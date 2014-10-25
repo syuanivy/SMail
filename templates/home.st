@@ -1,0 +1,1 @@
+home() ::= "The home page."
