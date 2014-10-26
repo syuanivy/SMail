@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class WebmailServer {
-	public static final String WEBMAIL_TEMPLATES_ROOT = "resources/cs601/webmail/templates";
+	public static final String WEBMAIL_TEMPLATES_ROOT = "resources/shuai/webmail/st";
 
 	public static final STListener stListener = new STListener();
 
@@ -25,24 +25,28 @@ public class WebmailServer {
 	}
 
 	public static void main(String[] args) throws Exception {
-		if ( args.length<2 ) {
-			System.err.println("java cs601.webmail.Server static-files-dir log-dir");
+		//Make sure there are two program arguments set in Run-Edit Configuration:
+        //In this case are the paths of the static-pages and shuai.webmail.log folders
+        if ( args.length<2 ) {
+			System.err.println("java shuai.webmail.Server static-files-dir shuai.webmail.log-dir");
 			System.exit(1);
 		}
-		String staticFilesDir = args[0];
-		String logDir = args[1];
+		String staticFilesDir = args[0];     // static-pages
+		String logDir = args[1];             //shuai.webmail.log
+
+        //Create a server
         Server server = new Server(8080);
 
-		ServletContextHandler context = new
-		            ServletContextHandler(ServletContextHandler.SESSIONS);
+		//set the context handler for the server, "/"
+        ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
 		context.setContextPath("/");
 		server.setHandler(context);
 
-		        // add a simple Servlet at "/dynamic/*"
+		// add the Dispatch Servlet at "/dynamic/*"
         ServletHolder holderDynamic = new ServletHolder("dynamic", DispatchServlet.class);
 		context.addServlet(holderDynamic, "/*");
 
-        // add special pathspec of "/home/" content mapped to the homePath
+        // add the static-home servlet, specifying "/home/" content mapped to the homePath
         ServletHolder holderHome = new ServletHolder("static-home", DefaultServlet.class);
         holderHome.setInitParameter("resourceBase",staticFilesDir);
         holderHome.setInitParameter("dirAllowed","true");
@@ -56,10 +60,10 @@ public class WebmailServer {
         holderPwd.setInitParameter("dirAllowed","true");
 		context.addServlet(holderPwd, "/");
 
-		// log using NCSA (common log format)
+		// shuai.webmail.log using NCSA (common shuai.webmail.log format)
 		// http://en.wikipedia.org/wiki/Common_Log_Format
 		NCSARequestLog requestLog = new NCSARequestLog();
-		requestLog.setFilename(logDir + "/yyyy_mm_dd.request.log");
+		requestLog.setFilename(logDir + "/yyyy_mm_dd.request.shuai.webmail.log");
 		requestLog.setFilenameDateFormat("yyyy_MM_dd");
 		requestLog.setRetainDays(90);
 		requestLog.setAppend(true);
