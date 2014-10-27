@@ -30,14 +30,16 @@ public class DispatchServlet extends HttpServlet {
 	public Page createPage(String uri,
 						   HttpServletRequest request,
 						   HttpServletResponse response)
+            throws IOException
 	{
-		Class pageClass = WebmailServer.mapping.get(uri); // return homepage.class
+		Class pageClass = WebmailServer.mapping.get(uri);
 		try {
 			Constructor<Page> ctor = pageClass.getConstructor(HttpServletRequest.class,
 															  HttpServletResponse.class);
 			return ctor.newInstance(request, response);
 		}
 		catch (Exception e) {
+            response.sendRedirect("/files/internalError.html"); //page,class not properly defined
 			ErrorManager.instance().error(e);
 		}
 		return null;

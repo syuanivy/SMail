@@ -9,6 +9,7 @@ import org.eclipse.jetty.server.handler.RequestLogHandler;
 import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import shuai.webmail.pages.WelcomePage;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,6 +23,7 @@ public class WebmailServer {
 	static {
 		mapping.put("/", LoginPage.class);
 		mapping.put("/users", UserListPage.class);
+        mapping.put("/welcome", WelcomePage.class);
 
 	}
 
