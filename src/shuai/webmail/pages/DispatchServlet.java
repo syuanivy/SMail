@@ -18,18 +18,20 @@ public class DispatchServlet extends HttpServlet {
 		String uri = request.getRequestURI();
 		Page p = createPage(uri, request, response);
 		if ( p==null ) {
-			response.sendRedirect("/files/error.html");
+			response.sendRedirect("/files/notFoundError.html");
 			return;
 		}
 		response.setContentType("text/html");
 		p.generate();
 	}
 
+
+
 	public Page createPage(String uri,
 						   HttpServletRequest request,
 						   HttpServletResponse response)
 	{
-		Class pageClass = WebmailServer.mapping.get(uri);
+		Class pageClass = WebmailServer.mapping.get(uri); // return homepage.class
 		try {
 			Constructor<Page> ctor = pageClass.getConstructor(HttpServletRequest.class,
 															  HttpServletResponse.class);

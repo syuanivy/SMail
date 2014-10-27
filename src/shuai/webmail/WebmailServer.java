@@ -1,7 +1,7 @@
 package shuai.webmail;
 import shuai.webmail.misc.STListener;
 import shuai.webmail.pages.DispatchServlet;
-import shuai.webmail.pages.HomePage;
+import shuai.webmail.pages.LoginPage;
 import shuai.webmail.pages.UserListPage;
 import org.eclipse.jetty.server.NCSARequestLog;
 import org.eclipse.jetty.server.Server;
@@ -20,8 +20,9 @@ public class WebmailServer {
 
 	public static Map<String,Class> mapping = new HashMap<String, Class>();
 	static {
-		mapping.put("/", HomePage.class);
+		mapping.put("/", LoginPage.class);
 		mapping.put("/users", UserListPage.class);
+
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -42,9 +43,13 @@ public class WebmailServer {
 		context.setContextPath("/");
 		server.setHandler(context);
 
+        //context.addServlet(LoginServlet.class, "/login");
+        //context.addServlet(LoginResponseServlet.class, "/response");
+
 		// add the Dispatch Servlet at "/dynamic/*"
         ServletHolder holderDynamic = new ServletHolder("dynamic", DispatchServlet.class);
 		context.addServlet(holderDynamic, "/*");
+
 
         // add the static-home servlet, specifying "/home/" content mapped to the homePath
         ServletHolder holderHome = new ServletHolder("static-home", DefaultServlet.class);

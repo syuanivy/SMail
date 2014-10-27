@@ -5,8 +5,8 @@ import org.stringtemplate.v4.ST;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class HomePage extends Page {
-	public HomePage(HttpServletRequest request, HttpServletResponse response) {
+public class LoginPage extends Page {
+	public LoginPage(HttpServletRequest request, HttpServletResponse response) {
 		super(request, response);
 	}
 
@@ -14,11 +14,11 @@ public class HomePage extends Page {
 
 	@Override
 	public ST body() {
-		return templates.getInstanceOf("home");
+        return templates.getInstanceOf("login");
 	}
 
 	@Override
 	public ST getTitle() {
-		return new ST("Home page");
+		return new ST("login page");
 	}
 }

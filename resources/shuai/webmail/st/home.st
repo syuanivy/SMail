@@ -1,1 +1,0 @@
-home() ::= "The home page."

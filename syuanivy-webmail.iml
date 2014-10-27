@@ -6,6 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/out/production/syuanivy-webmail/shuai/webmail/log" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/db" type="java-resource" />
       <excludeFolder url="file://$MODULE_DIR$/log" />
     </content>
     <orderEntry type="inheritedJdk" />

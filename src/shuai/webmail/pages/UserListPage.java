@@ -13,10 +13,10 @@ public class UserListPage extends Page {
 
 	/** Our simulated database */
 	static User[] users = new User[] {
-		new User("Boris", 39),
-		new User("Natasha", 31),
-		new User("Jorge", 25),
-		new User("Vladimir", 28)
+		new User("Boris", 39, "123"),
+		new User("Natasha", 31,"abc"),
+		new User("Jorge", 25,"xyz"),
+		new User("Vladimir", 28,"456")
 	};
 
 	@Override
