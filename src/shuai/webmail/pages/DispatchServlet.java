@@ -25,6 +25,19 @@ public class DispatchServlet extends HttpServlet {
 		p.generate();
 	}
 
+    public void doPOST(HttpServletRequest request,
+                      HttpServletResponse response)
+            throws ServletException, IOException
+    {
+        String uri = request.getRequestURI();
+        Page p = createPage(uri, request, response);
+        if ( p==null ) {
+            response.sendRedirect("/files/internalError.html");
+            return;
+        }
+        response.setContentType("text/html");
+        p.generate();
+    }
 
 
 	public Page createPage(String uri,

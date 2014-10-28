@@ -1,15 +1,14 @@
 package shuai.webmail;
+
 import shuai.webmail.misc.STListener;
-import shuai.webmail.pages.DispatchServlet;
-import shuai.webmail.pages.LoginPage;
-import shuai.webmail.pages.UserListPage;
+import shuai.webmail.pages.*;
 import org.eclipse.jetty.server.NCSARequestLog;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.RequestLogHandler;
 import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
-import shuai.webmail.pages.WelcomePage;
+
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,6 +23,14 @@ public class WebmailServer {
 		mapping.put("/", LoginPage.class);
 		mapping.put("/users", UserListPage.class);
         mapping.put("/welcome", WelcomePage.class);
+        mapping.put("/inbox", InboxPage.class);
+        mapping.put("/register", RegisterPage.class);
+        mapping.put("/search", SearchPage.class);
+        mapping.put("/compose", ComposePage.class);
+        mapping.put("/userinfo", UserInfoPage.class);
+        mapping.put("/viewmsg", ViewMsgPage.class);
+        mapping.put("/reply", ReplyPage.class);
+        mapping.put("/search", SearchPage.class);
 
 	}
 
