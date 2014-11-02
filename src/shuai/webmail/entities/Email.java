@@ -1,21 +1,23 @@
 package shuai.webmail.entities;
 
 public class Email {
-    String subject;
-    String body;
+    int id;
     String sender;
     String recipient;
+    String subject;
+    String body;
     Boolean attached = false;
-    public Email(String subject, String body, String sender, String recipient) {
-        this.subject = subject;
-        this.body = body;
+    public Email( String sender, String recipient, String subject, String body) {
         this.sender = sender;
         this.recipient = recipient;
+        this.subject = subject;
+        this.body = body;
     }
-    public String getSubject() { return subject; }
-    public String getBody() { return body; }
+    public String getId(){return sender;}
     public String getSender(){return sender;}
     public String getRecipient(){return recipient;}
+    public String getSubject() { return subject; }
+    public String getBody() { return body; }
     public Boolean hasAttachement(){return attached;}
 
     public void view(){

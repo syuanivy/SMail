@@ -1,6 +1,7 @@
 package shuai.webmail.managers;
 
 import shuai.webmail.DBService.Select;
+import shuai.webmail.entities.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

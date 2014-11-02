@@ -1,5 +1,5 @@
-inbox() ::= <<
-    <h1>Inbox</h1>
+inbox(user) ::= <<
+    <h1>$user$'s Inbox</h1>
 
     <form method=get action=/>
     <input type=submit value=Logout>

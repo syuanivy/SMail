@@ -1,6 +1,7 @@
 package shuai.webmail.entities;
 
 public class User {
+    int id = -1;
 	String name;
     String password;
 
@@ -8,7 +9,8 @@ public class User {
 		this.name = name;
         this.password = password;
 	}
+    public int getId() { return id; }
 	public String getName() { return name; }
     public String getPassword(){return password;}
-	//public String toString() { return name+":"+age; }
+
 }

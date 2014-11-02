@@ -22,7 +22,7 @@ public class Select {
 
     //SELECT * FROM table WHERE columnName = string
     public Select(String table, String column, String value) throws SQLException{
-        this.clause = "SELECT * FROM " + table + " WHERE " + column + "=" + value;
+        this.clause = "SELECT * FROM " + table + " WHERE " + column + "='" + value + "'";
         this.query = DBConnection.db.prepareStatement(clause);
         this.result = query.executeQuery();
 

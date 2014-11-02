@@ -1,5 +1,7 @@
 package shuai.webmail;
 
+import shuai.webmail.DBService.DBConnection;
+import shuai.webmail.managers.UserManager;
 import shuai.webmail.misc.STListener;
 import shuai.webmail.pages.*;
 import org.eclipse.jetty.server.NCSARequestLog;
@@ -10,6 +12,7 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
 
+import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,8 +26,13 @@ public class WebmailServer {
 		mapping.put("/", LoginPage.class);
 		mapping.put("/users", UserListPage.class);
         mapping.put("/welcome", WelcomePage.class);
+
         mapping.put("/inbox", InboxPage.class);
+        mapping.put("/loginprocessor", LoginProcessor.class);
+
         mapping.put("/register", RegisterPage.class);
+        mapping.put("/registerprocessor", RegisterProcessor.class);
+
         mapping.put("/search", SearchPage.class);
         mapping.put("/compose", ComposePage.class);
         mapping.put("/userinfo", UserInfoPage.class);
@@ -87,6 +95,9 @@ public class WebmailServer {
 		RequestLogHandler requestLogHandler = new RequestLogHandler();
 		requestLogHandler.setRequestLog(requestLog);
 		requestLogHandler.setServer(server);
+
+        Connection db = DBConnection.getDBConnection();
+
 
 		server.start();
 		server.join();

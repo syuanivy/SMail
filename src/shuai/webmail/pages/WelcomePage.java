@@ -16,10 +16,10 @@ public class WelcomePage extends Page {
 
     /** Our simulated database */
     static User[] users = new User[] {
-            new User("Boris", 39, "123"),
-            new User("Natasha", 31,"abc"),
-            new User("Jorge", 25,"xyz"),
-            new User("Vladimir", 28,"456")
+            new User("Boris", "123"),
+            new User("Natasha", "abc"),
+            new User("Jorge", "xyz"),
+            new User("Vladimir","456")
     };
     public void verify() { }
 

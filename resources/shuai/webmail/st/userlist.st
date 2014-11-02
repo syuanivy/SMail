@@ -11,7 +11,7 @@ OR in-line the template application:
 <table>
 $users:{u|
 <tr>
-  <td>$u.name$</td><td>$u.age$</td><td>$u.password$</td>
+  <td>$u.name$</td><td>$u.password$</td>
 </tr>
 }$
 </table>
