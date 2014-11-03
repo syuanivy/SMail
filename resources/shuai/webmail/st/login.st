@@ -1,15 +1,42 @@
 login() ::= <<
-  <h1>Welcome to Shuai's Webmail</h1>
 
-  <form method=post action=/loginprocessor>
-    Username: <input type=text name=username><br>
-    Password: <input type=password name=password><br><br>
-    <input type=submit value=Login>
-  </form>
+   <br>
 
-  <p>Do not have an account?</p>
+   <div class="container">
+     <div class="row">
+   	<div class="col-xs-4">
+   	</div>
 
-   <form method=get action=/register>
-     <input type=submit value=Create>
-   </form>
+   	<div class="col-xs-4">
+   	  <a href="#" class="thumbnail">
+           <img src="/files/images/logo.jpg" alt="125x125">
+         </a>
+
+   	  <form class="form-signin" role="form" method=post action=/loginprocessor>
+   		<h3 class="form-signin-heading">Please sign in</h3>
+   		<input type="text" name= "username" class="form-control" placeholder="username" required autofocus>
+   		<input type="password" name="password" class="form-control" placeholder="Password" required>
+   		<div class="checkbox">
+   		  <label>
+   			<input type="checkbox" value="remember-me"> Remember me
+   		  </label>
+   		</div>
+   		<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+   	  </form>
+
+   	  <br>
+
+   	  <p> Don't have an account? &nbsp; <a href="/register"> Create </a>
+   	  </p>
+   	</div>
+
+       <div class="col-xs-4">
+   	</div>
+     </div>
+   </div> <!-- /container -->
+
+
+
+
+
 >>

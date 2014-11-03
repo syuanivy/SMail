@@ -5,7 +5,7 @@ inbox(user) ::= <<
     <input type=submit value=Logout>
     </form>
 
-    <form method=get action=/userinfo>
+    <form method=get action=/userinfoprocessor>
     <input type=submit value=UserInfo>
     </form>
 

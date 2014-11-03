@@ -19,16 +19,29 @@ public class RegisterProcessor extends PostProcessor{
     @Override
     public void processPost() throws SQLException, IOException {
         String username = request.getParameter("username");
-        String password = request.getParameter("password");
+        String password1 = request.getParameter("password");
+        String password2 = request.getParameter("retype");
+
         Boolean exist = UserManager.isUser(username);
 
         if (!exist) {
-            request.getSession().setAttribute("user", username);
-            //insert into database;
-            response.sendRedirect("/welcome");
+            if(password1.equals (password2)){
+                boolean success = UserManager.addUser(username, password1);
+                if(success){
+                    request.getSession().setAttribute("user", username);
+                    response.sendRedirect("/welcome");
+                }else{
+                    request.setAttribute("error", "registration failed due to internal error"); // may not be necessary at all
+                    response.sendRedirect("/register");
+                }
+            }else{
+                request.setAttribute("error", "Retyping has to be the same!");
+                response.sendRedirect("/register");
+            }
+
         } else {
             request.setAttribute("error", "User existing, please choose another username!");
-            response.sendRedirect("/registerprocessor");
+            response.sendRedirect("/register");
         }
     }
 }

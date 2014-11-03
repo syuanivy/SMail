@@ -1,10 +1,13 @@
 package shuai.webmail.entities;
 
 public class User {
-    int id = -1;
-	String name;
-    String password;
+    public int id = -1;
+	public String name;
+    public String password;
 
+    public User() {
+
+    }
 	public User(String name, String password) {
 		this.name = name;
         this.password = password;

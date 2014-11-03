@@ -13,20 +13,22 @@ public class WelcomePage extends Page {
     public WelcomePage(HttpServletRequest request, HttpServletResponse response) {
         super(request, response);
     }
-
-    /** Our simulated database */
+    /*
     static User[] users = new User[] {
             new User("Boris", "123"),
             new User("Natasha", "abc"),
             new User("Jorge", "xyz"),
             new User("Vladimir","456")
     };
+    */
     public void verify() { }
 
     @Override
     public ST body() {
+
+        String username = (String) request.getSession().getAttribute("user");
         ST st = templates.getInstanceOf("welcome");
-        st.add("name", users[0].getName());
+        st.add("name", username);
         return st;
     }
 
