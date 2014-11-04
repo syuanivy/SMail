@@ -1,10 +1,10 @@
 center(user) ::= <<
 
 <div class="col-xs-10">
-			$searchrow()$
+			$user:searchrow()$
 
 			<br>
 
-			$tabledisplay(user)$
+			$user:tabledisplay()$
 </div>
 >>

@@ -6,7 +6,7 @@ leftsidebar(user) ::= <<
             </a>
 
 			<div class="list-group">
-				<a href="#" class="list-group-item active">
+				<a href="/compose" class="list-group-item active">
 					<span class="glyphicon glyphicon-pencil"></span> Compose
 				</a>
 				<a href="#" class="list-group-item">

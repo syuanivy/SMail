@@ -1,6 +1,5 @@
 navbar(user) ::= <<
 
-<nav id="myNavbar" class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
 	<!-- Brand and toggle get grouped for better mobile display -->
 	<div class="container">
 		<div class="navbar-header">
@@ -16,12 +15,11 @@ navbar(user) ::= <<
 		<div class="collapse navbar-collapse" id="navbarCollapse">
 			<ul class="nav navbar-nav">
 				<li class="active"><a href="#">Home</a></li>
-				<li><a href="#">About</a></li>
-				<li><a href="#">Contact</a></li>
+				<li><a href="/userinfo">Account</a></li>
+				<li><a href="/logout">Log out</a></li>
 			</ul>
 		</div>
 	</div>
-</nav>
-<br>
+
 
 >>

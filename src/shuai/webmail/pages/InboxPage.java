@@ -24,6 +24,14 @@ public class InboxPage extends Page{
     public ST body() {
 
         String username = (String) request.getSession().getAttribute("user");
+
+        if(username == null){
+            try{
+                response.sendRedirect("/");
+            }catch(IOException e){
+                e.printStackTrace();
+            }
+        }
         ST st = templates.getInstanceOf("inbox");
         st.add("user", username);
         return st;

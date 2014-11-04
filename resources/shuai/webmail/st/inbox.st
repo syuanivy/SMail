@@ -1,21 +1,38 @@
 inbox(user) ::= <<
-    <h1>$user$'s Inbox</h1>
 
-    <form method=get action=/>
-    <input type=submit value=Logout>
-    </form>
+<nav id="myNavbar" class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
+  $user:navbar()$
+</nav>
 
-    <form method=get action=/userinfoprocessor>
-    <input type=submit value=UserInfo>
-    </form>
+<br>
 
-    <form method=get action=/compose>
-    <input type=submit value=Compose>
-    </form>
+<div class="container">
+	<div class="page-header">
+	</div>
+</div>
 
-    <form method=get action=/search>
-    <input type=submit value=Search>
-    </form>
+
+<div class="container">
+	<div class="row">
+
+		$user:leftsidebar()$
+
+		<br>
+
+		$user:center()$
+	</div>
+</div>
+
+
+<div class="container">
+	<div class="row">
+		<div class="col-sm-12">
+			<footer>
+				<p>&copy; Copyright 2014 Shuai Yuan</p>
+			</footer>
+		</div>
+	</div>
+</div>
 
 
 

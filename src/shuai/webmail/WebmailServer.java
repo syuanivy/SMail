@@ -1,7 +1,6 @@
 package shuai.webmail;
 
 import shuai.webmail.DBService.DBConnection;
-import shuai.webmail.managers.UserManager;
 import shuai.webmail.misc.STListener;
 import shuai.webmail.pages.*;
 import org.eclipse.jetty.server.NCSARequestLog;
@@ -24,6 +23,7 @@ public class WebmailServer {
 	public static Map<String,Class> mapping = new HashMap<String, Class>();
 	static {
 		mapping.put("/", LoginPage.class);
+        mapping.put("/logout", Logout.class);
 		mapping.put("/users", UserListPage.class);
         mapping.put("/welcome", WelcomePage.class);
 
