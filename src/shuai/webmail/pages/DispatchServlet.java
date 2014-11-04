@@ -33,6 +33,9 @@ public class DispatchServlet extends HttpServlet {
             throws IOException
 	{
 		Class pageClass = WebmailServer.mapping.get(uri);
+        if(pageClass == null){
+            response.sendRedirect("/files/notFoundError.html");
+        }
 		try {
 			Constructor<Page> ctor = pageClass.getConstructor(HttpServletRequest.class,
 															  HttpServletResponse.class);

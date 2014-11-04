@@ -24,7 +24,6 @@ public class WebmailServer {
 	static {
 		mapping.put("/", LoginPage.class);
         mapping.put("/logout", Logout.class);
-		mapping.put("/users", UserListPage.class);
         mapping.put("/welcome", WelcomePage.class);
 
         mapping.put("/inbox", InboxPage.class);

@@ -4,6 +4,7 @@ import org.stringtemplate.v4.ST;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * Created by ivy on 10/26/14.
@@ -13,7 +14,22 @@ public class ViewMsgPage extends Page{
         super(request, response);
     }
 
-    public void verify() { }
+    public void verify() {
+        if(request.getSession() == null){
+            try{
+                response.sendRedirect("/");
+            }catch(IOException e){
+                e.printStackTrace();
+            }
+        }else if(request.getSession().getAttribute("user")==null){
+            try{
+                response.sendRedirect("/");
+            }catch(IOException e){
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     @Override
     public ST body() {

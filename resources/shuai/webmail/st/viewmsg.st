@@ -1,6 +1,6 @@
 viewmsg() ::= <<
   <h1>View MSG</h1>
-    <form method=get action=/>
+    <form method=get action=/logout>
     <input type=submit value=Logout>
     </form>
 

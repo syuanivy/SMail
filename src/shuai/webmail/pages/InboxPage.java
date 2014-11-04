@@ -18,20 +18,25 @@ public class InboxPage extends Page{
 
 
 
-    public void verify() { }
-
-    @Override
-    public ST body() {
-
-        String username = (String) request.getSession().getAttribute("user");
-
-        if(username == null){
+    public void verify() {
+        if(request.getSession() == null){
+            try{
+                response.sendRedirect("/");
+            }catch(IOException e){
+                e.printStackTrace();
+            }
+        }else if(request.getSession().getAttribute("user")==null){
             try{
                 response.sendRedirect("/");
             }catch(IOException e){
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public ST body() {
+        String username = (String) request.getSession().getAttribute("user");
         ST st = templates.getInstanceOf("inbox");
         st.add("user", username);
         return st;
