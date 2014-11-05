@@ -21,7 +21,9 @@ public class ComposePage extends Page{
             }catch(IOException e){
                 e.printStackTrace();
             }
-        }else if(request.getSession().getAttribute("user") == null){
+        }
+
+        if(request.getSession().getAttribute("user") == null){
             try{
                 response.sendRedirect("/");
             }catch(IOException e){

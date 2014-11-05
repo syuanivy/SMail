@@ -8,9 +8,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class Logout extends Page {
-    public Logout(HttpServletRequest request,
-                  HttpServletResponse response){
+public class LogoutPage extends Page {
+    public LogoutPage(HttpServletRequest request,
+                      HttpServletResponse response){
         super(request, response);
     }
 

@@ -1,6 +1,6 @@
 package shuai.webmail;
 
-import shuai.webmail.DBService.DBConnection;
+import shuai.webmail.db_services.DBConnection;
 import shuai.webmail.misc.STListener;
 import shuai.webmail.pages.*;
 import org.eclipse.jetty.server.NCSARequestLog;
@@ -9,6 +9,8 @@ import org.eclipse.jetty.server.handler.RequestLogHandler;
 import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import shuai.webmail.processors.LoginProcessor;
+import shuai.webmail.processors.RegisterProcessor;
 
 
 import java.sql.Connection;
@@ -23,21 +25,17 @@ public class WebmailServer {
 	public static Map<String,Class> mapping = new HashMap<String, Class>();
 	static {
 		mapping.put("/", LoginPage.class);
-        mapping.put("/logout", Logout.class);
-        mapping.put("/welcome", WelcomePage.class);
-
-        mapping.put("/inbox", InboxPage.class);
-        mapping.put("/loginprocessor", LoginProcessor.class);
-
-        mapping.put("/register", RegisterPage.class);
+        mapping.put("/login", LoginPage.class);
         mapping.put("/registerprocessor", RegisterProcessor.class);
-
-        mapping.put("/search", SearchPage.class);
-        mapping.put("/compose", ComposePage.class);
+        mapping.put("/register", RegisterPage.class);
+        mapping.put("/welcome", WelcomePage.class);
         mapping.put("/userinfo", UserInfoPage.class);
-        mapping.put("/viewmsg", ViewMsgPage.class);
-        mapping.put("/reply", ReplyPage.class);
-        mapping.put("/search", SearchPage.class);
+        mapping.put("/loginprocessor", LoginProcessor.class);
+        mapping.put("/inbox", InboxPage.class);
+        mapping.put("/home", InboxPage.class);
+        mapping.put("/compose", ComposePage.class);
+        mapping.put("/logout", LogoutPage.class);
+
 
 	}
 

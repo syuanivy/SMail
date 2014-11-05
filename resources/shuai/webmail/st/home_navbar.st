@@ -1,4 +1,4 @@
-navbar(user) ::= <<
+home_navbar(user) ::= <<
 
 	<!-- Brand and toggle get grouped for better mobile display -->
 	<div class="container">

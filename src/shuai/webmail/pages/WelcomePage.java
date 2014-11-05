@@ -29,7 +29,9 @@ public class WelcomePage extends Page {
             }catch(IOException e){
                 e.printStackTrace();
             }
-        }else if(request.getSession().getAttribute("user")==null){
+        }
+
+        if(request.getSession().getAttribute("user")==null){
             try{
                 response.sendRedirect("/");
             }catch(IOException e){
@@ -41,11 +43,14 @@ public class WelcomePage extends Page {
 
     @Override
     public ST body() {
-
-        String username = (String) request.getSession().getAttribute("user");
+        User user = (User) request.getSession().getAttribute("user");
         ST st = templates.getInstanceOf("welcome");
-        st.add("name", username);
-        return st;
+        if(user != null){
+            st.add("user", user.getName());
+            return st;
+        }else{
+            return null;
+        }
     }
 
     @Override

@@ -1,4 +1,4 @@
-tabledisplay(user) ::= <<
+home_tabledisplay(user) ::= <<
 
 <div class="panel panel-primary">
 				<!--

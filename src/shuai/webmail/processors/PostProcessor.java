@@ -1,4 +1,4 @@
-package shuai.webmail.pages;
+package shuai.webmail.processors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

@@ -1,6 +1,7 @@
 package shuai.webmail.pages;
 
 import org.stringtemplate.v4.ST;
+import shuai.webmail.entities.User;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,7 +22,9 @@ public class UserInfoPage extends Page {
             }catch(IOException e){
                 e.printStackTrace();
             }
-        }else if(request.getSession().getAttribute("user")==null){
+        }
+
+        if(request.getSession().getAttribute("user")==null){
             try{
                 response.sendRedirect("/");
             }catch(IOException e){
@@ -33,11 +36,14 @@ public class UserInfoPage extends Page {
 
     @Override
     public ST body() {
-        String username = (String) request.getSession().getAttribute("user");
+        User user = (User) request.getSession().getAttribute("user");
         ST st = templates.getInstanceOf("userinfo");
-        st.add("user", username);
-        return st;
-
+        if(user != null){
+            st.add("user", user.getName());
+            return st;
+        }else{
+            return null;
+        }
     }
 
     @Override

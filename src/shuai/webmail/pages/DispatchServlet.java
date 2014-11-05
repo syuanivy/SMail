@@ -2,6 +2,7 @@ package shuai.webmail.pages;
 
 import shuai.webmail.WebmailServer;
 import shuai.webmail.managers.ErrorManager;
+import shuai.webmail.processors.PostProcessor;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

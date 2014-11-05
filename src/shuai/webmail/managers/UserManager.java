@@ -1,16 +1,16 @@
 package shuai.webmail.managers;
 
-import shuai.webmail.DBService.DBConnection;
+import shuai.webmail.db_services.DBConnection;
 import shuai.webmail.entities.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-
+/**
+ * Created by ivy on 10/27/14.
+ */
 public class UserManager {
-    private static String table = "users";
-
 
     //Check if username exists in the database
     public static boolean isUser(String name) throws SQLException {
@@ -37,17 +37,17 @@ public class UserManager {
     }
 
     //Register a new user
-    public static  boolean addUser(String name, String password) throws SQLException{
+    public static  User addUser(String name, String password) throws SQLException{
         String clause = "INSERT INTO users(username, password) VALUES(?, ?)";
         PreparedStatement query = DBConnection.db.prepareStatement(clause);
         query.setString(1, name);
         query.setString(2, password);
         int result = query.executeUpdate();
         if(result == 1){
-            return true;
+            return checkUserInfo(name);
         }else{
             // error message: registration failed, try again.
-            return false;
+            return null;
         }
 
     }
@@ -60,13 +60,15 @@ public class UserManager {
         ResultSet result = query.executeQuery();
 
         User checkuser= new User();
-        checkuser.id = result.getInt("id");
-        checkuser.name = result.getString("username");
-        checkuser.password = result.getString("password");
+        checkuser.setId(result.getInt("id"));
+        checkuser.setName(result.getString("username"));
+        checkuser.setPassword(result.getString("password"));
 
-        System.out.println ("id = "+checkuser.id);
-        System.out.println ("id = "+checkuser.name);
-        System.out.println ("id = "+checkuser.password);
+        /*
+        System.out.println ("id = "+checkuser.getId());
+        System.out.println ("id = "+checkuser.getName());
+        System.out.println ("id = "+checkuser.getPassword());
+        */
         return checkuser;
     }
 

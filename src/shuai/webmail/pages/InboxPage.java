@@ -2,6 +2,7 @@ package shuai.webmail.pages;
 
 
 import org.stringtemplate.v4.ST;
+import shuai.webmail.entities.User;
 import shuai.webmail.managers.UserManager;
 
 import javax.servlet.ServletException;
@@ -25,7 +26,9 @@ public class InboxPage extends Page{
             }catch(IOException e){
                 e.printStackTrace();
             }
-        }else if(request.getSession().getAttribute("user")==null){
+        }
+
+        if(request.getSession().getAttribute("user")==null){
             try{
                 response.sendRedirect("/");
             }catch(IOException e){
@@ -36,14 +39,18 @@ public class InboxPage extends Page{
 
     @Override
     public ST body() {
-        String username = (String) request.getSession().getAttribute("user");
-        ST st = templates.getInstanceOf("inbox");
-        st.add("user", username);
-        return st;
+        User user = (User) request.getSession().getAttribute("user");
+        ST st = templates.getInstanceOf("home");
+        if(user != null){
+            st.add("user", user.getName());
+            return st;
+        }else{
+            return null;
+        }
     }
 
     @Override
     public ST getTitle() {
-        return new ST("inbox page");
+        return new ST("home page");
     }
 }

@@ -1,10 +1,10 @@
-package shuai.webmail.DBService;
+package shuai.webmail.db_services;
 
 import java.sql.*;
 
 
 public class DBConnection {
-    public static final String dbFile = "src/shuai/webmail/DBService/db/webmail_dev.db";
+    public static final String dbFile = "src/shuai/webmail/db_services/db/webmail_dev.db";
     public static Connection db = null;
 
 
