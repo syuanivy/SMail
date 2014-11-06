@@ -92,6 +92,7 @@ public class WebmailServer {
 		RequestLogHandler requestLogHandler = new RequestLogHandler();
 		requestLogHandler.setRequestLog(requestLog);
 		requestLogHandler.setServer(server);
+        //
 
         Connection db = DBConnection.getDBConnection();
 

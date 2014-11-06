@@ -8,7 +8,7 @@ public class DBConnection {
     public static Connection db = null;
 
 
-    public static Connection getDBConnection(){
+    public static synchronized Connection getDBConnection(){
         try {
             Class.forName("org.sqlite.JDBC"); // force load of driver
             db = DriverManager.getConnection("jdbc:sqlite:" + dbFile);

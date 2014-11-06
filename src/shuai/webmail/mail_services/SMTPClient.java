@@ -34,7 +34,7 @@ public class SMTPClient {
         this.emailAddress = account.getEmailAddress();
         this.SSL = account.isEncryption();
         if(SSL) socket =(SSLSocketFactory.getDefault()).createSocket(this.smtpServer, port);
-        else socket = new Socket();
+        else socket = new Socket(this.smtpServer, port);
 
     }
 
@@ -43,66 +43,68 @@ public class SMTPClient {
 
             bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             outputStream = new DataOutputStream(socket.getOutputStream());
-            Thread job = new Thread();
-            job = new Thread(new Runnable(){
-                                 public void run(){
-                                     try {
-                                         String msgFromServer;
-                                         while ((msgFromServer = (bufferedReader.readLine())) != null) {
-                                         System.out.println(" SMTP server: " + msgFromServer);
-                                         }
-                                     }catch (Exception e){
-                                         System.out.println(" The reader has a problem.");
-                                         try {
-                                             bufferedReader.close();
-                                             outputStream.close();
-                                             socket.close();
-                                         } catch (IOException e1) {
-                                              e1.printStackTrace();
-                                         }
-                                     }
-                                 }
-                                });
+            Thread job = new Thread(new Runnable(){
+                public void run(){
+                    try {
+                        String msgFromServer;
+                        while ((msgFromServer = (bufferedReader.readLine())) != null) {
+                            System.out.println(" SMTP server: " + msgFromServer);
+                        }
+                    }catch (Exception e){
+                        System.out.println(" The reader has a problem.");
+                        try {
+                            bufferedReader.close();
+                            outputStream.close();
+                            socket.close();
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
+                    }
+                }
+            });
             job.start();
-            System.out.println(" Client: HELO  serverName <CRLF>");
-            sendData("HELO smtp.gmail.com");
+
+            System.out.println(" Client: HELO smtpServer");
+            sendData("HELO "+this.smtpServer);
+            Thread.sleep(1000);
 
             // AUTH LOGIN <CRLF>
-            System.out.println(" Client: AUTH LOGIN <CRLF>");
+            System.out.println(" Client: AUTH LOGIN");
             sendData("AUTH LOGIN");
+            Thread.sleep(1000);
 
             // send user name
-            System.out.println(" Client: user name <CRLF>");
+            System.out.println("Client: "+new BASE64Encoder().encode(this.userName.getBytes()));
             sendData(new BASE64Encoder().encode(this.userName.getBytes()));
-
+            Thread.sleep(1000);
             // send password
-            System.out.println(" Client: password <CRLF>");
+            System.out.println("Client: "+new BASE64Encoder().encode(this.password.getBytes()));
             sendData(new BASE64Encoder().encode(this.password.getBytes()));
-
+            Thread.sleep(1000);
             //FROM:<sender> <CRLF>
-            System.out.println(" Client: MAIL <SP> FROM:<reverse-path> <CRLF>");
+            System.out.println("Client: MAIL FROM:<" + this.emailAddress + ">");
             sendData("MAIL FROM:<" + this.emailAddress + ">");
-
+            Thread.sleep(1000);
             // TO:<recipient> <CRLF>
-            System.out.println(" Client: RCPT <SP> TO:<forward-path> <CRLF>");
+            System.out.println(" Client: RCPT TO:<emailAddress>");
             sendData("RCPT TO:<" + email.getRecipient() + ">");
+            Thread.sleep(1000);
 
-
-            System.out.println(" Client: DATA <CRLF>");
+            System.out.println(" Client: DATA");
             sendData("DATA");
-
+            Thread.sleep(1000);
             // send email header
             sendData(email.getSubject());
-
-            // send plain text email content now!!
+            Thread.sleep(1000);
+            // send plain text
             sendData(email.getBody());
-
+            Thread.sleep(1000);
             //end signal
-            System.out.println(" Client: <CRLF> . <CRLF>");
-            sendData("\r\n.");
-
+            System.out.println(" Client:. ");
+            sendData(".");
+            Thread.sleep(1000);
             // QUIT
-            System.out.println(" Client:: QUIT\r\n");
+            System.out.println(" Client:: QUIT");
             sendData("QUIT");
 
         }catch(Exception e) {

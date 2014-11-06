@@ -46,7 +46,7 @@ public class WelcomePage extends Page {
         User user = (User) request.getSession().getAttribute("user");
         ST st = templates.getInstanceOf("welcome");
         if(user != null){
-            st.add("user", user.getName());
+            st.add("name", user.getName());
             return st;
         }else{
             return null;
