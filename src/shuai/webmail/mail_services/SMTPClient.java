@@ -1,14 +1,12 @@
 package shuai.webmail.mail_services;
 
+import shuai.webmail.entities.Account;
 import shuai.webmail.entities.Email;
-import shuai.webmail.entities.SMTPAccount;
 import sun.misc.BASE64Encoder;
 
-import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 import java.io.*;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 /**
  * Created by ivy on 11/4/14.
@@ -26,9 +24,9 @@ public class SMTPClient {
     private BufferedReader bufferedReader;
     private DataOutputStream outputStream;
 
-    public SMTPClient(SMTPAccount account) throws IOException{
+    public SMTPClient(Account account) throws IOException{
         this.smtpServer = account.getSmtpServer();
-        this.port = account.getPort();
+        this.port = account.getSmtpPort();
         this.userName = account.getUserName();
         this.password = account.getPassword();
         this.emailAddress = account.getEmailAddress();
@@ -38,7 +36,7 @@ public class SMTPClient {
 
     }
 
-    public void sendEMail(Email email) {
+    public void sendEmail(Email email) {
         try {
 
             bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -64,11 +62,12 @@ public class SMTPClient {
             });
             job.start();
 
-            System.out.println(" Client: HELO smtpServer");
+            Thread.sleep(1000);
+            System.out.println("HELO "+this.smtpServer);
             sendData("HELO "+this.smtpServer);
             Thread.sleep(1000);
 
-            // AUTH LOGIN <CRLF>
+            // AUTH LOGIN
             System.out.println(" Client: AUTH LOGIN");
             sendData("AUTH LOGIN");
             Thread.sleep(1000);
@@ -77,25 +76,35 @@ public class SMTPClient {
             System.out.println("Client: "+new BASE64Encoder().encode(this.userName.getBytes()));
             sendData(new BASE64Encoder().encode(this.userName.getBytes()));
             Thread.sleep(1000);
+
             // send password
             System.out.println("Client: "+new BASE64Encoder().encode(this.password.getBytes()));
             sendData(new BASE64Encoder().encode(this.password.getBytes()));
             Thread.sleep(1000);
-            //FROM:<sender> <CRLF>
+
+            //FROM:<sender>
             System.out.println("Client: MAIL FROM:<" + this.emailAddress + ">");
             sendData("MAIL FROM:<" + this.emailAddress + ">");
             Thread.sleep(1000);
-            // TO:<recipient> <CRLF>
-            System.out.println(" Client: RCPT TO:<emailAddress>");
+
+            // TO:<recipient>
+            System.out.println(" Client: RCPT TO:<"+email.getRecipient()+">");
             sendData("RCPT TO:<" + email.getRecipient() + ">");
             Thread.sleep(1000);
 
             System.out.println(" Client: DATA");
             sendData("DATA");
             Thread.sleep(1000);
-            // send email header
-            sendData(email.getSubject());
+            // send email header, ending with a blank line
+            sendData("Subject: "+email.getSubject()+"\r\n");
             Thread.sleep(1000);
+            /*//**//*//*TODO: add other headers
+            C: From: "Bob Example" <bob@example.org>
+            C: To: "Alice Example" <alice@example.com>
+            C: Cc: theboss@example.com
+            C: Date: Tue, 15 January 2008 16:02:43 -0500
+            */
+
             // send plain text
             sendData(email.getBody());
             Thread.sleep(1000);
@@ -104,7 +113,7 @@ public class SMTPClient {
             sendData(".");
             Thread.sleep(1000);
             // QUIT
-            System.out.println(" Client:: QUIT");
+            System.out.println(" Client: QUIT");
             sendData("QUIT");
 
         }catch(Exception e) {

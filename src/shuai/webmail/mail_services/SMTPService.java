@@ -1,7 +1,7 @@
 package shuai.webmail.mail_services;
 
+import shuai.webmail.entities.Account;
 import shuai.webmail.entities.Email;
-import shuai.webmail.entities.SMTPAccount;
 
 import java.io.IOException;
 
@@ -10,21 +10,21 @@ import java.io.IOException;
  */
 public class SMTPService {
     private Email email;
-    private SMTPAccount account;
+    private Account account;
     private final static int SMTP_PORT = 25;
     private final static int SMTP_SSL_PORT = 465;
 
-    public SMTPService(Email email, SMTPAccount account) {
+    public SMTPService(Email email, Account account) {
         this.email = email;
         this.account = account;
     }
 
     public void send() throws IOException{
-        if(portVerified(account.getPort())){
+        if(portVerified(account.getSmtpPort())){
             SMTPClient client = new SMTPClient(account);
-            client.sendEMail(email);
+            client.sendEmail(email);
         } else {
-            System.err.println("Unknown SMTP port = " + account.getPort());
+            System.err.println("Unknown SMTP port = " + account.getSmtpPort());
         }
 
     }
