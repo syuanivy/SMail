@@ -4,32 +4,38 @@ package shuai.webmail.entities;
  * Created by ivy on 11/4/14.
  */
 public class Account {
+    private String emailAddress;
     private String smtpServer;
-    private int smtpPort;
+    private String smtpPort;
     private String popServer;
-    private int popPort;
-    private boolean SSL;
+    private String popPort;
+    private String SSL;//TODO: boolean, by checkbox
     private String userName;
     private String password;
-    private String emailAddress;
+    private String localUser;
 
-    public Account(String smtpServer, int smtpPort, String popServer, int popPort, boolean SSL, String userName, String password, String emailAddress) {
-        this.smtpServer = smtpServer;
+
+    public Account(){}
+    public Account(String email, String smtp, String smtpPort, String pop, String popPOrt,
+                   String SSL, String username, String password, String localUser){
+        this.emailAddress= email;
+        this.smtpServer = smtp;
         this.smtpPort = smtpPort;
-        this.popServer = popServer;
-        this.popPort = popPort;
+        this.popServer = pop;
+        this.popPort = popPOrt;
         this.SSL = SSL;
-        this.userName = userName;
+        this.userName = username;
         this.password = password;
-        this.emailAddress = emailAddress;
+        this.localUser = localUser;
+
     }
 
     public String getSmtpServer() {return smtpServer;}
     public void setSmtpServer(String smtpServer) {
         this.smtpServer = smtpServer;
     }
-    public int getSmtpPort() {return smtpPort;}
-    public void setSmtpPort(int port) {
+    public String getSmtpPort() {return smtpPort;}
+    public void setSmtpPort(String port) {
         this.smtpPort = port;
     }
 
@@ -37,15 +43,15 @@ public class Account {
     public void setPopServer(String popServer) {
         this.popServer = popServer;
     }
-    public int getPopPort() {return popPort;}
-    public void setPopPort(int port) {
+    public String getPopPort() {return popPort;}
+    public void setPopPort(String port) {
         this.popPort = port;
     }
 
-    public boolean isEncryption() {
+    public String isEncryption() {
         return SSL;
     }
-    public void setEncryption(boolean isEncrypted) {
+    public void setEncryption(String isEncrypted) {
         this.SSL = isEncrypted;
     }
 
@@ -64,6 +70,12 @@ public class Account {
     }
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
+    }
+    public String getLocalUser() {
+        return localUser;
+    }
+    public void setLocalUser(String localUser) {
+        this.localUser = localUser;
     }
 
 

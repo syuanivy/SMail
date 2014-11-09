@@ -1,7 +1,6 @@
 package shuai.webmail.mail_services;
 
 import shuai.webmail.entities.Account;
-import shuai.webmail.entities.Email;
 
 import java.io.IOException;
 
@@ -19,7 +18,7 @@ public class POPService {
     }
 
     public void retrieve() throws IOException {
-        if(portVerified(account.getPopPort())){
+        if(portVerified(995)){
             POPClient client = new POPClient(account);
             client.retrieveEmail();
         } else {

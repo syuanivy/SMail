@@ -1,7 +1,7 @@
 package shuai.webmail.mail_services;
 
 import shuai.webmail.entities.Account;
-import shuai.webmail.entities.Email;
+import shuai.webmail.entities.Outgoing;
 import sun.misc.BASE64Encoder;
 
 import javax.net.ssl.SSLSocketFactory;
@@ -15,8 +15,8 @@ public class SMTPClient {
     private Socket socket;
 
     private String smtpServer;
-    private int port;
-    private boolean SSL;
+    private String port;
+    private String SSL;
     private String userName;
     private String password;
     private String emailAddress;
@@ -31,12 +31,12 @@ public class SMTPClient {
         this.password = account.getPassword();
         this.emailAddress = account.getEmailAddress();
         this.SSL = account.isEncryption();
-        if(SSL) socket =(SSLSocketFactory.getDefault()).createSocket(this.smtpServer, port);
-        else socket = new Socket(this.smtpServer, port);
+        if(SSL=="1") socket =(SSLSocketFactory.getDefault()).createSocket(this.smtpServer, 465);
+        else socket = new Socket(this.smtpServer, 25);
 
     }
 
-    public void sendEmail(Email email) {
+    public void sendEmail(Outgoing Outgoing) {
         try {
 
             bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -88,15 +88,15 @@ public class SMTPClient {
             Thread.sleep(1000);
 
             // TO:<recipient>
-            System.out.println(" Client: RCPT TO:<"+email.getRecipient()+">");
-            sendData("RCPT TO:<" + email.getRecipient() + ">");
+            System.out.println(" Client: RCPT TO:<"+ Outgoing.getRecipient()+">");
+            sendData("RCPT TO:<" + Outgoing.getRecipient() + ">");
             Thread.sleep(1000);
 
             System.out.println(" Client: DATA");
             sendData("DATA");
             Thread.sleep(1000);
             // send email header, ending with a blank line
-            sendData("Subject: "+email.getSubject()+"\r\n");
+            sendData("Subject: "+ Outgoing.getSubject()+"\r\n");
             Thread.sleep(1000);
             /*//**//*//*TODO: add other headers
             C: From: "Bob Example" <bob@example.org>
@@ -106,7 +106,7 @@ public class SMTPClient {
             */
 
             // send plain text
-            sendData(email.getBody());
+            sendData(Outgoing.getBody());
             Thread.sleep(1000);
             //end signal
             System.out.println(" Client:. ");

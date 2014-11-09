@@ -20,14 +20,6 @@ public class InboxPage extends Page{
 
 
     public void verify() {
-        if(request.getSession() == null){
-            try{
-                response.sendRedirect("/");
-            }catch(IOException e){
-                e.printStackTrace();
-            }
-        }
-
         if(request.getSession().getAttribute("user")==null){
             try{
                 response.sendRedirect("/");

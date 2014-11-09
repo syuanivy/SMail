@@ -1,7 +1,7 @@
 package shuai.webmail.mail_services;
 
 import shuai.webmail.entities.Account;
-import shuai.webmail.entities.Email;
+import shuai.webmail.entities.Outgoing;
 
 import java.io.IOException;
 
@@ -10,18 +10,18 @@ import java.io.IOException;
  */
 public class Test {
     public static void main(String[] args) throws IOException, InterruptedException {
-        Account gmail = new Account("smtp.gmail.com", 465, "pop.gmail.com", 995, true, "syuanivy", "624426@ivy!!!", "syuanivy@gmail.com");
+        Account gmail = new Account("syuanivy@gmail.com","smtp.gmail.com", "465", "pop.gmail.com", "995", "1", "syuanivy", "624426@ivy!!!", "ivy");
 
-        Email email = new Email();
-        email.setSender("syuanivy@gmail.com;");
-        email.setRecipient("wangxitao_work@126.com ");
-        email.setSubject("Are you still at school?");
-        email.setBody("Sent from my SMTP :)");
+        Outgoing Outgoing = new Outgoing();
+        Outgoing.setSender("syuanivy@gmail.com;");
+        Outgoing.setRecipient("syuanivy@gmail.com");
+        Outgoing.setSubject("Open your eyes");
+        Outgoing.setBody("retest");
 
-      //  SMTPService newOutgoing = new SMTPService(email, gmail);
-       // newOutgoing.send();
-        POPService inbox = new POPService(gmail);
-        inbox.retrieve();
+        SMTPService newOutgoing = new SMTPService(Outgoing, gmail);
+        newOutgoing.send();
+        //POPService inbox = new POPService(gmail);
+        //inbox.retrieve();
     }
 
 }
