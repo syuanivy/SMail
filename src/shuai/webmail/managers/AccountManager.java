@@ -19,10 +19,10 @@ public class AccountManager {
         Account newaccount = new Account();
         newaccount.setEmailAddress(fields[0]);
         newaccount.setSmtpServer(fields[1]);
-        newaccount.setSmtpPort(fields[2]);
+        newaccount.setSmtpPort(Integer.parseInt(fields[2]));
         newaccount.setPopServer(fields[3]);
-        newaccount.setPopPort(fields[4]);
-      //  newaccount.setEncryption(fields[5]);
+        newaccount.setPopPort(Integer.parseInt(fields[4]));
+        newaccount.setEncryption(Integer.parseInt(fields[5]));
         newaccount.setUserName(fields[6]);
         newaccount.setPassword(fields[7]);
         newaccount.setLocalUser(fields[8]);
@@ -55,9 +55,9 @@ public class AccountManager {
 
         account.setEmailAddress(result.getString("email_address"));
         account.setSmtpServer(result.getString("smtp"));
-        account.setSmtpPort(result.getString("smtp_port"));
+        account.setSmtpPort(result.getInt("smtp_port"));
         account.setPopServer(result.getString("pop"));
-        account.setPopPort(result.getString("pop_port"));
+        account.setPopPort(result.getInt("pop_port"));
         account.setEncryption(result.getInt("ssl"));
         account.setUserName(result.getString("username"));
         account.setPassword(result.getString("password"));

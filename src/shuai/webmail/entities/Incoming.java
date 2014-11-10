@@ -9,32 +9,34 @@ public class Incoming {
     String recipient;
     String subject;
     String body;
-    String attached = "0";
-    String label = "0";
+    int attached = 0;
+    int label = 0;
     String time;
-    public Incoming(){}
-    public Incoming(String sender, String recipient, String subject, String body) {
+
+    public Incoming(String id, String sender, String recipient, String subject, String body) {
+        this.id = id;
         this.sender = sender;
         this.recipient = recipient;
         this.subject = subject;
         this.body = body;
     }
 
-
+    public String getID(){return id;}
     public String getSender(){return sender;}
     public String getRecipient(){return recipient;}
     public String getSubject() { return subject; }
     public String getBody() { return body; }
-    public String hasAttachement(){return attached;}
-    public String getLabel() { return label; }
+    public int hasAttachement(){return attached;}
+    public int getLabel() { return label; }
     public String getTime() { return time; }
 
+    public void setID(String ID){this.id = ID;}
     public void setSender(String sender){this.sender = sender;}
     public void setRecipient(String recipient){this.recipient = recipient;}
     public void setSubject(String subject) { this.subject =  subject; }
     public void setBody(String body) { this.body =  body; }
-    public void setAttachment(String attached) { this.attached =  attached; }
-    public void setLabel(String label) { this.label = label; }
+    public void setAttachment(int attached) { this.attached =  attached; }
+    public void setLabel(int label) { this.label = label; }
     public void setTime(String time) { this.time =  time; }
 
 }

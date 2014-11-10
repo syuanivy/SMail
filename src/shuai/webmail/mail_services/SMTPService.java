@@ -20,7 +20,7 @@ public class SMTPService {
     }
 
     public void send() throws IOException{
-        if(portVerified(465)){
+        if(portVerified(account.getSmtpPort())){
             SMTPClient client = new SMTPClient(account);
             client.sendEmail(Outgoing);
         } else {

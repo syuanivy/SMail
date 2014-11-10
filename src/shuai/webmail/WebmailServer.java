@@ -10,6 +10,7 @@ import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import shuai.webmail.processors.ComposeProcessor;
+import shuai.webmail.processors.FetchProcessor;
 import shuai.webmail.processors.LoginProcessor;
 import shuai.webmail.processors.RegisterProcessor;
 
@@ -37,6 +38,7 @@ public class WebmailServer {
         mapping.put("/compose", ComposePage.class);
         mapping.put("/composeprocessor", ComposeProcessor.class);
         mapping.put("/logout", LogoutPage.class);
+        mapping.put("/home/fetch", FetchProcessor.class);
 
 
 	}
@@ -59,8 +61,6 @@ public class WebmailServer {
 		context.setContextPath("/");
 		server.setHandler(context);
 
-        //context.addServlet(LoginServlet.class, "/login");
-        //context.addServlet(LoginResponseServlet.class, "/response");
 
 		// add the Dispatch Servlet at "/dynamic/*"
         ServletHolder holderDynamic = new ServletHolder("dynamic", DispatchServlet.class);

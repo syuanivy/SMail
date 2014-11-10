@@ -1,6 +1,8 @@
 package shuai.webmail.mail_services;
 
 import shuai.webmail.entities.Account;
+import shuai.webmail.entities.Incoming;
+import shuai.webmail.managers.EmailManager;
 
 import javax.net.ssl.SSLSocketFactory;
 import java.io.BufferedReader;
@@ -16,7 +18,7 @@ public class POPClient {
     private Socket socket;
 
     private String popServer;
-    private String port;
+    private int port;
     private int SSL;
     private String userName;
     private String password;
@@ -34,9 +36,9 @@ public class POPClient {
         this.emailAddress = account.getEmailAddress();
         this.SSL = account.isEncryption();
         //openssl s_client -connect mail.example.com:995
-        if(SSL==1) socket =(SSLSocketFactory.getDefault()).createSocket(this.popServer, 995); // TODO: PORTto be changed back to int
+        if(SSL==1) socket =(SSLSocketFactory.getDefault()).createSocket(this.popServer, port); // TODO: PORTto be changed back to int
         //telnet pop.163.com 110
-        else socket = new Socket(this.popServer, 110);
+        else socket = new Socket(this.popServer, port);
         this.text = "";
 
     }
@@ -96,6 +98,10 @@ public class POPClient {
 
             // Printout the incoming email
             System.out.println("text = "+text);
+            if(text != ""){
+                Incoming email = new Incoming("fakeID1","fakesender@gmail.com",this.emailAddress, "fake subject", text);
+                EmailManager.addIncoming(email);
+            }
 
 
         }catch(Exception e) {

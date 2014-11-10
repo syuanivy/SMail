@@ -4,6 +4,7 @@ import shuai.webmail.entities.Account;
 import shuai.webmail.entities.Outgoing;
 import shuai.webmail.mail_services.SMTPService;
 import shuai.webmail.managers.AccountManager;
+import shuai.webmail.managers.EmailManager;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,11 +31,13 @@ public class ComposeProcessor extends PostProcessor {
         request.send();
 
        //TODO: save outgoing emails in db.
-/*     addOutgoing(Outgoing email);
-       if (successful) email.sent= 1; // go to sent
-       else email.sent = 0; // go to draft
+/*
+       if (successfully sent) email.setSent(1); // go to sent
+       else email.setSent = 0; // go to draft
+       addSent(Outgoing email);
 */
-
+        email.setSent(1);
+        EmailManager.addOutgoing(email);
         response.sendRedirect("/home");
         }
 

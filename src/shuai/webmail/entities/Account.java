@@ -6,17 +6,17 @@ package shuai.webmail.entities;
 public class Account {
     private String emailAddress;
     private String smtpServer;
-    private String smtpPort;
+    private int smtpPort;
     private String popServer;
-    private String popPort;
-    int SSL;//TODO: boolean, by checkbox
+    private int popPort;
+    private int SSL;//TODO: boolean, by checkbox
     private String userName;
     private String password;
     private String localUser;
 
 
     public Account(){}
-    public Account(String email, String smtp, String smtpPort, String pop, String popPOrt,
+    public Account(String email, String smtp, int smtpPort, String pop, int popPOrt,
                    int SSL, String username, String password, String localUser){
         this.emailAddress= email;
         this.smtpServer = smtp;
@@ -34,8 +34,8 @@ public class Account {
     public void setSmtpServer(String smtpServer) {
         this.smtpServer = smtpServer;
     }
-    public String getSmtpPort() {return smtpPort;}
-    public void setSmtpPort(String port) {
+    public int getSmtpPort() {return smtpPort;}
+    public void setSmtpPort(int port) {
         this.smtpPort = port;
     }
 
@@ -43,8 +43,8 @@ public class Account {
     public void setPopServer(String popServer) {
         this.popServer = popServer;
     }
-    public String getPopPort() {return popPort;}
-    public void setPopPort(String port) {
+    public int getPopPort() {return popPort;}
+    public void setPopPort(int port) {
         this.popPort = port;
     }
 

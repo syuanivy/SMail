@@ -1,5 +1,6 @@
 package shuai.webmail.processors;
 
+import org.eclipse.jetty.server.Authentication;
 import shuai.webmail.entities.Account;
 import shuai.webmail.entities.User;
 import shuai.webmail.managers.AccountManager;
@@ -21,9 +22,13 @@ public class LoginProcessor extends PostProcessor {
     public void processPost() throws SQLException, IOException{
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        Boolean isUser = UserManager.isUser(username);
+        if (!isUser) {
+            response.sendRedirect("/"); //TODO: AJAX
+            return;
+        }
+
         Boolean success = UserManager.isPWCorrect(username, password);
-
-
         if (success) {
             User user = UserManager.checkUserInfo(username);
             Account account = AccountManager.getUserAccount(username);

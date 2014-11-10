@@ -2,9 +2,11 @@ home_searchrow(user) ::= <<
 
 <div class="row">
 				<div class="col-xs-2">
-					<button type="submit" class="btn btn-primary">
-						<span class="glyphicon glyphicon-refresh"></span> Refresh
-					</button>
+				    <form method ="post" action ="/home/fetch">
+					    <button type="submit" class="btn btn-primary" >
+						    <span class="glyphicon glyphicon-refresh"></span> Refresh
+					    </button>
+					</form>
 				</div>
 				<div class="col-xs-8">
 					<form class="form-inline">

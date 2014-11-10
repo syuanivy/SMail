@@ -18,7 +18,7 @@ public class POPService {
     }
 
     public void retrieve() throws IOException {
-        if(portVerified(995)){
+        if(portVerified(account.getPopPort())){
             POPClient client = new POPClient(account);
             client.retrieveEmail();
         } else {
