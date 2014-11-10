@@ -16,7 +16,7 @@ public class SMTPClient {
 
     private String smtpServer;
     private String port;
-    private String SSL;
+    private int SSL;
     private String userName;
     private String password;
     private String emailAddress;
@@ -31,7 +31,7 @@ public class SMTPClient {
         this.password = account.getPassword();
         this.emailAddress = account.getEmailAddress();
         this.SSL = account.isEncryption();
-        if(SSL=="1") socket =(SSLSocketFactory.getDefault()).createSocket(this.smtpServer, 465);
+        if(SSL==1) socket =(SSLSocketFactory.getDefault()).createSocket(this.smtpServer, 465);
         else socket = new Socket(this.smtpServer, 25);
 
     }

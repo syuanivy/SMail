@@ -2,8 +2,10 @@ package shuai.webmail.managers;
 
 import shuai.webmail.db_services.DBConnection;
 import shuai.webmail.entities.Account;
+import shuai.webmail.entities.User;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -20,7 +22,7 @@ public class AccountManager {
         newaccount.setSmtpPort(fields[2]);
         newaccount.setPopServer(fields[3]);
         newaccount.setPopPort(fields[4]);
-        newaccount.setEncryption(fields[5]);
+      //  newaccount.setEncryption(fields[5]);
         newaccount.setUserName(fields[6]);
         newaccount.setPassword(fields[7]);
         newaccount.setLocalUser(fields[8]);
@@ -42,14 +44,28 @@ public class AccountManager {
     }
     //TODO: UPDATE in sqlite
     public static Account updateAccount(){return null;}
-    String clause = "SELECT * FROM accounts VALUES WHERE ";
-//    PreparedStatement query = DBConnection.db.prepareStatement(clause);
-    //get account by localusername, we have one account per use for now
-    public static Account getUserAccount(String username) throws SQLException{
 
+    public static Account getUserAccount(String localUser) throws SQLException{
+        String clause = "SELECT * FROM accounts WHERE my_user= ?";
+        PreparedStatement query = DBConnection.db.prepareStatement(clause);
+        query.setString(1, localUser);
+        ResultSet result = query.executeQuery();
 
+        Account account= new Account();
 
-        return null;
+        account.setEmailAddress(result.getString("email_address"));
+        account.setSmtpServer(result.getString("smtp"));
+        account.setSmtpPort(result.getString("smtp_port"));
+        account.setPopServer(result.getString("pop"));
+        account.setPopPort(result.getString("pop_port"));
+        account.setEncryption(result.getInt("ssl"));
+        account.setUserName(result.getString("username"));
+        account.setPassword(result.getString("password"));
+        account.setLocalUser(result.getString("my_user"));
+
+        return account;
+
     }
+
 
 }

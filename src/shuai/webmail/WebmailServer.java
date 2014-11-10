@@ -9,6 +9,7 @@ import org.eclipse.jetty.server.handler.RequestLogHandler;
 import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import shuai.webmail.processors.ComposeProcessor;
 import shuai.webmail.processors.LoginProcessor;
 import shuai.webmail.processors.RegisterProcessor;
 
@@ -34,6 +35,7 @@ public class WebmailServer {
         mapping.put("/inbox", InboxPage.class);
         mapping.put("/home", InboxPage.class);
         mapping.put("/compose", ComposePage.class);
+        mapping.put("/composeprocessor", ComposeProcessor.class);
         mapping.put("/logout", LogoutPage.class);
 
 

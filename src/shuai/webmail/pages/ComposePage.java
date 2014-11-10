@@ -1,6 +1,7 @@
 package shuai.webmail.pages;
 
 import org.stringtemplate.v4.ST;
+import shuai.webmail.entities.Account;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,15 +16,8 @@ public class ComposePage extends Page{
     }
 
     public void verify() {
-        if(request.getSession() == null){
-            try{
-                response.sendRedirect("/");
-            }catch(IOException e){
-                e.printStackTrace();
-            }
-        }
 
-        if(request.getSession().getAttribute("user") == null){
+        if(request.getSession().getAttribute("account") == null){
             try{
                 response.sendRedirect("/");
             }catch(IOException e){
@@ -35,7 +29,14 @@ public class ComposePage extends Page{
 
     @Override
     public ST body() {
-        return templates.getInstanceOf("compose");
+
+        Account account = (Account) request.getSession().getAttribute("account");
+        String sender = account.getEmailAddress();
+        String user = account.getLocalUser();
+        ST st = templates.getInstanceOf("compose");
+        st.add("sender", sender);
+        st.add("user", user);
+        return st;
     }
 
     @Override

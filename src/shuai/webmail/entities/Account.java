@@ -9,7 +9,7 @@ public class Account {
     private String smtpPort;
     private String popServer;
     private String popPort;
-    private String SSL;//TODO: boolean, by checkbox
+    int SSL;//TODO: boolean, by checkbox
     private String userName;
     private String password;
     private String localUser;
@@ -17,7 +17,7 @@ public class Account {
 
     public Account(){}
     public Account(String email, String smtp, String smtpPort, String pop, String popPOrt,
-                   String SSL, String username, String password, String localUser){
+                   int SSL, String username, String password, String localUser){
         this.emailAddress= email;
         this.smtpServer = smtp;
         this.smtpPort = smtpPort;
@@ -48,10 +48,10 @@ public class Account {
         this.popPort = port;
     }
 
-    public String isEncryption() {
+    public int isEncryption() {
         return SSL;
     }
-    public void setEncryption(String isEncrypted) {
+    public void setEncryption(int isEncrypted) {
         this.SSL = isEncrypted;
     }
 

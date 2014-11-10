@@ -1,6 +1,8 @@
 package shuai.webmail.processors;
 
 import shuai.webmail.entities.Account;
+import shuai.webmail.entities.Outgoing;
+import shuai.webmail.mail_services.SMTPService;
 import shuai.webmail.managers.AccountManager;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,20 +21,21 @@ public class ComposeProcessor extends PostProcessor {
 
     @Override
     public void processPost() throws SQLException, IOException {
+       Account account = (Account) request.getSession().getAttribute("account");
+       String[] outgoingFields = {account.getEmailAddress(),request.getParameter("recipient"),
+                request.getParameter("subject"),request.getParameter("body")};
 
-      /*  Account account = (Account) request.getSession().getAttribute("account");
-        String[] outgoingFields = {request.getParameter("sender"),request.getParameter("recipient"),
-                request.getParameter("subject"),request.getParameter("body");
+        Outgoing email = new Outgoing(outgoingFields[0], outgoingFields[1],outgoingFields[2],outgoingFields[3]);
+        SMTPService request = new SMTPService(email, account);
+        request.send();
 
+       //TODO: save outgoing emails in db.
+/*     addOutgoing(Outgoing email);
+       if (successful) email.sent= 1; // go to sent
+       else email.sent = 0; // go to draft
+*/
 
-
-
-
-        Account newaccount = AccountManager.addAccount(accountFields);
-        request.getSession().setAttribute("user", newuser);*//*
-        request.getSession().setAttribute("account", newaccount);
-        response.sendRedirect("/welcome");*/
-
+        response.sendRedirect("/home");
         }
 
 

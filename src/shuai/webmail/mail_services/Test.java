@@ -10,7 +10,7 @@ import java.io.IOException;
  */
 public class Test {
     public static void main(String[] args) throws IOException, InterruptedException {
-        Account gmail = new Account("syuanivy@gmail.com","smtp.gmail.com", "465", "pop.gmail.com", "995", "1", "syuanivy", "624426@ivy!!!", "ivy");
+        Account gmail = new Account("syuanivy@gmail.com","smtp.gmail.com", "465", "pop.gmail.com", "995", 1, "syuanivy", "624426@ivy!!!", "ivy");
 
         Outgoing Outgoing = new Outgoing();
         Outgoing.setSender("syuanivy@gmail.com;");

@@ -1,5 +1,8 @@
 package shuai.webmail.processors;
 
+import shuai.webmail.entities.Account;
+import shuai.webmail.entities.User;
+import shuai.webmail.managers.AccountManager;
 import shuai.webmail.managers.UserManager;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,8 +23,12 @@ public class LoginProcessor extends PostProcessor {
         String password = request.getParameter("password");
         Boolean success = UserManager.isPWCorrect(username, password);
 
+
         if (success) {
-            request.getSession().setAttribute("user", UserManager.checkUserInfo(username));
+            User user = UserManager.checkUserInfo(username);
+            Account account = AccountManager.getUserAccount(username);
+            request.getSession().setAttribute("user", user);
+            request.getSession().setAttribute("account", account);
             response.sendRedirect("/inbox");
         } else {
             request.setAttribute("error", "Unknown user, please try again");

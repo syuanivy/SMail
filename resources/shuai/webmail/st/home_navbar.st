@@ -1,4 +1,4 @@
-home_navbar(user) ::= <<
+home_navbar(account) ::= <<
 
 	<!-- Brand and toggle get grouped for better mobile display -->
 	<div class="container">
@@ -9,7 +9,7 @@ home_navbar(user) ::= <<
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="#">Hello, $user$</a>
+			<a class="navbar-brand" href="#">$account$</a>
 		</div>
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse" id="navbarCollapse">

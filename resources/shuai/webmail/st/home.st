@@ -1,7 +1,7 @@
-home(user) ::= <<
+home(user, account) ::= <<
 
 <nav id="myNavbar" class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
-  $user:home_navbar()$
+  $account:home_navbar()$
 </nav>
 
 <br>
