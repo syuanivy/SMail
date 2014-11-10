@@ -6,7 +6,7 @@ home_leftsidebar(user) ::= <<
             </a>
 
 			<div class="list-group">
-				<a href="/compose" class="list-group-item active">
+				<a href="#" class="list-group-item active" data-toggle="modal" data-target="#modalCompose">
 					<span class="glyphicon glyphicon-pencil"></span> Compose
 				</a>
 				<a href="#" class="list-group-item">

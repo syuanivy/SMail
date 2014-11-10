@@ -34,6 +34,9 @@ home(user, account) ::= <<
 	</div>
 </div>
 
+<div class="modal fade" id="modalCompose">
+    $account:compose_window()$
+</div><!-- /.modal compose message -->
 
 
 >>
