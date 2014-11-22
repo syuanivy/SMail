@@ -4,12 +4,13 @@ import shuai.webmail.entities.Account;
 import shuai.webmail.entities.Outgoing;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 /**
  * Created by ivy on 11/4/14.
  */
 public class Test {
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) throws IOException, InterruptedException,SQLException {
         Account gmail = new Account("syuanivy@gmail.com","smtp.gmail.com", 465, "pop.gmail.com", 995, 1, "syuanivy", "624426@ivy!!!", "ivy");
 
 

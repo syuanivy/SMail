@@ -3,6 +3,7 @@ package shuai.webmail.mail_services;
 import shuai.webmail.entities.Account;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 /**
  * Created by ivy on 11/5/14.
@@ -17,7 +18,7 @@ public class POPService {
         this.account = account;
     }
 
-    public void retrieve() throws IOException,InterruptedException {
+    public void retrieve() throws IOException,InterruptedException,SQLException{
         if(portVerified(account.getPopPort())){
             POPClient client = new POPClient(account);
             client.retrieveAll();

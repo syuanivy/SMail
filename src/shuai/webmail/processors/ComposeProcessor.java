@@ -21,23 +21,22 @@ public class ComposeProcessor extends PostProcessor {
     }
 
     @Override
-    public void processPost() throws SQLException, IOException {
+    public void processPost() throws SQLException, IOException{
        Account account = (Account) request.getSession().getAttribute("account");
+       if(account == null){
+           response.sendRedirect("/login");
+           return;
+       }
+
        String[] outgoingFields = {account.getEmailAddress(),request.getParameter("recipient"),
                 request.getParameter("subject"),request.getParameter("body")};
-
         Outgoing email = new Outgoing(outgoingFields[0], outgoingFields[1],outgoingFields[2],outgoingFields[3]);
         SMTPService request = new SMTPService(email, account);
-        request.send();
-
-       //TODO: save outgoing emails in db.
-/*
-       if (successfully sent) email.setSent(1); // go to sent
-       else email.setSent = 0; // go to draft
-       addSent(Outgoing email);
-*/
-        email.setSent(1);
-        EmailManager.addOutgoing(email);
+        try {
+            request.send();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         response.sendRedirect("/home");
         }
 

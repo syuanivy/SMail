@@ -21,6 +21,10 @@ public class FetchProcessor extends PostProcessor {
     @Override
     public void processPost() throws SQLException, IOException {
         Account account = (Account) request.getSession().getAttribute("account");
+        if(account == null){
+            response.sendRedirect("/login");
+            return;
+        }
         POPService request = new POPService(account);
         try {
             request.retrieve();

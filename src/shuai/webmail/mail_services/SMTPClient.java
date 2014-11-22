@@ -2,133 +2,116 @@ package shuai.webmail.mail_services;
 
 import shuai.webmail.entities.Account;
 import shuai.webmail.entities.Outgoing;
+import shuai.webmail.managers.EmailManager;
 import sun.misc.BASE64Encoder;
 
 import javax.net.ssl.SSLSocketFactory;
 import java.io.*;
 import java.net.Socket;
+import java.sql.SQLException;
 
 /**
  * Created by ivy on 11/4/14.
  */
 public class SMTPClient {
     private Socket socket;
+    private BufferedReader in;
+    private DataOutputStream out;
+    private Account account;
+    private Outgoing email;
 
-    private String smtpServer;
-    private int port;
-    private int SSL;
-    private String userName;
-    private String password;
-    private String emailAddress;
+    public SMTPClient(Account account, Outgoing email) throws IOException,InterruptedException{
+        this.account = account;
+        this.email = email;
+        this.socket = connectSMTP(account);
+        this.in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        this.out = new DataOutputStream(socket.getOutputStream());
+        verify(in.readLine(), "220");
+        handShake();
+        login();
 
-    private BufferedReader bufferedReader;
-    private DataOutputStream outputStream;
 
-    public SMTPClient(Account account) throws IOException{
-        this.smtpServer = account.getSmtpServer();
-        this.port = account.getSmtpPort();
-        this.userName = account.getUserName();
-        this.password = account.getPassword();
-        this.emailAddress = account.getEmailAddress();
-        this.SSL = account.isEncryption();
-        if(SSL==1) socket =(SSLSocketFactory.getDefault()).createSocket(this.smtpServer, port);
-        else socket = new Socket(this.smtpServer, port);
 
     }
+    public Socket connectSMTP(Account account) throws IOException{
+        if(account.isEncryption()==1) socket =(SSLSocketFactory.getDefault()).createSocket(account.getSmtpServer(), account.getSmtpPort());
+        else socket = new Socket(account.getSmtpServer(), account.getSmtpPort());
+        return socket;
+    }
 
-    public void sendEmail(Outgoing Outgoing) {
-        try {
+    public boolean verify(String msgLine, String expectedResponse) {
+        if(!msgLine.contains(expectedResponse)){
+            return false;
+        }
+        return true;
+    }
 
-            bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            outputStream = new DataOutputStream(socket.getOutputStream());
-            Thread job = new Thread(new Runnable(){
-                public void run(){
-                    try {
-                        String msgFromServer;
-                        while ((msgFromServer = (bufferedReader.readLine())) != null) {
-                            System.out.println(" SMTP server: " + msgFromServer);
-                        }
-                    }catch (Exception e){
-                        System.out.println(" The reader has a problem.");
-                        try {
-                            bufferedReader.close();
-                            outputStream.close();
-                            socket.close();
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
-                    }
-                }
-            });
-            job.start();
+    public void send(Outgoing email) throws InterruptedException, IOException,SQLException{
+        sendFromAccount();
+        sendToAddresses();
+        sendEmail();
+        quitAndClose();
+    }
 
-            Thread.sleep(1000);
-            System.out.println("HELO "+this.smtpServer);
-            sendData("HELO "+this.smtpServer);
-            Thread.sleep(1000);
-
-            // AUTH LOGIN
-            System.out.println(" Client: AUTH LOGIN");
-            sendData("AUTH LOGIN");
-            Thread.sleep(1000);
-
-            // send user name
-            System.out.println("Client: "+new BASE64Encoder().encode(this.userName.getBytes()));
-            sendData(new BASE64Encoder().encode(this.userName.getBytes()));
-            Thread.sleep(1000);
-
-            // send password
-            System.out.println("Client: "+new BASE64Encoder().encode(this.password.getBytes()));
-            sendData(new BASE64Encoder().encode(this.password.getBytes()));
-            Thread.sleep(1000);
-
-            //FROM:<sender>
-            System.out.println("Client: MAIL FROM:<" + this.emailAddress + ">");
-            sendData("MAIL FROM:<" + this.emailAddress + ">");
-            Thread.sleep(1000);
-
-            // TO:<recipient>
-            System.out.println(" Client: RCPT TO:<"+ Outgoing.getRecipient()+">");
-            sendData("RCPT TO:<" + Outgoing.getRecipient() + ">");
-            Thread.sleep(1000);
-
-            System.out.println(" Client: DATA");
-            sendData("DATA");
-            Thread.sleep(1000);
-            // send email header, ending with a blank line
-
-            //send from
-            sendData("From: "+Outgoing.getSender());
-            Thread.sleep(1000);
-            //send to
-            sendData("To: "+Outgoing.getRecipient());
-            Thread.sleep(1000);
-            //send subject
-            sendData("Subject: "+ Outgoing.getSubject()+"\r\n");
-            Thread.sleep(1000);
-
-
-            // send plain text
-            sendData(Outgoing.getBody());
-            Thread.sleep(1000);
-            //end signal
-            System.out.println(" Client:. ");
-            sendData(".");
-            Thread.sleep(1000);
-            // QUIT
-            System.out.println(" Client: QUIT");
-            sendData("QUIT");
-
-        }catch(Exception e) {
+    private void quitAndClose() throws InterruptedException, IOException {
+        sendData("QUIT");
+        verify(in.readLine(),"221");
+        try{
+            in.close();
+            out.close();
+            socket.close();
+        }catch(Exception e){
             e.printStackTrace();
         }
-
     }
+
+    private void sendEmail() throws SQLException, InterruptedException,IOException {
+        sendData("DATA");
+        verify(in.readLine(), "354");
+        // send email header, ending with a blank line
+        sendData("From: "+email.getSender());
+        sendData("To: "+email.getRecipient());
+        sendData("Subject: "+ email.getSubject()+"\r\n");
+        sendData(email.getBody());
+        sendData(".");
+        boolean sent = verify(in.readLine(), "250");
+        if(sent==true) {
+            email.setSent(1);
+            EmailManager.addOutgoing(email);
+        }
+    }
+
+    private void sendToAddresses() throws InterruptedException, IOException {
+        sendData("RCPT TO:<" + email.getRecipient() + ">");
+        verify(in.readLine(), "250");
+    }
+
+    private void sendFromAccount() throws InterruptedException, IOException {
+        sendData("MAIL FROM:<" + account.getEmailAddress() + ">");
+        verify(in.readLine(), "250");
+    }
+
+    private void login() throws InterruptedException, IOException {
+        sendData("AUTH LOGIN");
+        verify(in.readLine(), "334");
+        // send user name
+        sendData(new BASE64Encoder().encode(account.getUserName().getBytes()));
+        verify(in.readLine(), "334");
+        // send password
+        sendData(new BASE64Encoder().encode(account.getPassword().getBytes()));
+        verify(in.readLine(), "235");
+    }
+
+    private void handShake() throws InterruptedException, IOException {
+        sendData("HELO "+account.getSmtpServer());
+        verify(in.readLine(),"250");
+    }
+
 
     private void sendData(String data) throws InterruptedException {
         try {
-            outputStream.writeBytes(data + "\r\n");
-            outputStream.flush();
+            out.writeBytes(data + "\r\n");
+            out.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
