@@ -22,7 +22,11 @@ public class FetchProcessor extends PostProcessor {
     public void processPost() throws SQLException, IOException {
         Account account = (Account) request.getSession().getAttribute("account");
         POPService request = new POPService(account);
-        request.retrieve();
+        try {
+            request.retrieve();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         response.sendRedirect("/home");
     }
 

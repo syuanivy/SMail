@@ -17,10 +17,10 @@ public class POPService {
         this.account = account;
     }
 
-    public void retrieve() throws IOException {
+    public void retrieve() throws IOException,InterruptedException {
         if(portVerified(account.getPopPort())){
             POPClient client = new POPClient(account);
-            client.retrieveEmail();
+            client.retrieveAll();
         } else {
             System.err.println("Unknown POP port = " + account.getPopPort());
         }

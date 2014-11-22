@@ -13,6 +13,9 @@ public class Incoming {
     int label = 0;
     String time;
 
+    public Incoming(){
+    }
+
     public Incoming(String id, String sender, String recipient, String subject, String body) {
         this.id = id;
         this.sender = sender;

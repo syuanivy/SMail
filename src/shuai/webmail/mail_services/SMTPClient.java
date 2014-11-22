@@ -96,14 +96,17 @@ public class SMTPClient {
             sendData("DATA");
             Thread.sleep(1000);
             // send email header, ending with a blank line
+
+            //send from
+            sendData("From: "+Outgoing.getSender());
+            Thread.sleep(1000);
+            //send to
+            sendData("To: "+Outgoing.getRecipient());
+            Thread.sleep(1000);
+            //send subject
             sendData("Subject: "+ Outgoing.getSubject()+"\r\n");
             Thread.sleep(1000);
-            /*//**//*//*TODO: add other headers
-            C: From: "Bob Example" <bob@example.org>
-            C: To: "Alice Example" <alice@example.com>
-            C: Cc: theboss@example.com
-            C: Date: Tue, 15 January 2008 16:02:43 -0500
-            */
+
 
             // send plain text
             sendData(Outgoing.getBody());
