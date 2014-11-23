@@ -1,5 +1,6 @@
 package shuai.webmail;
 
+import org.eclipse.jetty.server.handler.HandlerCollection;
 import shuai.webmail.db_services.DBConnection;
 import shuai.webmail.misc.STListener;
 import shuai.webmail.pages.*;
@@ -55,11 +56,15 @@ public class WebmailServer {
 
         //Create a server
         Server server = new Server(8080);
+/*        HandlerCollection handlers = new HandlerCollection();
+        handlers.setServer(server);*/
+
 
 		//set the context handler for the server, "/"
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
 		context.setContextPath("/");
 		server.setHandler(context);
+     //   handlers.addHandler(context);
 
 
 		// add the Dispatch Servlet at "/dynamic/*"
@@ -94,6 +99,8 @@ public class WebmailServer {
 		RequestLogHandler requestLogHandler = new RequestLogHandler();
 		requestLogHandler.setRequestLog(requestLog);
 		requestLogHandler.setServer(server);
+/*        handlers.addHandler(requestLogHandler);*/
+
         //
 
         Connection db = DBConnection.getDBConnection();

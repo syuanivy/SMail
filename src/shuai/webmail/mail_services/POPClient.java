@@ -105,53 +105,17 @@ public class POPClient {
             newMail.setID(UID);
             newMail.setTime(message.getSentDate().toString());
             newMail.setSubject(message.getSubject());
-            Address[] senders = message.getFrom();
-            StringBuffer senderString = new StringBuffer();
-            for (Address sender : senders) {
-                senderString.append("," + sender.toString());
 
-            }
-            Address[] recipients = message.getRecipients(Message.RecipientType.TO);
-            StringBuffer recipientString = new StringBuffer();
-            for (Address recipient : recipients) {
-                recipientString.append("," + recipient.toString());
-            }
-            newMail.setSender(senderString.toString().substring(1));
-            newMail.setRecipient(recipientString.toString().substring(1));
+            String senderlist = getSenderList(message);
+            String recipientlist = getRecipientList(message);
+            newMail.setSender(senderlist);
+            newMail.setRecipient(recipientlist);
+
             String contentType = message.getContentType();
+            String body = getBodyAttachment(message, contentType)[0];
+            String attachment = getBodyAttachment(message, contentType)[1];
 
-            String messageContent = "";
-            String attachment = "";
-
-            if (contentType.contains("multipart")) {
-                // content may contain attachments
-                Multipart multiPart = (Multipart) message.getContent();
-                int numberOfParts = multiPart.getCount();
-                for (int Count = 0; Count < numberOfParts; Count++) {
-                    MimeBodyPart part = (MimeBodyPart) multiPart.getBodyPart(Count);
-                    if (Part.ATTACHMENT.equalsIgnoreCase(part.getDisposition())) {
-                        // this part is attachment
-                        String fileName = part.getFileName();
-                        attachment += fileName + ", ";
-                        part.saveFile("" + File.separator + fileName);
-                    } else {
-                        // this part may be the message content
-                        messageContent = part.getContent().toString();
-                    }
-                }
-
-                if (attachment.length() > 1) {
-                    attachment = attachment.substring(0, attachment.length() - 2);
-                }
-            } else if (contentType.contains("text/plain")
-                    || contentType.contains("text/html")) {
-                Object body = message.getContent();
-                if (body != null) {
-                    messageContent = body.toString();
-                }
-            }
-
-            newMail.setBody(messageContent);
+            newMail.setBody(body);
             EmailManager.addIncoming(newMail);
             return newMail;
         } catch (IOException e) {
@@ -163,6 +127,64 @@ public class POPClient {
 
     }
 
+    private String[] getBodyAttachment(MimeMessage message, String contentType) throws IOException, MessagingException {
+        String body = "";
+        String attachment = "";
+
+        if (contentType.contains("multipart")) {
+            // content may contain attachments
+            Multipart multiPart = (Multipart) message.getContent();
+            int numberOfParts = multiPart.getCount();
+            for (int Count = 0; Count < numberOfParts; Count++) {
+                MimeBodyPart part = (MimeBodyPart) multiPart.getBodyPart(Count);
+                if (Part.ATTACHMENT.equalsIgnoreCase(part.getDisposition())) {
+                    // this part is attachment
+                    String fileName = part.getFileName();
+                    attachment += fileName + ", ";
+                    part.saveFile("" + File.separator + fileName);
+                } else {
+                    // this part may be the message content
+                    body = part.getContent().toString();
+                }
+            }
+
+            if (attachment.length() > 1) {
+                attachment = attachment.substring(0, attachment.length() - 2);
+            }
+        } else if (contentType.contains("text/plain")
+                || contentType.contains("text/html")) {
+            Object Body = message.getContent();
+            if (Body != null) {
+                body = Body.toString();
+            }
+        }
+
+        String[] bodyAttachement = new String[2];
+        bodyAttachement[0]=body;
+        bodyAttachement[1]=attachment;
+        return bodyAttachement;
+    }
+
+    private String getRecipientList(MimeMessage message) throws MessagingException {
+        Address[] recipients = message.getRecipients(Message.RecipientType.TO);
+        if (recipients==null) return "";
+        StringBuffer recipientString = new StringBuffer();
+        for (Address recipient : recipients) {
+            recipientString.append("," + recipient.toString());
+        }
+        return recipientString.toString().substring(1);
+    }
+
+    private String getSenderList(MimeMessage message) throws MessagingException {
+        Address[] senders = message.getFrom();
+        if (senders==null) return "";
+        StringBuffer senderString = new StringBuffer();
+        for (Address sender : senders) {
+            senderString.append("," + sender.toString());
+
+        }
+        return senderString.toString().substring(1);
+    }
 
 
 }
