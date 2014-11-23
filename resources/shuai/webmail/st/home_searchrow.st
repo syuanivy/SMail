@@ -1,4 +1,4 @@
-home_searchrow(user) ::= <<
+home_searchrow(account) ::= <<
 
 <div class="row">
 				<div class="col-xs-2">

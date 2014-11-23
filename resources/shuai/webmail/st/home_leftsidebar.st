@@ -1,4 +1,4 @@
-home_leftsidebar(user) ::= <<
+home_leftsidebar(account) ::= <<
 
      <div class="col-xs-2">
             <a href="#" class="thumbnail">

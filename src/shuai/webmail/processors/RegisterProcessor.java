@@ -23,7 +23,7 @@ public class RegisterProcessor extends PostProcessor{
 
     @Override
     public void processPost() throws SQLException, IOException {
-        //All fields are required for now, which is enforced by the UI.
+        //All fields are required, which is enforced by the UI.
         String[] userFields = {request.getParameter("username"),request.getParameter("password"),request.getParameter("retype")};
         String[] accountFields = {request.getParameter("email"),request.getParameter("smtp"),
                 request.getParameter("smtpPort"),request.getParameter("pop"),request.getParameter("popPort"),
@@ -32,12 +32,11 @@ public class RegisterProcessor extends PostProcessor{
 
 
         //TODO: AJAX client side: check existing user and password1 == password2;
-        Boolean exist = UserManager.isUser(userFields[0]);
+        User checkuser = UserManager.checkUserInfo(userFields[0]);
+        Boolean exist = (checkuser != null);
         Boolean match = userFields[1].equals(userFields[2]);
 
         //TODO: AJAX client side: check all fields are filled;
-
-
 
         if (!exist & match) {
             User newuser = UserManager.addUser(userFields);

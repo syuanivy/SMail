@@ -1,7 +1,7 @@
-home(user, account) ::= <<
+home(user, account, center) ::= <<
 
 <nav id="myNavbar" class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
-  $account:home_navbar()$
+  $user:home_navbar()$
 </nav>
 
 <br>
@@ -15,11 +15,11 @@ home(user, account) ::= <<
 <div class="container">
 	<div class="row">
 
-		$user:home_leftsidebar()$
+		$account:home_leftsidebar()$
 
 		<br>
 
-		$user:home_center()$
+		$center$
 	</div>
 </div>
 

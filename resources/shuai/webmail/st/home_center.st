@@ -1,10 +1,10 @@
-home_center(user) ::= <<
+home_center(account,table) ::= <<
 
 <div class="col-xs-10">
-			$user:home_searchrow()$
+			$account:home_searchrow()$
 
 			<br>
 
-			$user:home_tabledisplay()$
+			$table$
 </div>
 >>

@@ -4,14 +4,14 @@ package shuai.webmail.entities;
  * Created by ivy on 11/8/14.
  */
 public class Incoming {
-    String id;
-    String sender;
-    String recipient;
-    String subject;
-    String body;
+    public String id;
+    public String sender;
+    public String recipient;
+    public String subject;
+    public String body;
     int attached = 0;
     int label = 0;
-    String time;
+    public String time;
 
     public Incoming(){
     }

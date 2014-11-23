@@ -1,13 +1,13 @@
 package shuai.webmail.managers;
 
-import shuai.webmail.db_services.DBConnection;
+
+import shuai.webmail.entities.Account;
 import shuai.webmail.entities.Incoming;
 import shuai.webmail.entities.Outgoing;
-
-import javax.swing.*;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import java.util.ArrayList;
 import static shuai.webmail.db_services.DBConnection.*;
 
 /**
@@ -45,7 +45,24 @@ public class EmailManager {
     }*/
 
 
-    //check if incoming email has already been fetched
+    public static ArrayList<Incoming> inboxMails(Account account) throws SQLException{
+        String clause = "SELECT sender, subject, body, time FROM incoming WHERE recipient = ? ORDER BY time DESC";
+        PreparedStatement query = db.prepareStatement(clause);
+        query.setString(1, account.getEmailAddress());
+        ResultSet result = query.executeQuery();
+        ArrayList<Incoming> inboxMails = new ArrayList<Incoming>();
+        while (result.next()){
+            Incoming mail = new Incoming();
+            mail.setSender(result.getString(1));
+            mail.setSubject(result.getString(2));
+            mail.setBody(result.getString(3));
+            mail.setTime(result.getString(4));
+            inboxMails.add(mail);
+        }
+        result.close();
+        return inboxMails;
+
+    }
 
 
 }

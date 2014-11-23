@@ -1,8 +1,8 @@
 package shuai.webmail.managers;
-
-import shuai.webmail.db_services.DBConnection;
+import static shuai.webmail.db_services.DBConnection.*;
 import shuai.webmail.entities.User;
-
+import sun.misc.BASE64Encoder;
+import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,32 +15,24 @@ public class UserManager {
     //attempt to find user information in db
     public static ResultSet findUser(String name) throws SQLException {
         String clause = "SELECT * FROM users WHERE username= ?";
-        PreparedStatement query = DBConnection.db.prepareStatement(clause);
+        PreparedStatement query = db.prepareStatement(clause);
         query.setString(1, name);
         ResultSet result = query.executeQuery();
         return result;
     }
 
-    //Check if username exists in the database
-    //TODO: AJAX
-    public static boolean isUser(String name) throws SQLException {
-        ResultSet result = findUser(name);
-        return result.next();
-    }
-
     //Check if password matches the username, the username has been confirmed to be existing user
-    public static boolean isPWCorrect(String name, String password) throws SQLException {
-        ResultSet result = findUser(name);
-        if(password.equals(result.getString("password"))) return true;
+    public static boolean isPWCorrect(String pwInput, String pwCoded) throws SQLException, IOException {
+        if(new BASE64Encoder().encode(pwInput.getBytes()).equals(pwCoded)) return true;
         else return false;
     }
 
     //Register a new user, the username has been confirmed to be non-existing//
-    public static  User addUser(String[] userFields) throws SQLException{
+    public static  User addUser(String[] userFields) throws SQLException,IOException{
         String clause = "INSERT INTO users(username, password) VALUES(?, ?)";
-        PreparedStatement query = DBConnection.db.prepareStatement(clause);
+        PreparedStatement query = db.prepareStatement(clause);
         query.setString(1, userFields[0]);//String name
-        query.setString(2, userFields[1]);// String password
+        query.setString(2, userFields[1]);// encoded password
         int result = query.executeUpdate();
         if(result == 1){
             return checkUserInfo(userFields[0]);
@@ -50,10 +42,11 @@ public class UserManager {
     }
 
     //Check userinfo by username
-    public static User checkUserInfo(String name) throws SQLException{
+    public static User checkUserInfo(String name) throws SQLException, IOException{
         ResultSet result = findUser(name);
+        if (!result.next()) return null; //not a registered user
         User checkuser= new User();
-        checkuser.setId(result.getInt("id")); //now it is the PRIMARY KEY in the users table
+        checkuser.setId(result.getInt("id"));
         checkuser.setName(result.getString("username"));
         checkuser.setPassword(result.getString("password"));
         return checkuser;

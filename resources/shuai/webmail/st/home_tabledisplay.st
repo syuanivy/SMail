@@ -1,4 +1,4 @@
-home_tabledisplay(user) ::= <<
+home_tabledisplay(inbox) ::= <<
 
 <div class="panel panel-primary">
 				<!--
@@ -11,31 +11,15 @@ home_tabledisplay(user) ::= <<
 					<table class="table table-hover">
 						<thead>
 							<tr>
-								<th>Datetime</th>
 								<th>Sender</th>
 								<th>Subject</th>
 								<th>Message</th>
+								<th>Datetime</th>
 							</tr>
 						</thead>
+
 						<tbody>
-							<tr>
-								<td>2014-11-2 10:30am</td>
-								<td>Su Xue</td>
-								<td>A Test</td>
-								<td>"Hello world..."</td>
-							</tr>
-							<tr>
-								<td>2014-10-30 9:30am</td>
-								<td>Chao Chen</td>
-								<td>My Birthday</td>
-								<td>"Wish me happy birthday..."</td>
-							</tr>
-							<tr>
-								<td>2014-10-24 6:09pm</td>
-								<td>Ye Liyang</td>
-								<td>My Birthday</td>
-								<td>"I want to stay in lab..."</td>
-							</tr>
+							$inbox:tablerow()$
 						</tbody>
 					</table>
 				<div>
