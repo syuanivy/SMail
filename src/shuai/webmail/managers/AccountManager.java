@@ -3,6 +3,7 @@ package shuai.webmail.managers;
 import shuai.webmail.db_services.DBConnection;
 import shuai.webmail.entities.Account;
 import shuai.webmail.entities.User;
+import sun.misc.BASE64Encoder;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,7 +25,7 @@ public class AccountManager {
         newaccount.setPopPort(Integer.parseInt(fields[4]));
         newaccount.setEncryption(Integer.parseInt(fields[5]));
         newaccount.setUserName(fields[6]);
-        newaccount.setPassword(fields[7]);
+        newaccount.setPassword(new BASE64Encoder().encode(fields[7].getBytes()));
         newaccount.setLocalUser(fields[8]);
 
         String clause = "INSERT INTO accounts VALUES(?,?,?,?,?,?,?,?,?)";
@@ -36,7 +37,7 @@ public class AccountManager {
         query.setString(5, fields[4]);
         query.setString(6, fields[5]);
         query.setString(7, fields[6]);
-        query.setString(8, fields[7]);
+        query.setString(8, new BASE64Encoder().encode(fields[7].getBytes()));
         query.setString(9, fields[8]);
 
         query.executeUpdate();

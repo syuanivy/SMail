@@ -95,10 +95,10 @@ public class SMTPClient {
         sendData("AUTH LOGIN");
         verify(in.readLine(), "334");
         // send user name
-        sendData(new BASE64Encoder().encode(account.getUserName().getBytes()));
+        sendData(new BASE64Encoder().encode(account.getUserName().getBytes()));//encode username
         verify(in.readLine(), "334");
         // send password
-        sendData(new BASE64Encoder().encode(account.getPassword().getBytes()));
+        sendData(account.getPassword());//already encoded in db
         verify(in.readLine(), "235");
     }
 

@@ -32,7 +32,7 @@ public class UserManager {
         String clause = "INSERT INTO users(username, password) VALUES(?, ?)";
         PreparedStatement query = db.prepareStatement(clause);
         query.setString(1, userFields[0]);//String name
-        query.setString(2, userFields[1]);// encoded password
+        query.setString(2, new BASE64Encoder().encode(userFields[1].getBytes()));// encoded password
         int result = query.executeUpdate();
         if(result == 1){
             return checkUserInfo(userFields[0]);

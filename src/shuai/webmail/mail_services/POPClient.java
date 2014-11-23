@@ -3,6 +3,7 @@ package shuai.webmail.mail_services;
 import shuai.webmail.entities.Account;
 import shuai.webmail.entities.Incoming;
 import shuai.webmail.managers.EmailManager;
+import sun.misc.BASE64Decoder;
 
 import javax.mail.*;
 import javax.mail.internet.MimeBodyPart;
@@ -44,7 +45,7 @@ public class POPClient {
     private void login() throws InterruptedException,IOException{
         sendData("USER "+account.getUserName());
         verifyOK(in.readLine());
-        sendData("PASS "+account.getPassword());
+        sendData("PASS "+new String(new BASE64Decoder().decodeBuffer(account.getPassword()), "UTF-8"));//decoded password
         verifyOK(in.readLine());
     }
 

@@ -2,6 +2,8 @@ package shuai.webmail.mail_services;
 
 import shuai.webmail.entities.Account;
 import shuai.webmail.entities.Outgoing;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -11,6 +13,15 @@ import java.sql.SQLException;
  */
 public class Test {
     public static void main(String[] args) throws IOException, InterruptedException,SQLException {
+
+        String s = "teststring";
+        String encoded = new BASE64Encoder().encode(s.getBytes());
+        byte[] decodedbytes = new BASE64Decoder().decodeBuffer(encoded);
+        String decoded = new String(decodedbytes,"UTF-8");
+        System.out.println(encoded);
+        System.out.println(decoded);
+
+/*
         Account gmail = new Account("syuanivy@gmail.com","smtp.gmail.com", 465, "pop.gmail.com", 995, 1, "syuanivy", "624426@ivy!!!", "ivy");
 
 
@@ -26,6 +37,7 @@ public class Test {
 
         POPService inbox = new POPService(gmail);
         inbox.retrieve();
+*/
 
     }
 
