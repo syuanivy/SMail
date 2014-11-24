@@ -24,6 +24,14 @@ page(title, body) ::= <<
               	\$("#formgroup-bcc").toggle();
               });
 
+             \$("#link-reply").click(function(){
+              	\$("#panel-reply").toggle();
+              });
+
+              \$("#link-forward").click(function(){
+              	\$("#panel-forward").toggle();
+              });
+
               \$(function() {
                 \$(document).on("click",".clickableRow",function() {
                    window.document.location = \$(this).attr("href");
