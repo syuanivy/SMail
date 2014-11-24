@@ -36,6 +36,25 @@ public class EmailManager {
         query.setString(5, email.getBody());
         query.executeUpdate();
     }
+
+    public static Incoming findEmail(String id, int type) throws SQLException{
+        Incoming email = new Incoming();
+        if(type==2){
+            String clause = "SELECT sender, subject, body, time FROM incoming WHERE id = ?";
+            PreparedStatement query = db.prepareStatement(clause);
+            query.setString(1, id);
+            ResultSet result = query.executeQuery();
+            while (result.next()){
+                email.setSender(result.getString(1));
+                email.setSubject(result.getString(2));
+                email.setBody(result.getString(3));
+                email.setTime(result.getString(4));
+            }
+            result.close();
+            return email;
+        }
+        return null;
+    }
 /*
     if(s.startsWith("Date:")){
         time = s.substring(s.indexOf(":")+1);
@@ -46,17 +65,18 @@ public class EmailManager {
 
 
     public static ArrayList<Incoming> inboxMails(Account account) throws SQLException{
-        String clause = "SELECT sender, subject, body, time FROM incoming WHERE recipient = ? ORDER BY time DESC";
+        String clause = "SELECT id, sender, subject, body, time FROM incoming WHERE recipient = ? ORDER BY time DESC";
         PreparedStatement query = db.prepareStatement(clause);
         query.setString(1, account.getEmailAddress());
         ResultSet result = query.executeQuery();
         ArrayList<Incoming> inboxMails = new ArrayList<Incoming>();
         while (result.next()){
             Incoming mail = new Incoming();
-            mail.setSender(result.getString(1));
-            mail.setSubject(result.getString(2));
-            mail.setBody(result.getString(3));
-            mail.setTime(result.getString(4));
+            mail.setID(result.getString(1));
+            mail.setSender(result.getString(2));
+            mail.setSubject(result.getString(3));
+            mail.setBody(result.getString(4));
+            mail.setTime(result.getString(5));
             inboxMails.add(mail);
         }
         result.close();

@@ -12,10 +12,7 @@ import org.eclipse.jetty.server.handler.RequestLogHandler;
 import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
-import shuai.webmail.processors.ComposeProcessor;
-import shuai.webmail.processors.FetchProcessor;
-import shuai.webmail.processors.LoginProcessor;
-import shuai.webmail.processors.RegisterProcessor;
+import shuai.webmail.processors.*;
 
 
 import java.sql.Connection;
@@ -42,7 +39,8 @@ public class WebmailServer {
         mapping.put("/composeprocessor", ComposeProcessor.class);
         mapping.put("/logout", LogoutPage.class);
         mapping.put("/home/fetch", FetchProcessor.class);
-        mapping.put("/messagedisplay", MessagePage.class);
+        mapping.put("/display", MessagePage.class);
+
 
 
 	}

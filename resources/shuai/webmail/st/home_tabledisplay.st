@@ -8,7 +8,7 @@ home_tabledisplay(inbox) ::= <<
 				-->
 
 				<div class="panel-body">
-					<table class="table table-hover">
+					<table class="table table-hover" style="cursor: pointer;">
 						<thead>
 							<tr>
 								<th>Sender</th>

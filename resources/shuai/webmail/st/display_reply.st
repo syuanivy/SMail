@@ -16,7 +16,13 @@ display_reply(email, account) ::= <<
 
 			<div class="panel panel-default">
 				<div class="panel-body">
-					<form role="form" class="form-horizontal">
+					<form role="form" class="form-horizontal" method="post" action="/composeprocessor">
+						<div class="form-group">
+                        	<label class="col-xs-2" for="inputTo">Subject</label>
+                        		<div class ="col-xs-8">
+                        		<input type="text" value ="Re:$email.subject$" name="subject" class="form-control" >
+                        		</div>
+                        </div>
 						<div class="form-group">
 							<label class="col-xs-2" for="inputFrom">From</label>
 							<div class="col-xs-8">
@@ -27,11 +33,12 @@ display_reply(email, account) ::= <<
 								</select>
 							</div>
 						</div>
+
 						<div class="form-group">
 							<label class="col-xs-2" for="inputTo">Reply To</label>
 							<div class ="col-xs-8">
-							<input type="email" value ="$email.sender$" name="reply_to" class="form-control" id="reply_to" >
-						</div>
+							<input type="email" value ="$email.sender$" name="recipient" class="form-control" id="reply_to" >
+							</div>
 							<label class="col-xs-1"> <a id="link-cc">cc</a> </label>
 							<label class="col-xs-1"> <a id="link-bcc">bcc</a> </label>
 						</div>
@@ -46,8 +53,8 @@ display_reply(email, account) ::= <<
 							<div class="col-sm-10"><input type="email" class="form-control" id="inputBCC" placeholder="comma separated list of recipients"></div>
 						</div>
 
-						<div class="form-group">
-						  <div class="col-xs-12"><textarea class="form-control" id="inputBody" rows="6"></textarea></div>
+                        <div class="form-group">
+						  <div class="col-xs-12"><textarea class="form-control" id="inputBody" rows="6">--On $email.time$, $email.sender$ wrote:  $email.body$ </textarea></div>
 						</div>
 
 						<div class="col-xs-2">
@@ -60,6 +67,4 @@ display_reply(email, account) ::= <<
 					</form>
 				<div><!-- panel-body-->
 			</div>
-
-		</div>
 >>

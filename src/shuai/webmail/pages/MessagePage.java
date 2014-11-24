@@ -37,18 +37,16 @@ public class MessagePage extends Page {
     public ST body() {
         User user = (User) request.getSession().getAttribute("user");
         Account account = (Account) request.getSession().getAttribute("account");
-//        Incoming email = (Incoming) request.getSession().getAttribute("email");
-        ST frame = templates.getInstanceOf("home_display_reply");
-        ST message = templates.getInstanceOf("display_reply");
-/*
-        ArrayList<Incoming> inboxMails = new ArrayList<Incoming>();
+        String emailID = request.getParameter("id");
+        Incoming email = new Incoming();
         try{
-            inboxMails = EmailManager.inboxMails(account);
+            email = EmailManager.findEmail(emailID,2);
         }catch(SQLException e){
             e.printStackTrace();
         }
-*/
-        Incoming email = new Incoming("fakefake", "fakesender@gmail.com", "fakerecipient@gmail.com", "fakesubject", "fakebody");
+        ST frame = templates.getInstanceOf("home_display_reply");
+        ST message = templates.getInstanceOf("display_reply");
+//        Incoming email = new Incoming("fakefake", "fakesender@gmail.com", "fakerecipient@gmail.com", "fakesubject", "fakebody");
 
 
         if(user != null & account != null){

@@ -22,7 +22,11 @@ page(title, body) ::= <<
        		  \$("#link-bcc").click(function(){
        			\$("#formgroup-bcc").toggle();
        		  });
-       		});
+
+              \$("#$email.id$").click(function() {
+				window.document.location = \$(this).attr("href");
+			  });
+            });
        	</script>
 
 </head>

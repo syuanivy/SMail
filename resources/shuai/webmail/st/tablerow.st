@@ -1,5 +1,5 @@
 tablerow(email) ::= <<
-<tr>
+<tr id="$email.id$" href="/display?id=$email.id$">
   <td>$email.sender$</td>
   <td>$email.subject$</td>
   <td>$email.body$</td>
