@@ -32,6 +32,12 @@ public class InboxPage extends Page{
             }
         }
     }
+/*
+    @Override
+    public ST script() {
+        ST script = templates.getInstanceOf("email_script");
+        return new ST("<script></script>");}
+*/
 
     @Override
     public ST body() {

@@ -16,7 +16,6 @@ public class ComposePage extends Page{
     }
 
     public void verify() {
-
         if(request.getSession().getAttribute("account") == null){
             try{
                 response.sendRedirect("/");
@@ -26,6 +25,10 @@ public class ComposePage extends Page{
         }
     }
 
+/*
+    @Override
+    public ST script() {return new ST("<script></script>");}
+*/
 
     @Override
     public ST body() {

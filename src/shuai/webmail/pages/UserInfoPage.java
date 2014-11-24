@@ -16,14 +16,6 @@ public class UserInfoPage extends Page {
     }
 
     public void verify() {
-        if(request.getSession() == null){
-            try{
-                response.sendRedirect("/");
-            }catch(IOException e){
-                e.printStackTrace();
-            }
-        }
-
         if(request.getSession().getAttribute("user")==null){
             try{
                 response.sendRedirect("/");
@@ -32,7 +24,10 @@ public class UserInfoPage extends Page {
             }
         }
     }
-
+/*
+    @Override
+    public ST script() {return new ST("<script></script>");}
+*/
 
     @Override
     public ST body() {

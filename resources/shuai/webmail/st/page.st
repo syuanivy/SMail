@@ -13,21 +13,25 @@ page(title, body) ::= <<
        <script src="/files/js/bootstrap.min.js"></script>
        <link href="/files/bootstrap-editable/css/bootstrap-editable.css" rel="stylesheet">
        <script src="/files/bootstrap-editable/js/bootstrap-editable.min.js"></script>
-       	<script>
-       		\$(document).ready(function(){
-       		  \$("#link-cc").click(function(){
-       			\$("#formgroup-cc").toggle();
-       		  });
 
-       		  \$("#link-bcc").click(function(){
-       			\$("#formgroup-bcc").toggle();
-       		  });
+       <script>
+         \$(document).ready(function(){
+             \$("#link-cc").click(function(){
+              	\$("#formgroup-cc").toggle();
+              });
 
-              \$("#$email.id$").click(function() {
-				window.document.location = \$(this).attr("href");
-			  });
-            });
-       	</script>
+              \$("#link-bcc").click(function(){
+              	\$("#formgroup-bcc").toggle();
+              });
+
+              \$(function() {
+                \$(document).on("click",".clickableRow",function() {
+                   window.document.location = \$(this).attr("href");
+                  });
+              });
+         });
+       </script>
+
 
 </head>
 

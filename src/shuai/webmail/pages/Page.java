@@ -58,7 +58,9 @@ public abstract class Page {
 		try {
 			verify(); // check args before generation
 			ST pageST = templates.getInstanceOf("page");
+           // ST scriptST = script();
 			ST bodyST = body();
+           // pageST.add("script", scriptST);
 			pageST.add("body", bodyST);
 			pageST.add("title", getTitle());
 
@@ -72,6 +74,8 @@ public abstract class Page {
 			out.close();
 		}
 	}
+
+    //public abstract ST script();
 
 	public abstract ST body();
 

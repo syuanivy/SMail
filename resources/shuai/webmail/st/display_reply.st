@@ -54,14 +54,14 @@ display_reply(email, account) ::= <<
 						</div>
 
                         <div class="form-group">
-						  <div class="col-xs-12"><textarea class="form-control" id="inputBody" rows="6">--On $email.time$, $email.sender$ wrote:  $email.body$ </textarea></div>
+						  <div class="col-xs-12"><textarea class="form-control" name="body" id="inputBody" rows="6">&#10;&#10;&#10;--On $email.time$, $email.sender$ wrote: &#13;&#10;$email.body$ </textarea></div>
 						</div>
 
 						<div class="col-xs-2">
 							<button type="button" class="btn btn-default">Save</button>
 						</div>
 						<div class="col-xs-2">
-							<button type="button" class="btn btn-primary ">Send <i class="fa fa-arrow-circle-right fa-lg"></i></button>
+							<button type="submit" class="btn btn-primary ">Send <i class="fa fa-arrow-circle-right fa-lg"></i></button>
 						</div>
 
 					</form>

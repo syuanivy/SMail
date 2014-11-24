@@ -14,8 +14,12 @@ public class LogoutPage extends Page {
         super(request, response);
     }
 
-    public void verify() {
-    }
+    public void verify() {}
+
+/*
+    @Override
+    public ST script() {return new ST("<script></script>");}
+*/
 
     @Override
     public ST body() {

@@ -33,7 +33,10 @@ public class MessagePage extends Page {
         }
     }
 
-    @Override
+/*    @Override
+    public ST script() {return new ST("<script></script>");}
+
+   */ @Override
     public ST body() {
         User user = (User) request.getSession().getAttribute("user");
         Account account = (Account) request.getSession().getAttribute("account");
