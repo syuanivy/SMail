@@ -22,11 +22,11 @@ home_tabledisplay(inbox) ::= <<
 							$inbox:tablerow()$
 						</tbody>
 					</table>
-				<div>
+				</div>
 				<!--
 				<div class="panel-footer">
 					Panel footer
 				</div>
 				-->
-			</div>
+</div>
 >>

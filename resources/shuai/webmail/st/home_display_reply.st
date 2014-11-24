@@ -1,7 +1,7 @@
-compose(user, sender) ::= <<
+home_display_reply(user, account, display_reply) ::= <<
 
 <nav id="myNavbar" class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
-  $sender:home_navbar()$
+  $user:home_navbar()$
 </nav>
 
 <br>
@@ -14,11 +14,12 @@ compose(user, sender) ::= <<
 
 <div class="container">
 	<div class="row">
-	    $user:home_leftsidebar()$
+
+		$account:home_leftsidebar()$
 
 		<br>
 
-		$sender:compose_module()$
+		$display_reply$
 	</div>
 </div>
 
@@ -33,6 +34,9 @@ compose(user, sender) ::= <<
 	</div>
 </div>
 
+<div class="modal fade" id="modalCompose">
+    $account:compose_window()$
+</div><!-- /.modal compose message -->
 
 
 >>

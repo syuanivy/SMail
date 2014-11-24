@@ -42,6 +42,7 @@ public class WebmailServer {
         mapping.put("/composeprocessor", ComposeProcessor.class);
         mapping.put("/logout", LogoutPage.class);
         mapping.put("/home/fetch", FetchProcessor.class);
+        mapping.put("/messagedisplay", MessagePage.class);
 
 
 	}
