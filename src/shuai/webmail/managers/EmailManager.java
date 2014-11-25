@@ -2,6 +2,7 @@ package shuai.webmail.managers;
 
 
 import shuai.webmail.entities.Account;
+import shuai.webmail.entities.Email;
 import shuai.webmail.entities.Incoming;
 import shuai.webmail.entities.Outgoing;
 import java.sql.PreparedStatement;
@@ -16,7 +17,7 @@ import static shuai.webmail.db_services.DBConnection.*;
 public class EmailManager {
 
     public static void addOutgoing(Outgoing email)throws SQLException{
-        String clause = "INSERT INTO outgoing(sender, recipient, subject, body, sent) VALUES(?, ?, ?, ? ,?)";
+        String clause = "INSERT INTO outgoing(sender, recipient, subject, body, label) VALUES(?, ?, ?, ? ,?)";
         PreparedStatement query = db.prepareStatement(clause);
         query.setString(1, email.getSender());
         query.setString(2, email.getRecipient());
@@ -37,24 +38,39 @@ public class EmailManager {
         query.executeUpdate();
     }
 
-    public static Incoming findEmail(String id, int type) throws SQLException{
-        Incoming email = new Incoming();
-        if(type==2){
-            String clause = "SELECT sender, subject, body, time FROM incoming WHERE id = ?";
-            PreparedStatement query = db.prepareStatement(clause);
-            query.setString(1, id);
-            ResultSet result = query.executeQuery();
-            while (result.next()){
-                email.setSender(result.getString(1));
-                email.setSubject(result.getString(2));
-                email.setBody(result.getString(3));
-                email.setTime(result.getString(4));
-            }
+    public static Email findEmail(String id, String foldername) throws SQLException{
+        Email email = new Email();
+        String clause = new String();
+        if(foldername.equals("inbox")) clause = "SELECT id, sender,recipient, subject, body, time,label FROM incoming WHERE id = ?";
+        if(foldername.equals("sent")) clause = "SELECT id, sender, recipient, subject, body, time,label FROM outgoing WHERE id = ?";
+        PreparedStatement query = db.prepareStatement(clause);
+        query.setString(1, id);
+        ResultSet result = query.executeQuery();
+        while (result.next()){
+            email.setID(result.getString(1));
+            email.setSender(result.getString(2));
+            email.setRecipient(result.getString(3));
+            email.setSubject(result.getString(4));
+            email.setBody(result.getString(5));
+            email.setTime(result.getString(6));
+            email.setLabel(result.getInt(7));
             result.close();
             return email;
         }
+
         return null;
     }
+public static String findFolder(String label){
+    String foldername = new String();
+    if(label.equals("0")) foldername = "inbox";
+    if(label.equals("1")) foldername = "sent";
+    if(label.equals("2")) foldername = "draft";
+    if(label.equals("3")) foldername = "trash";
+    return foldername;
+}
+
+
+
 /*
     if(s.startsWith("Date:")){
         time = s.substring(s.indexOf(":")+1);
@@ -64,23 +80,34 @@ public class EmailManager {
     }*/
 
 
-    public static ArrayList<Incoming> inboxMails(Account account) throws SQLException{
-        String clause = "SELECT id, sender, subject, body, time FROM incoming WHERE recipient = ? ORDER BY time DESC";
+    public static ArrayList<Email> mailList(Account account, String foldername) throws SQLException{
+        String clause = new String();
+/*
+        switch (foldername) {
+            case "inbox":
+                clause = "SELECT id, sender, subject, body, time FROM incoming WHERE recipient = ? ORDER BY time DESC";
+            case "sent":
+                clause = "SELECT id, sender, subject, body, time FROM outgoing WHERE recipient = ? ORDER BY time DESC";
+        }*/
+        if(foldername.equals("inbox")) clause = "SELECT id, sender, subject, body, time, label FROM incoming WHERE recipient = ? ORDER BY time DESC";
+        if(foldername.equals("sent")) clause = "SELECT id, sender, subject, body, time, label FROM outgoing WHERE sender = ? AND label = 1 ORDER BY time DESC";
+
         PreparedStatement query = db.prepareStatement(clause);
         query.setString(1, account.getEmailAddress());
         ResultSet result = query.executeQuery();
-        ArrayList<Incoming> inboxMails = new ArrayList<Incoming>();
+        ArrayList<Email> mailList = new ArrayList<Email>();
         while (result.next()){
-            Incoming mail = new Incoming();
+            Email mail = new Email();
             mail.setID(result.getString(1));
             mail.setSender(result.getString(2));
             mail.setSubject(result.getString(3));
             mail.setBody(result.getString(4));
             mail.setTime(result.getString(5));
-            inboxMails.add(mail);
+            mail.setLabel(result.getInt(6));
+            mailList.add(mail);
         }
         result.close();
-        return inboxMails;
+        return mailList;
 
     }
 

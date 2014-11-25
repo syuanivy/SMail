@@ -9,10 +9,8 @@ page(title, body) ::= <<
        <link rel="stylesheet" type="text/css" href="/files/css/bootstrap.min.css">
        <link rel="stylesheet" type="text/css" href="/files/css/bootstrap-theme.min.css">
    	   <script src="http://code.jquery.com/jquery.min.js"></script>
-   	   <script src="/files/libs/jquery/jquery-1.8.2.min.js"></script>
        <script src="/files/js/bootstrap.min.js"></script>
-       <link href="/files/bootstrap-editable/css/bootstrap-editable.css" rel="stylesheet">
-       <script src="/files/bootstrap-editable/js/bootstrap-editable.min.js"></script>
+
 
        <script>
          \$(document).ready(function(){

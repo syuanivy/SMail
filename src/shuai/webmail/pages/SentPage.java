@@ -1,6 +1,5 @@
 package shuai.webmail.pages;
 
-
 import org.stringtemplate.v4.ST;
 import shuai.webmail.entities.Account;
 import shuai.webmail.entities.Email;
@@ -14,8 +13,12 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class InboxPage extends Page{
-    public InboxPage(HttpServletRequest request, HttpServletResponse response) {
+/**
+ * Created by ivy on 11/24/14.
+ */
+public class SentPage extends Page {
+
+    public SentPage(HttpServletRequest request, HttpServletResponse response) {
         super(request, response);
     }
 
@@ -31,12 +34,7 @@ public class InboxPage extends Page{
             }
         }
     }
-/*
-    @Override
-    public ST script() {
-        ST script = templates.getInstanceOf("email_script");
-        return new ST("<script></script>");}
-*/
+
 
     @Override
     public ST body() {
@@ -44,10 +42,10 @@ public class InboxPage extends Page{
         Account account = (Account) request.getSession().getAttribute("account");
         ST home = templates.getInstanceOf("home");
         ST center = templates.getInstanceOf("home_center");
-        ST table = templates.getInstanceOf("inbox_tabledisplay");
-        ArrayList<Email> inboxMails = new ArrayList<Email>();
+        ST table = templates.getInstanceOf("sent_tabledisplay");
+        ArrayList<Email> sentMails = new ArrayList<Email>();
         try{
-            inboxMails = EmailManager.mailList(account,"inbox");
+            sentMails = EmailManager.mailList(account,"sent");
         }catch(SQLException e){
             e.printStackTrace();
         }
@@ -57,7 +55,7 @@ public class InboxPage extends Page{
             home.add("user", user.getName());
             home.add("account", account.getEmailAddress());
             center.add("account", account.getEmailAddress());
-            table.add("inbox", inboxMails);
+            table.add("sent", sentMails);
             center.add("table", table);
             home.add("center",center);
             return home;
@@ -68,6 +66,8 @@ public class InboxPage extends Page{
 
     @Override
     public ST getTitle() {
-        return new ST("home page");
+        return new ST("sent_page");
     }
+
+
 }

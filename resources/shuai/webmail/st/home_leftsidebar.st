@@ -9,12 +9,15 @@ home_leftsidebar(account) ::= <<
 				<a href="#" class="list-group-item active" data-toggle="modal" data-target="#modalCompose">
 					<span class="glyphicon glyphicon-pencil"></span> Compose
 				</a>
-				<a href="#" class="list-group-item">
+				<a href="/inbox" class="list-group-item">
 					<span class="glyphicon glyphicon-envelope"></span> Inbox <span class="badge">145</span>
 				</a>
-				<a href="#" class="list-group-item">
+				<a href="/home/sent" class="list-group-item">
 					<span class="glyphicon glyphicon-share"></span> Sent <span class="badge">50</span>
 				</a>
+				<a href="#" class="list-group-item">
+                	<span class="glyphicon glyphicon-pencil"></span> Draft <span class="badge">2</span>
+                </a>
 				<a href="#" class="list-group-item">
 					<span class="glyphicon glyphicon-trash"></span> Trash <span class="badge">8</span>
 				</a>

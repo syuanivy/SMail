@@ -2,7 +2,6 @@ package shuai.webmail;
 
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.handler.HandlerCollection;
-import org.xml.sax.helpers.DefaultHandler;
 import shuai.webmail.db_services.DBConnection;
 import shuai.webmail.misc.STListener;
 import shuai.webmail.pages.*;
@@ -39,7 +38,9 @@ public class WebmailServer {
         mapping.put("/composeprocessor", ComposeProcessor.class);
         mapping.put("/logout", LogoutPage.class);
         mapping.put("/home/fetch", FetchProcessor.class);
-        mapping.put("/display", MessagePage.class);
+        mapping.put("/display", MessageDisplayPage.class);
+        mapping.put("/home/sent", SentPage.class);
+        mapping.put("/save", SaveDraftProcessor.class);
 
 
 

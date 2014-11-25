@@ -2,6 +2,7 @@ package shuai.webmail.pages;
 
 import org.stringtemplate.v4.ST;
 import shuai.webmail.entities.Account;
+import shuai.webmail.entities.Email;
 import shuai.webmail.entities.Incoming;
 import shuai.webmail.entities.User;
 import shuai.webmail.managers.EmailManager;
@@ -15,8 +16,8 @@ import java.util.ArrayList;
 /**
  * Created by ivy on 11/23/14.
  */
-public class MessagePage extends Page {
-    public MessagePage(HttpServletRequest request, HttpServletResponse response) {
+public class MessageDisplayPage extends Page {
+    public MessageDisplayPage(HttpServletRequest request, HttpServletResponse response) {
         super(request, response);
     }
 
@@ -33,24 +34,24 @@ public class MessagePage extends Page {
         }
     }
 
-/*    @Override
-    public ST script() {return new ST("<script></script>");}
+    /*    @Override
+        public ST script() {return new ST("<script></script>");}
 
-   */ @Override
+       */ @Override
     public ST body() {
         User user = (User) request.getSession().getAttribute("user");
         Account account = (Account) request.getSession().getAttribute("account");
         String emailID = request.getParameter("id");
-        Incoming email = new Incoming();
+        String label = request.getParameter("label");
+        String foldername = EmailManager.findFolder(label);
+        Email email = new Email();
         try{
-            email = EmailManager.findEmail(emailID,2);
+            email = EmailManager.findEmail(emailID,foldername);
         }catch(SQLException e){
             e.printStackTrace();
         }
         ST frame = templates.getInstanceOf("home_display_reply");
         ST message = templates.getInstanceOf("display_reply");
-//        Incoming email = new Incoming("fakefake", "fakesender@gmail.com", "fakerecipient@gmail.com", "fakesubject", "fakebody");
-
 
         if(user != null & account != null){
             frame.add("user", user.getName());

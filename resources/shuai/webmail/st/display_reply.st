@@ -114,10 +114,11 @@ display_reply(email, account) ::= <<
                                     <div class="form-group">
             						  <div class="col-xs-12"><textarea class="form-control" name="body" id="inputBody" rows="6">&#10;&#10;---------- Forwarded message ----------&#13;&#10;From&#58; $email.sender$&#13;&#10;Date&#58; $email.time$&#13;&#10;Subject&#58; $email.subject$&#13;&#10;To&#58; $account$&#13;&#10;&#10;$email.body$ </textarea></div>
             						</div>
-
+            						<form method="post" action="/save">
             						<div class="col-xs-2">
-            							<button type="button" class="btn btn-default">Save</button>
+            							<button type="submit" class="btn btn-default">Save</button>
             						</div>
+            						</form>
             						<div class="col-xs-2">
             							<button type="submit" class="btn btn-primary ">Send <i class="fa fa-arrow-circle-right fa-lg"></i></button>
             						</div>

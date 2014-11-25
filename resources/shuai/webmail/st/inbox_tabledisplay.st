@@ -1,4 +1,4 @@
-home_tabledisplay(inbox) ::= <<
+inbox_tabledisplay(inbox) ::= <<
 
 <div class="panel panel-primary">
 				<!--

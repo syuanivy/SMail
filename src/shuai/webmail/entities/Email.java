@@ -1,38 +1,47 @@
 package shuai.webmail.entities;
 
-public class Outgoing extends Email{
-    int id=-1;
-    String sender;
-    String recipient;
-    String subject;
-    String body;
+/**
+ * Created by ivy on 11/24/14.
+ */
+public class Email {
+    public String id;
+    public String sender;
+    public String recipient;
+    public String subject;
+    public String body;
+    public String time;
     int attached = 0;
-    int sent = 0;
-    String time;
-    public Outgoing(){}
-    public Outgoing(String sender, String recipient, String subject, String body) {
-        this.sender = sender;
-        this.recipient = recipient;
-        this.subject = subject;
-        this.body = body;
-    }
+    int label = 0;
 
+    public String getID(){return id;}
 
     public String getSender(){return sender;}
+
     public String getRecipient(){return recipient;}
+
     public String getSubject() { return subject; }
+
     public String getBody() { return body; }
+
     public int hasAttachement(){return attached;}
-    public int isSent() { return sent; }
+
+    public int getLabel() { return label; }
+
     public String getTime() { return time; }
 
+    public void setID(String ID){this.id = ID;}
+
     public void setSender(String sender){this.sender = sender;}
+
     public void setRecipient(String recipient){this.recipient = recipient;}
+
     public void setSubject(String subject) { this.subject =  subject; }
+
     public void setBody(String body) { this.body =  body; }
+
     public void setAttachment(int attached) { this.attached =  attached; }
-    public void setSent(int sent) { this.sent =  sent; }
+
+    public void setLabel(int label) { this.label = label; }
+
     public void setTime(String time) { this.time =  time; }
-
-
 }
