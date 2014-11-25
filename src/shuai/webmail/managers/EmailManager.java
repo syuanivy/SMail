@@ -17,13 +17,14 @@ import static shuai.webmail.db_services.DBConnection.*;
 public class EmailManager {
 
     public static void addOutgoing(Outgoing email)throws SQLException{
-        String clause = "INSERT INTO outgoing(sender, recipient, subject, body, label) VALUES(?, ?, ?, ? ,?)";
+        String clause = "INSERT INTO outgoing(sender, recipient, subject, body, attached,label) VALUES(?, ?, ?, ? ,?)";
         PreparedStatement query = db.prepareStatement(clause);
         query.setString(1, email.getSender());
         query.setString(2, email.getRecipient());
         query.setString(3, email.getSubject());
         query.setString(4, email.getBody());
-        query.setString(5, String.valueOf(email.isSent()));
+        query.setString(5, String.valueOf(email.hasAttachement()));
+        query.setString(6, String.valueOf(email.isSent()));
         query.executeUpdate();
     }
 

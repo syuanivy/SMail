@@ -10,8 +10,8 @@ public class Email {
     public String subject;
     public String body;
     public String time;
-    int attached = 0;
-    int label = 0;
+    public int attached = 0;
+    public int label = 0;
 
     public String getID(){return id;}
 

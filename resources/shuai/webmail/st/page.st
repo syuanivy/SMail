@@ -8,7 +8,7 @@ page(title, body) ::= <<
    	<!-- include the following Bootstrap files-->
        <link rel="stylesheet" type="text/css" href="/files/css/bootstrap.min.css">
        <link rel="stylesheet" type="text/css" href="/files/css/bootstrap-theme.min.css">
-   	   <script src="http://code.jquery.com/jquery.min.js"></script>
+   	   <script src="//code.jquery.com/jquery.min.js"></script>
        <script src="/files/js/bootstrap.min.js"></script>
 
 
