@@ -1,24 +1,27 @@
 display_reply(email, account) ::= <<
+
         <div class="col-xs-1">
 			<img src="/files/images/snail.png" alt="125x125", style="width: 100%; max-height: 100%">
 		</div>
 
 		<div class="col-xs-8">
-			<h4> Su Xue <small> &lt;$email.sender$&gt;</small></h4>
+		    <h4>$email.subject$</h4>
+			<h4><small> From: Shuai Yuan </small><small> &lt;$email.sender$&gt;</small></h4>
+			<h4> <small> To: Snail User </small> <small> &lt;$email.recipient$&gt;</small></h4>
+			<h4><small>Date: $email.time$ </small></h4>
 
-			<div class="form-group">
-                 <h4><div class ="col-xs-9"><small> $email.time$ </small></div></h4>
+	        <div class="form-group">
+	             <div class="col-xs-6">&#160;&#160;&#160;&#160;</div>
                  <label class="col-xs-1"> <a id="link-reply">Reply</a> </label>
                  <label class="col-xs-1"> <a id="link-forward">Forward</a> </label>
-                 <div class ="col-xs-1">&#160;&#160;&#160;&#160;</div>
-
             </div>
 
-			<br>
+
+		    <br>
 
 			$email.body$
 
-			<hr>
+		    <hr>
 
 			<div class="panel panel-default" id="panel-reply" style="display:none">
 				<div class="panel-body">
@@ -62,7 +65,7 @@ display_reply(email, account) ::= <<
 						</div>
 
 						<div class="col-xs-2">
-							<button type="button" class="btn btn-default">Save</button>
+							<button type="submit" class="btn btn-default">Save</button>
 						</div>
 						<div class="col-xs-2">
 							<button type="submit" class="btn btn-primary ">Send <i class="fa fa-arrow-circle-right fa-lg"></i></button>
