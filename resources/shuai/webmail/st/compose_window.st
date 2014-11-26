@@ -21,7 +21,7 @@ compose_window(sender) ::= <<
 			</div>
 			<div class="form-group">
 			  <label class="col-sm-12" for="inputBody">Message</label>
-			  <div class="col-sm-12"><textarea name="body" class="form-control" id="inputBody" rows="10"></textarea></div>
+			  <div class="col-sm-12"><textarea spellcheck="true" name="body" class="form-control" id="inputBody" rows="10"></textarea></div>
 			</div>
 	  </div>
 

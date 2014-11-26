@@ -61,7 +61,7 @@ display_reply(email, account) ::= <<
             			</div>
 
                         <div class="form-group">
-						  <div class="col-xs-12"><textarea class="form-control" name="body" id="inputBody" rows="6">&#10;&#10;&#10;--On $email.time$, $email.sender$ wrote: &#13;&#10;$email.body$ </textarea></div>
+						  <div class="col-xs-12"><textarea spellcheck="true" class="form-control" name="body" id="inputBody" rows="6">&#10;&#10;&#10;--On $email.time$, $email.sender$ wrote: &#13;&#10;$email.body$ </textarea></div>
 						</div>
 
 						<div class="col-xs-2">
@@ -115,7 +115,7 @@ display_reply(email, account) ::= <<
             						</div>
 
                                     <div class="form-group">
-            						  <div class="col-xs-12"><textarea class="form-control" name="body" id="inputBody" rows="6">&#10;&#10;---------- Forwarded message ----------&#13;&#10;From&#58; $email.sender$&#13;&#10;Date&#58; $email.time$&#13;&#10;Subject&#58; $email.subject$&#13;&#10;To&#58; $account$&#13;&#10;&#10;$email.body$ </textarea></div>
+            						  <div class="col-xs-12"><textarea spellcheck="true" class="form-control" name="body" id="inputBody" rows="6">&#10;&#10;---------- Forwarded message ----------&#13;&#10;From&#58; $email.sender$&#13;&#10;Date&#58; $email.time$&#13;&#10;Subject&#58; $email.subject$&#13;&#10;To&#58; $account$&#13;&#10;&#10;$email.body$ </textarea></div>
             						</div>
             						<form method="post" action="/save">
             						<div class="col-xs-2">
