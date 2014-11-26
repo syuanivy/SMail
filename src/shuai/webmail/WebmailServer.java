@@ -41,6 +41,7 @@ public class WebmailServer {
         mapping.put("/home/fetch", FetchProcessor.class);
         mapping.put("/display", MessageDisplayPage.class);
         mapping.put("/home/sent", SentPage.class);
+        mapping.put("/home/draft", DraftPage.class);
         mapping.put("/save", SaveDraftProcessor.class);
 
 

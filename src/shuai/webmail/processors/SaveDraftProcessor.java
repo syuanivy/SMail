@@ -32,6 +32,7 @@ public class SaveDraftProcessor extends PostProcessor {
         Outgoing email = new Outgoing(outgoingFields[0], outgoingFields[1],outgoingFields[2],outgoingFields[3]);
         email.setLabel(2);
         EmailManager.addOutgoing(email);
+        response.sendRedirect("/inbox");
     }
 
 

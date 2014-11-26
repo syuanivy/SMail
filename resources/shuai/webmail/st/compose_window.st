@@ -27,7 +27,7 @@ compose_window(sender) ::= <<
 
 	  <div class="modal-footer">
 		<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
-		<button type="button" class="btn btn-warning pull-left">Save Draft</button>
+		<button type="submit" formaction="/save" class="btn btn-warning pull-left">Save Draft</button>
 		<button type="submit" class="btn btn-primary ">Send <i class="fa fa-arrow-circle-right fa-lg"></i></button>
 	  </div>
     </form>

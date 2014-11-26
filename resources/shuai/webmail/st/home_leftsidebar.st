@@ -15,7 +15,7 @@ home_leftsidebar(account) ::= <<
 				<a href="/home/sent" class="list-group-item">
 					<span class="glyphicon glyphicon-share"></span> Sent <span class="badge">50</span>
 				</a>
-				<a href="#" class="list-group-item">
+				<a href="/home/draft" class="list-group-item">
                 	<span class="glyphicon glyphicon-pencil"></span> Draft <span class="badge">2</span>
                 </a>
 				<a href="#" class="list-group-item">
