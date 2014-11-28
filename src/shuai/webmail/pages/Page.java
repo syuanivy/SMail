@@ -38,7 +38,7 @@ public abstract class Page {
 		}
 	}
 
-	public void verify() throws VerifyException {
+	public void verify() throws VerifyException{
 		// handle default args like page number, etc...
 		// verify that arguments make sense
 		// implemented by subclass typically

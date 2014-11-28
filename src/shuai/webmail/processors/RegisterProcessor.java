@@ -20,6 +20,8 @@ public class RegisterProcessor extends PostProcessor{
                           HttpServletResponse response){
         super(request, response);
     }
+    @Override
+    public void verify(){}
 
     @Override
     public void processPost() throws SQLException, IOException {

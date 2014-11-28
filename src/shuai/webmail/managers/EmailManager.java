@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedList;
 
 import static shuai.webmail.db_services.DBConnection.*;
 
@@ -23,8 +24,58 @@ import static shuai.webmail.db_services.DBConnection.*;
  * Created by ivy on 10/27/14.
  */
 public class EmailManager {
+    //Count the number of mails in built in folders
+    public static void countMails(Account account) throws SQLException {
+        Account.Folders folderInfo = account.folders;
+        int numFolders = folderInfo.size;
+        int[] builtIn = countBuiltIn(account);
+        for (int i=0; i<4 ; i++){
+            folderInfo.myfolders.get(i).setCount(builtIn[i]);
+        }
+        //count user-defined folders
+        if(numFolders>4){
+            for (Account.MyFolder folder:folderInfo.myfolders.subList(4,numFolders-1)){
+                String[] clauses=new String[2];
+                clauses[0] = "SELECT COUNT(*) FROM incoming WHERE label=? AND recipient=?";
+                clauses[1] = "SELECT COUNT(*) FROM outgoing WHERE label=? AND sender=?";
+                int count=0;
+                for (String clause: clauses){
+                    PreparedStatement query = db.prepareStatement(clause);
+                    query.setInt(1,folder.label);
+                    query.setString(2,account.getEmailAddress());
+                    ResultSet result = query.executeQuery();
+                    if(result.next()) count += result.getInt(1);
+                    result.close();
+                }
+                folder.setCount(count);
+            }
+        }
+    }
 
-    public static void addOutgoing(Outgoing email)throws SQLException{
+    public static int[] countBuiltIn(Account account) throws SQLException{
+
+            int[] builtIn = new int[4];
+            String[] clauses = new String[5];
+            clauses[0] = "SELECT COUNT(*) FROM incoming WHERE label=0 AND recipient=?";
+            clauses[1] = "SELECT COUNT(*) FROM outgoing WHERE label=1 AND sender=?";
+            clauses[2] = "SELECT COUNT(*) FROM outgoing WHERE label=2 AND sender=?";
+            clauses[3]  = "SELECT COUNT(*) FROM incoming WHERE label=4 AND recipient=?";
+            clauses[4] = "SELECT COUNT(*) FROM outgoing WHERE label=4 AND sender=? ";
+            for(int i=0;i<4;i++){
+                PreparedStatement query = db.prepareStatement(clauses[i]);
+                query.setString(1,account.getEmailAddress());
+                ResultSet result = query.executeQuery();
+                if(result.next()) builtIn[i] = result.getInt(1);
+                result.close();
+            }
+            PreparedStatement query = db.prepareStatement(clauses[4]);
+            query.setString(1,account.getEmailAddress());
+            ResultSet result = query.executeQuery();
+            if(result.next()) builtIn[3]+= result.getInt(1);
+            return builtIn;
+        }
+
+    public static void addOutgoing(Outgoing email) throws SQLException{
         String clause = "INSERT INTO outgoing(sender, recipient, subject, body, label) VALUES(?, ?, ?, ? ,?)";
         PreparedStatement query = db.prepareStatement(clause);
         query.setString(1, email.getSender());
@@ -80,7 +131,7 @@ public class EmailManager {
             return emailContent;
         }else{//trash or user-defined folders
             clause = "SELECT id, sender, recipient, subject, body, time, attached, label FROM incoming WHERE id = ? AND label = ?" +
-               "UNION SELECT id, sender, recipient, subject, body, time, attached, label FROM outgoing WHERE id = ? AND label = ? ORDER BY time DESC";
+                    "UNION SELECT id, sender, recipient, subject, body, time, attached, label FROM outgoing WHERE id = ? AND label = ? ORDER BY time DESC";
             PreparedStatement query = db.prepareStatement(clause);
             db.prepareStatement(clause);
             query.setString(1, id);
@@ -144,11 +195,17 @@ public class EmailManager {
     }
 
     //add user-defined folder
-    public static void addFolder(String foldername) throws SQLException{
+    public static int addFolder(String foldername) throws SQLException{
         String clause = "INSERT INTO label(label) VALUES(?)";
         PreparedStatement query = db.prepareStatement(clause);
         query.setString(1, foldername);
         query.executeUpdate();
+        clause = "SELECT id FROM Label WHERE label=foldername";
+        query = db.prepareStatement(clause);
+        ResultSet result =query.executeQuery();
+        int newLabel = -1;
+        if(result.next()) newLabel = result.getInt(1);
+        return newLabel;
     }
 
     //move emails between folders
@@ -174,6 +231,7 @@ public class EmailManager {
             else return false;
         }
     }
+
 
 
     /*    public static String findFolderName(int label) throws SQLException{

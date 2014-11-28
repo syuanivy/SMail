@@ -14,16 +14,8 @@ public class WelcomePage extends Page {
     public WelcomePage(HttpServletRequest request, HttpServletResponse response) {
         super(request, response);
     }
-    /*
-    static User[] users = new User[] {
-            new User("Boris", "123"),
-            new User("Natasha", "abc"),
-            new User("Jorge", "xyz"),
-            new User("Vladimir","456")
-    };
-    */
-    public void verify() {
 
+    public void verify() {
         if(request.getSession().getAttribute("user")==null){
             try{
                 response.sendRedirect("/");
@@ -32,9 +24,6 @@ public class WelcomePage extends Page {
             }
         }
     }
-
-   // @Override
-  //  public ST script() {return new ST("<script></script>");}
 
     @Override
     public ST body() {

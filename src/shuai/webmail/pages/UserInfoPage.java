@@ -24,10 +24,6 @@ public class UserInfoPage extends Page {
             }
         }
     }
-/*
-    @Override
-    public ST script() {return new ST("<script></script>");}
-*/
 
     @Override
     public ST body() {

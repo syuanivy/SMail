@@ -20,7 +20,7 @@ public abstract class PostProcessor {
     /**
      * redirect uri
      */
-
+    public abstract  void verify() throws IOException;
     public abstract void processPost() throws SQLException, IOException;
 
 

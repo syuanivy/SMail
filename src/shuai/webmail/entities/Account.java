@@ -1,5 +1,10 @@
 package shuai.webmail.entities;
 
+import shuai.webmail.managers.EmailManager;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+
 /**
  * Created by ivy on 11/4/14.
  */
@@ -13,6 +18,7 @@ public class Account {
     private String userName;
     private String password;
     private String localUser;
+    public Folders folders = new Folders();
 
 
     public Account(){}
@@ -27,6 +33,35 @@ public class Account {
         this.userName = username;
         this.password = password;
         this.localUser = localUser;
+
+    }
+    public class MyFolder{
+        public int label;
+        public int count=0;
+        public MyFolder(int label, int count){
+            this.label = label;
+            this.count = count;
+        }
+
+        public void setCount(int count){this.count = count;}
+    }
+
+    public class Folders{
+        public ArrayList<MyFolder> myfolders = new ArrayList<MyFolder>();
+        public int size = 4;
+        public Folders(){
+            this.myfolders.add(new MyFolder(0,0));// four built in folders
+            this.myfolders.add(new MyFolder(1,0));
+            this.myfolders.add(new MyFolder(2,0));
+            this.myfolders.add(new MyFolder(4,0));
+        }
+
+        public void newFolder(String foldername) throws SQLException{
+            int newLabel = EmailManager.addFolder(foldername);
+            this.myfolders.add(new MyFolder(newLabel,0));
+            this.size++;
+        }
+
 
     }
 

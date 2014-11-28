@@ -16,11 +16,6 @@ public class LogoutPage extends Page {
 
     public void verify() {}
 
-/*
-    @Override
-    public ST script() {return new ST("<script></script>");}
-*/
-
     @Override
     public ST body() {
         request.getSession().invalidate(); // invalidate the session and return the login page

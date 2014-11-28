@@ -17,7 +17,14 @@ public class FetchProcessor extends PostProcessor {
                             HttpServletResponse response){
         super(request, response);
     }
-
+    @Override
+    public void verify() throws IOException {
+        Account account = (Account) request.getSession().getAttribute("account");
+        if(account == null){
+            response.sendRedirect("/login");
+            return;
+        }
+    }
     @Override
     public void processPost() throws SQLException, IOException {
         Account account = (Account) request.getSession().getAttribute("account");
