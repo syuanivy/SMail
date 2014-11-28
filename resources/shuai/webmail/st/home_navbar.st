@@ -1,4 +1,4 @@
-home_navbar(account) ::= <<
+home_navbar(user) ::= <<
 
 	<!-- Brand and toggle get grouped for better mobile display -->
 	<div class="container">
@@ -14,7 +14,7 @@ home_navbar(account) ::= <<
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse" id="navbarCollapse">
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="#">Home</a></li>
+				<li class="active"><a href="/home">Home</a></li>
 				<li><a href="/userinfo">Account</a></li>
 				<li><a href="/logout">Log out</a></li>
 			</ul>

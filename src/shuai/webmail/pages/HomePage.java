@@ -1,8 +1,10 @@
 package shuai.webmail.pages;
 
+
 import org.stringtemplate.v4.ST;
 import shuai.webmail.entities.Account;
 import shuai.webmail.entities.Email;
+import shuai.webmail.entities.Incoming;
 import shuai.webmail.entities.User;
 import shuai.webmail.managers.EmailManager;
 
@@ -12,12 +14,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-/**
- * Created by ivy on 11/26/14.
- */
-public class DraftPage extends Page {
-
-    public DraftPage(HttpServletRequest request, HttpServletResponse response) {
+public class HomePage extends Page{
+    public HomePage(HttpServletRequest request, HttpServletResponse response) {
         super(request, response);
     }
 
@@ -33,18 +31,27 @@ public class DraftPage extends Page {
             }
         }
     }
-
+/*
+    @Override
+    public ST script() {
+        ST script = templates.getInstanceOf("email_script");
+        return new ST("<script></script>");}
+*/
 
     @Override
     public ST body() {
         User user = (User) request.getSession().getAttribute("user");
         Account account = (Account) request.getSession().getAttribute("account");
+        int label;
+        if(request.getParameter("folder")!=null) label = Integer.parseInt(request.getParameter("folder"));
+        else label=0;
+
         ST home = templates.getInstanceOf("home");
         ST center = templates.getInstanceOf("home_center");
-        ST table = templates.getInstanceOf("sent_tabledisplay");
-        ArrayList<Email> sentMails = new ArrayList<Email>();
+        ST table = templates.getInstanceOf("home_tabledisplay");
+        ArrayList<Email> mails = new ArrayList<Email>();
         try{
-            sentMails = EmailManager.mailList(account, 2);
+            mails = EmailManager.mailList(account,label);
         }catch(SQLException e){
             e.printStackTrace();
         }
@@ -54,7 +61,7 @@ public class DraftPage extends Page {
             home.add("user", user.getName());
             home.add("account", account.getEmailAddress());
             center.add("account", account.getEmailAddress());
-            table.add("sent", sentMails);
+            table.add("maillist", mails);
             center.add("table", table);
             home.add("center",center);
             return home;
@@ -65,8 +72,6 @@ public class DraftPage extends Page {
 
     @Override
     public ST getTitle() {
-        return new ST("sent_page");
+        return new ST("home page");
     }
-
-
 }

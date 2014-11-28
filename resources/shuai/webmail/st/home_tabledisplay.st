@@ -1,4 +1,4 @@
-inbox_tabledisplay(inbox) ::= <<
+home_tabledisplay(maillist) ::= <<
 
 <div class="panel panel-primary">
 				<!--
@@ -19,7 +19,7 @@ inbox_tabledisplay(inbox) ::= <<
 						</thead>
 
 						<tbody>
-							$inbox:tablerow()$
+							$maillist:tablerow()$
 						</tbody>
 					</table>
 				</div>

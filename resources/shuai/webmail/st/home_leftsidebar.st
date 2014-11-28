@@ -1,7 +1,7 @@
 home_leftsidebar(account) ::= <<
 
      <div class="col-xs-2">
-            <a href="#" class="thumbnail">
+            <a href="/home" class="thumbnail">
                 <img src="/files/images/logo.jpg" alt="125x125">
             </a>
 
@@ -9,16 +9,16 @@ home_leftsidebar(account) ::= <<
 				<a href="#" class="list-group-item active" data-toggle="modal" data-target="#modalCompose">
 					<span class="glyphicon glyphicon-pencil"></span> Compose
 				</a>
-				<a href="/inbox" class="list-group-item">
+				<a href="/home?folder=0" folder="0" class="list-group-item">
 					<span class="glyphicon glyphicon-envelope"></span> Inbox <span class="badge">145</span>
 				</a>
-				<a href="/home/sent" class="list-group-item">
+				<a href="/home?folder=1" folder="1" class="list-group-item">
 					<span class="glyphicon glyphicon-share"></span> Sent <span class="badge">50</span>
 				</a>
-				<a href="/home/draft" class="list-group-item">
+				<a href="/home?folder=2" folder="2" class="list-group-item">
                 	<span class="glyphicon glyphicon-pencil"></span> Draft <span class="badge">2</span>
                 </a>
-				<a href="#" class="list-group-item">
+				<a href="/home?folder=3" folder="3" class="list-group-item">
 					<span class="glyphicon glyphicon-trash"></span> Trash <span class="badge">8</span>
 				</a>
 			</div>
