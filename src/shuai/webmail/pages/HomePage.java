@@ -40,7 +40,7 @@ public class HomePage extends Page{
 
         ST leftbar = new ST("");
         try {
-            LeftSideBar leftSideBar = new LeftSideBar(account);
+            LeftSideBar leftSideBar = LeftSideBar.generateBar(account);
             leftbar = leftSideBar.leftbar;
         } catch (SQLException e) {
             e.printStackTrace();

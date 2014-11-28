@@ -35,9 +35,14 @@ public class LoginProcessor extends PostProcessor {
         boolean success = UserManager.isPWCorrect(password, checkuser.getPassword());
         if(success){
             Account account = AccountManager.getUserAccount(username);
-            request.getSession().setAttribute("user", checkuser);
-            request.getSession().setAttribute("account", account);
-            response.sendRedirect("/inbox");
+            if(account==null){
+                request.setAttribute("error", "No associated account, try again!");
+                response.sendRedirect("/");
+            }else{
+                request.getSession().setAttribute("user", checkuser);
+                request.getSession().setAttribute("account", account);
+                response.sendRedirect("/inbox");
+            }
         }else{
             request.setAttribute("error", "Wrong password, try again!");
             response.sendRedirect("/");

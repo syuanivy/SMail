@@ -26,7 +26,7 @@ import static shuai.webmail.db_services.DBConnection.*;
 public class EmailManager {
     //Count the number of mails in built in folders
     public static void countMails(Account account) throws SQLException {
-        Account.Folders folderInfo = account.folders;
+        Folders folderInfo = account.folders;
         int numFolders = folderInfo.size;
         int[] builtIn = countBuiltIn(account);
         for (int i=0; i<4 ; i++){
@@ -34,7 +34,7 @@ public class EmailManager {
         }
         //count user-defined folders
         if(numFolders>4){
-            for (Account.MyFolder folder:folderInfo.myfolders.subList(4,numFolders-1)){
+            for (MyFolder folder:folderInfo.myfolders.subList(4,numFolders-1)){
                 String[] clauses=new String[2];
                 clauses[0] = "SELECT COUNT(*) FROM incoming WHERE label=? AND recipient=?";
                 clauses[1] = "SELECT COUNT(*) FROM outgoing WHERE label=? AND sender=?";
@@ -234,17 +234,6 @@ public class EmailManager {
 
 
 
-    /*    public static String findFolderName(int label) throws SQLException{
-            String foldername = new String();
-            String clause = "SELECT label FROM label WHERE id = ? ";
-            PreparedStatement query = db.prepareStatement(clause);
-            query.setInt(1, label);
-            ResultSet result= query.executeQuery();
-            while (result.next()){
-                foldername = result.getString(1);
-            }
-            return foldername;
-        }*/
     /*
     public static String Dateformat(String serverDate){
         String serverFormat;

@@ -1,6 +1,9 @@
 package shuai.webmail.entities;
 
 import shuai.webmail.managers.EmailManager;
+import shuai.webmail.managers.Folders;
+import shuai.webmail.managers.MyFolder;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -35,36 +38,8 @@ public class Account {
         this.localUser = localUser;
 
     }
-    public class MyFolder{
-        public int label;
-        public String foldername;
-        public int count=0;
-        public MyFolder(int label, String foldername){
-            this.label = label;
-            this.foldername = foldername;
-        }
-
-        public void setCount(int count){this.count = count;}
-    }
-
-    public class Folders{
-        public ArrayList<MyFolder> myfolders = new ArrayList<MyFolder>();
-        public int size = 4;
-        public Folders(){
-            this.myfolders.add(new MyFolder(0,"inbox"));// four built in folders
-            this.myfolders.add(new MyFolder(1,"sent"));
-            this.myfolders.add(new MyFolder(2,"draft"));
-            this.myfolders.add(new MyFolder(4,"trash"));
-        }
-
-        public void newFolder(String foldername) throws SQLException{
-            int newLabel = EmailManager.addFolder(foldername);
-            this.myfolders.add(new MyFolder(newLabel, foldername));
-            this.size++;
-        }
 
 
-    }
 
     public String getSmtpServer() {return smtpServer;}
     public void setSmtpServer(String smtpServer) {
@@ -113,6 +88,17 @@ public class Account {
     public void setLocalUser(String localUser) {
         this.localUser = localUser;
     }
+
+    public int[] getFolders(){
+        ArrayList<MyFolder> myfolders = this.folders.myfolders;
+        int num = myfolders.size();
+        int[] labels = new int[num];
+        for (int i = 0; i< num; i++){
+            labels[i] = myfolders.get(i).label;
+        }
+        return labels;
+    }
+    public void setFolders(Folders folders){this.folders = folders;}
 
 
 
