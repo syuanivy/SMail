@@ -37,10 +37,11 @@ public class Account {
     }
     public class MyFolder{
         public int label;
+        public String foldername;
         public int count=0;
-        public MyFolder(int label, int count){
+        public MyFolder(int label, String foldername){
             this.label = label;
-            this.count = count;
+            this.foldername = foldername;
         }
 
         public void setCount(int count){this.count = count;}
@@ -50,15 +51,15 @@ public class Account {
         public ArrayList<MyFolder> myfolders = new ArrayList<MyFolder>();
         public int size = 4;
         public Folders(){
-            this.myfolders.add(new MyFolder(0,0));// four built in folders
-            this.myfolders.add(new MyFolder(1,0));
-            this.myfolders.add(new MyFolder(2,0));
-            this.myfolders.add(new MyFolder(4,0));
+            this.myfolders.add(new MyFolder(0,"inbox"));// four built in folders
+            this.myfolders.add(new MyFolder(1,"sent"));
+            this.myfolders.add(new MyFolder(2,"draft"));
+            this.myfolders.add(new MyFolder(4,"trash"));
         }
 
         public void newFolder(String foldername) throws SQLException{
             int newLabel = EmailManager.addFolder(foldername);
-            this.myfolders.add(new MyFolder(newLabel,0));
+            this.myfolders.add(new MyFolder(newLabel, foldername));
             this.size++;
         }
 

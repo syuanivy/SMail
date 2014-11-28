@@ -47,11 +47,21 @@ public class MessageDisplayPage extends Page {
             e.printStackTrace();
         }
         ST frame = templates.getInstanceOf("home_display_reply");
+
+        ST leftbar = new ST("");
+        try {
+            LeftSideBar leftSideBar = new LeftSideBar(account);
+            leftbar = leftSideBar.leftbar;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         ST message = templates.getInstanceOf("display_reply");
 
         if(user != null & account != null){
             frame.add("user", user.getName());
             frame.add("account", account.getEmailAddress());
+            frame.add("leftbar",leftbar);
             message.add("email", email);
             message.add("account", account.getEmailAddress());
             frame.add("display_reply", message);

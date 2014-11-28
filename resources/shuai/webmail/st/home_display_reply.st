@@ -1,4 +1,4 @@
-home_display_reply(user, account, display_reply) ::= <<
+home_display_reply(user, account, leftbar, display_reply) ::= <<
 
 <nav id="myNavbar" class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
   $user:home_navbar()$
@@ -15,7 +15,7 @@ home_display_reply(user, account, display_reply) ::= <<
 <div class="container">
 	<div class="row">
 
-		$account:home_leftsidebar()$
+		$leftbar$
 
 		<br>
 
