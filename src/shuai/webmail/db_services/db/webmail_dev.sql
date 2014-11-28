@@ -184,6 +184,19 @@ INSERT INTO "incoming" VALUES('GmailId149eb07ec9c8deb9','Shuai Yuan <ivyandscorp
 <div class="gmail_quote">On Nov 25, 2014 11:34 PM,  &lt;<a href="mailto:syuanivy@gmail.com">syuanivy@gmail.com</a>&gt; wrote:<br type="attribution"><blockquote class="gmail_quote" style="margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">is sent retrieved as well?<br>
 </blockquote></div>
 ',0,0,'2014-11-26 07:36:54');
+INSERT INTO "incoming" VALUES('GmailId149eb27fb24a5a56','syuanivy@gmail.com','syuanivy@gmail.com','Re:new schema add default value back','
+
+--On 2014-11-26 08:07:24, syuanivy@gmail.com wrote: 
+why were they gone? wired... 
+.
+',0,0,'2014-11-26 08:12:04');
+INSERT INTO "incoming" VALUES('GmailId149eb326dfcc66e4','syuanivy@gmail.com','syuanivy@gmail.com','Re:new schema add default value back','not sure why, but add the value back
+--On 2014-11-26 08:07:24, syuanivy@gmail.com wrote: 
+why were they gone? wired... 
+.
+',0,0,'2014-11-26 08:23:37');
+INSERT INTO "incoming" VALUES('GmailId149eb39233741560','Shuai Yuan <shuaiyuan@nyu.edu>','syuanivy@gmail.com','test reply','<div dir="ltr">test</div>
+',0,0,'2014-11-26 08:30:41');
 CREATE TABLE users(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,username TXT UNIQUE NOT NULL, password TXT NOT NULL);
 INSERT INTO "users" VALUES(1,'shuai','shuai');
 INSERT INTO "users" VALUES(3,'su','xyz');
@@ -219,7 +232,32 @@ INSERT INTO "accounts" VALUES('zao@gmail.com','smtp.gmail.com',465,'pop.gmail.co
 INSERT INTO "accounts" VALUES('niurou@163.com','smtp.163.com',25,'pop.sina.com',110,0,'niurou','niurou','niurou');
 INSERT INTO "accounts" VALUES('syuanivy@gmail.com','smtp.gmail.com',465,'pop.gmail.com',995,1,'syuanivy','NjI0NDI2QGl2eSEhIQ==','ivy');
 INSERT INTO "accounts" VALUES('dd@gmail.com','smtp.gmail.com',465,'pop.gmail.com',995,1,'dd','ZGQ=','wangwangwang');
-CREATE TABLE outgoing (id INTEGER PRIMARY KEY, sender TXT, recipient TXT, subject TXT, body TXT, attached INT DEFAULT 0, label INT DEFAULT 0, time TXT DEFAULT CURRENT_TIMESTAMP);
+CREATE TABLE outgoing (id INTEGER PRIMARY KEY, sender TXT NOT NULL, recipient TXT, subject TXT, body TXT, attached INT DEFAULT 0, label INT DEFAULT 2, time TXT DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY (sender) REFERENCES accounts(email_address));
+INSERT INTO "outgoing" VALUES(1,'syuanivy@gmail.com','ivyandscorpio@gmail.com','test cleaned up code','testest',0,1,'2014-11-27 19:59:09');
+INSERT INTO "outgoing" VALUES(2,'syuanivy@gmail.com','syuanivy@gmail.com','Re: test cleaned up code','
+test
+--On 2014-11-26 08:23:37, syuanivy@gmail.com wrote: 
+not sure why, but add the value back
+    		--On 2014-11-26 08:07:24, syuanivy@gmail.com wrote: 
+    		why were they gone? wired... 
+    		.
+    		 ',0,2,'2014-11-27 20:00:04');
+INSERT INTO "outgoing" VALUES(3,'syuanivy@gmail.com','','Fwd:test cleaned up code','
+---------- Forwarded message ----------
+From: syuanivy@gmail.com
+Date: 2014-11-27 19:59:09
+Subject: test cleaned up code
+To: syuanivy@gmail.com
+
+testest ',0,2,'2014-11-27 20:00:21');
+CREATE TABLE label (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,label TXT UNIQUE NOT NULL);
+INSERT INTO "label" VALUES(0,'inbox');
+INSERT INTO "label" VALUES(1,'sent');
+INSERT INTO "label" VALUES(2,'draft');
+INSERT INTO "label" VALUES(3,'read');
+INSERT INTO "label" VALUES(4,'trash');
+INSERT INTO "label" VALUES(5,'deleted');
 DELETE FROM sqlite_sequence;
 INSERT INTO "sqlite_sequence" VALUES('users',24);
+INSERT INTO "sqlite_sequence" VALUES('label',6);
 COMMIT;

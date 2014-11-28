@@ -24,10 +24,20 @@ page(title, body) ::= <<
 
              \$("#link-reply").click(function(){
               	\$("#panel-reply").toggle();
+              	\$("#panel-forward").hide();
               });
 
               \$("#link-forward").click(function(){
               	\$("#panel-forward").toggle();
+              	\$("#panel-reply").hide();
+              });
+
+              \$("#cancel-reply").click(function(){
+              	\$("#panel-reply").hide();
+              });
+
+              \$("#cancel-forward").click(function(){
+                \$("#panel-forward").hide();
               });
 
               \$(function() {

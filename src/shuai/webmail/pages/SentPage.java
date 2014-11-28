@@ -45,7 +45,7 @@ public class SentPage extends Page {
         ST table = templates.getInstanceOf("sent_tabledisplay");
         ArrayList<Email> sentMails = new ArrayList<Email>();
         try{
-            sentMails = EmailManager.mailList(account,"sent");
+            sentMails = EmailManager.mailList(account,1);
         }catch(SQLException e){
             e.printStackTrace();
         }

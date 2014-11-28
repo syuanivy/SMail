@@ -1,15 +1,8 @@
 package shuai.webmail.entities;
 
 public class Outgoing extends Email{
-    public int id=-1;
-    public String sender;
-    public String recipient;
-    public String subject;
-    public String body;
-    public int attached = 0;
     public int label = 2;
-    public String time;
-    public Outgoing(){}
+
     public Outgoing(String sender, String recipient, String subject, String body) {
         this.sender = sender;
         this.recipient = recipient;

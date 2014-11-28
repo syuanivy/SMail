@@ -43,10 +43,9 @@ public class MessageDisplayPage extends Page {
         Account account = (Account) request.getSession().getAttribute("account");
         String emailID = request.getParameter("id");
         String label = request.getParameter("label");
-        String foldername = EmailManager.findFolder(label);
         Email email = new Email();
         try{
-            email = EmailManager.findEmail(emailID,foldername);
+            email = EmailManager.findEmail(emailID,Integer.parseInt(label));
         }catch(SQLException e){
             e.printStackTrace();
         }

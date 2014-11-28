@@ -11,7 +11,7 @@ public class Email {
     public String body;
     public String time;
     public int attached = 0;
-    public int label = 0;
+    public int label;
 
     public String getID(){return id;}
 

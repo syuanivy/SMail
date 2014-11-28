@@ -65,7 +65,7 @@ display_reply(email, account) ::= <<
 						</div>
 
 						<div class="col-xs-2">
-		                    <button type="button" class="btn btn-default pull-left" data-dismiss="panel">Cancel</button>
+		                    <button type="button" id="cancel-reply" class="btn btn-default pull-left" >Cancel</button>
 		                </div>
 
 						<div class="col-xs-2">
@@ -123,7 +123,7 @@ display_reply(email, account) ::= <<
             						</div>
 
        						        <div class="col-xs-2">
-		                                 <button type="button" class="btn btn-default pull-left" data-dismiss="panel-forward">Cancel</button>
+		                                 <button type="button" id="cancel-forward" class="btn btn-default pull-left" >Cancel</button>
 		                            </div>
 
             						<div class="col-xs-2">

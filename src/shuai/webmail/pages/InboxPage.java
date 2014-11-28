@@ -47,7 +47,7 @@ public class InboxPage extends Page{
         ST table = templates.getInstanceOf("inbox_tabledisplay");
         ArrayList<Email> inboxMails = new ArrayList<Email>();
         try{
-            inboxMails = EmailManager.mailList(account,"inbox");
+            inboxMails = EmailManager.mailList(account,0);
         }catch(SQLException e){
             e.printStackTrace();
         }

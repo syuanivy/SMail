@@ -15,15 +15,22 @@ import java.sql.SQLException;
 /**
  * Created by ivy on 11/4/14.
  */
+
+
 public class Test {
+
     public static void main(String[] args) throws IOException, InterruptedException,SQLException {
+        //test switch on String variable
+
+
+/*      //test decoding base64
         Connection db = DBConnection.getDBConnection();
 
         Email test= EmailManager.findEmail("20","sent");
         System.out.println(test.hasAttachement() + " /" + test.getLabel() + " /" + test.getTime());
 
         Email test34= EmailManager.findEmail("34","sent");
-        System.out.println(test34.hasAttachement() + " /" + test34.getLabel() + " /" + test34.getTime());
+        System.out.println(test34.hasAttachement() + " /" + test34.getLabel() + " /" + test34.getTime());*/
 /*
         String s = "teststring";
         String encoded = new BASE64Encoder().encode(s.getBytes());
