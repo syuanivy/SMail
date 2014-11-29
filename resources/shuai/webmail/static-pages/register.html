@@ -1,17 +1,46 @@
-userinfo(user, defaultaccount) ::= <<
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Register</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- include the following Bootstrap files-->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+	<script src="http://code.jquery.com/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+	
+	<script>
+		$(document).ready(function(){
+		  $("#add-account").click(function(){
+			$("#panel-accnt-1").show();
+			$("#add-account").hide();
+			$("#remove-account").show();
+		  });
+		  
+		  $("#remove-account").click(function(){
+			$("#panel-accnt-1").hide();
+			$("#add-account").show();
+			$("#remove-account").hide();
+		  });
+		});
+	</script>
+</head>
+<body>
+
 <br>
 
 <div class="container">
 	<div class="row">
 		<div class="col-xs-2 col-xs-offset-5">
 			<a href="#" class="thumbnail">
-			<img src="/files/images/logo.jpg" alt="125x125">
+			<img src="images/logo.jpg" alt="125x125">
 			</a>
 		</div>
 		<div class="col-xs-12 text-center">
 			<h3>Register a New User</h3>
 			<span class="help-block">
-				The items with * are required.
+				The items with * are required. 
 			</span>
 		</div>
 	</div>
@@ -21,12 +50,12 @@ userinfo(user, defaultaccount) ::= <<
 <div class="container">
  <div class="row">
   <div class="col-xs-8 col-xs-offset-2">
-
+  
 	<form role="form">
 		<div class="row">
 			<div class="col-xs-6">
 				<div class="form-group">
-					<label for="username">Username*
+					<label for="username">Username*					
 						&nbsp;&nbsp;<a href="#" class="text-right">check</a>
 					</label>
 					<input type="username" class="form-control active" id="username" placeholder="Username" required autofocus>
@@ -35,7 +64,7 @@ userinfo(user, defaultaccount) ::= <<
 			<div class="col-xs-4">
 			</div>
 		</div>
-
+		
 		<div class="row">
 			<div class="col-xs-6">
 				<div class="form-group">
@@ -53,8 +82,8 @@ userinfo(user, defaultaccount) ::= <<
 
 		<div id = "panel-accnt-0" class="panel panel-info">
 			<div class="panel-heading">
-				<b>Default Account</b>
-				<label >
+				<b>Default Account</b> 					
+				<label >				
 					&nbsp;&nbsp;<a href="#">check</a>
 				</label>
 			</div>
@@ -95,14 +124,14 @@ userinfo(user, defaultaccount) ::= <<
 						</div>
 					</div>
 				</div> <!-- row -->
-
+				
 				<div class="row">
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label for="inputPOP">POP*</label>
 							<input type="text" class="form-control" id="inputPOP" placeholder="pop.xxx.com" required>
 						</div>
-					</div>
+					</div>			
 					<div class="col-xs-4">
 						<div class="form-group">
 							<label for="inputPOPport">POP Port* </label>
@@ -114,17 +143,17 @@ userinfo(user, defaultaccount) ::= <<
 							<label for="POPssl">SSL</label>
 							<input type="checkbox" id="POPssl">
 						</div>
-					</div>
+					</div>					
 				</div> <!-- row -->
 			</div> <!-- panel body-->
 		</div> <!-- panel-->
-
+		
 		<div id = "panel-accnt-1" class="panel panel-success" style="display:none">
 			<div class="panel-heading">
 				<b>Additional Account</b>
-				<label >
+				<label >				
 					&nbsp;&nbsp;<a href="#">check</a>
-				</label>
+				</label>				
 			</div>
 			<div class="panel-body">
 				<div class="row">
@@ -163,14 +192,14 @@ userinfo(user, defaultaccount) ::= <<
 						</div>
 					</div>
 				</div> <!-- row -->
-
+				
 				<div class="row">
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label for="inputPOP">POP*</label>
 							<input type="text" class="form-control" id="inputPOP" placeholder="pop.xxx.com" required>
 						</div>
-					</div>
+					</div>			
 					<div class="col-xs-4">
 						<div class="form-group">
 							<label for="inputPOPport">POP Port* </label>
@@ -182,11 +211,11 @@ userinfo(user, defaultaccount) ::= <<
 							<label for="POPssl">SSL</label>
 							<input type="checkbox" id="POPssl">
 						</div>
-					</div>
+					</div>					
 				</div> <!-- row -->
 			</div> <!-- panel body-->
-		</div> <!-- panel-->
-
+		</div> <!-- panel-->			
+		
 		<div class="row">
 			<div class="col-xs-12 text-right" id="add-account">
 				<a id="link-add-account" style="cursor: pointer;"  data-toggle="tooltip" data-placement="bottom" title="Add another account">
@@ -202,17 +231,19 @@ userinfo(user, defaultaccount) ::= <<
 				</a>
 			</div>
 		</div> <!-- row -->
-
+		
 		<div class="row">
 			<div class="col-xs-12 text-center">
-				<button type="submit" class="btn btn-primary btn-lg">Update</button>
+				<button type="submit" class="btn btn-primary btn-lg">Register</button>
 			</div>
 		</div> <!-- row -->
 
 	</form>
-  </div> <!-- col-->
+  </div> <!-- col-->	
  </div> <!-- row -->
 </div> <!-- /container -->
 
 
->>
+</body>
+</html>
+

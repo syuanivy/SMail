@@ -1,8 +1,8 @@
 package shuai.webmail.entities;
 
 public class User {
-    private int id = -1;
-	private String name;
+    public int id = -1;
+	public String name;
     private String password;
 
     public User() { }

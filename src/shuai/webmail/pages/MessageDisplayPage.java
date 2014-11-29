@@ -37,12 +37,15 @@ public class MessageDisplayPage extends Page {
     @Override
     public ST body() {
         User user = (User) request.getSession().getAttribute("user");
-        Account account = (Account) request.getSession().getAttribute("account");
+        Account account;
+        if(request.getSession().getAttribute("accountToShow") != null) account = (Account) request.getSession().getAttribute("accountToShow");
+        else account = (Account) request.getSession().getAttribute("account");
         String emailID = request.getParameter("id");
         String label = request.getParameter("label");
         Email email = new Email();
         try{
             email = EmailManager.findEmail(emailID,Integer.parseInt(label));
+            if(email.label==0) EmailManager.changeFolder(email.id, email.label, 3);
         }catch(SQLException e){
             e.printStackTrace();
         }

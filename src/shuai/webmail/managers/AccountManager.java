@@ -49,14 +49,14 @@ public class AccountManager {
         query.executeUpdate();
         return newaccount;
     }
-    //TODO: UPDATE in sqlite
-    public static Account updateAccount(){return null;}
 
-    public static Account getUserAccount(String localUser) throws SQLException{
+
+    public static ArrayList<Account> getUserAccount(String localUser) throws SQLException{
         String clause = "SELECT * FROM accounts WHERE my_user= ?";
         PreparedStatement query = DBConnection.db.prepareStatement(clause);
         query.setString(1, localUser);
         ResultSet result = query.executeQuery();
+        ArrayList<Account> accounts = new ArrayList<>();
 
         while(result.next()){
 
@@ -90,10 +90,9 @@ public class AccountManager {
             }
             account.setFolders(folders);
             EmailManager.countMails(account);
-
-            return account;
+            accounts.add(account);
         }
-        return null;
+        return accounts;
     }
 
        public static String findFolderName(int label) throws SQLException{

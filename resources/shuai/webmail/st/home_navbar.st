@@ -1,4 +1,4 @@
-home_navbar(user) ::= <<
+home_navbar(user,account,second_account) ::= <<
 
 	<!-- Brand and toggle get grouped for better mobile display -->
 	<div class="container">
@@ -9,7 +9,7 @@ home_navbar(user) ::= <<
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="#">$user$</a>
+			<a class="navbar-brand" href="#">$user.name$</a>
 		</div>
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse" id="navbarCollapse">
@@ -24,8 +24,8 @@ home_navbar(user) ::= <<
                          <span class="glyphicon glyphicon-user"></span> <span class="caret"></span>
                       </a>
                       <ul class="dropdown-menu" role="menu">
-                           <li><a href="#">ivyandscorpio@gmail.com</a></li>
-                           <li><a href="#">syuan@nyu.edu</a></li>
+                           <li><a href="/home" accountNum="1">$account.emailAddress$</a></li>
+                           <li><a href="/home" accountNum="2">$second_account.emailAddress$</a></li>
                       </ul>
                 </li>
                 <li role="presentation" class="dropdown">
@@ -34,6 +34,7 @@ home_navbar(user) ::= <<
                       </a>
                       <ul class="dropdown-menu" role="menu">
                             <li><a href="/userinfo">Settings</a></li>
+                            <li><a href="/userinfo">Change Password</a></li>
                             <li><a href="/logout">Log out</a></li>
                       </ul>
                 </li>

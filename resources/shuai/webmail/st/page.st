@@ -45,6 +45,18 @@ page(title, body) ::= <<
              });
             \$("#table_msg tbody tr[msg_label='0']").css({"font-weight":"bold"});
 
+              \$("#add-account").click(function(){
+                \$("#panel-accnt-1").show();
+                \$("#add-account").hide();
+                \$("#remove-account").show();
+              });
+
+              \$("#remove-account").click(function(){
+                \$("#panel-accnt-1").hide();
+                \$("#add-account").show();
+                \$("#remove-account").hide();
+              });
+
          });
        </script>
 

@@ -19,21 +19,15 @@ home_searchrow(account) ::= <<
                 <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Trash">
                       <span class="glyphicon glyphicon-trash"></span>
                 </button>
+
                 <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Move to ...">
                       <span class="glyphicon glyphicon-folder-close"></span>
                 </button>
-                <!-- drowdown button -->
-                <div class="btn-group">
-                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                      <span class="caret"></span>
-                  </button>
-                  <ul class="dropdown-menu" role="menu">
-                      <li><a href="#" data-toggle="modal" data-target="#modalCreateFolder">
-                              <span class="glyphicon glyphicon-plus"></span> Folder
-                          </a>
-                      </li>
-                  </ul>
-                </div>
+
+                <button type="button" class="btn btn-default"  data-placement="top" title="Create folder"  data-toggle="modal" data-target="#modalCreateFolder">
+                      <span class="glyphicon glyphicon-plus"></span>
+                </button>
+
           </div>
     </div>
 

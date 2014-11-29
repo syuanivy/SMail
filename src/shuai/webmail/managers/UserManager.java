@@ -52,6 +52,14 @@ public class UserManager {
         return checkuser;
     }
 
+    //change password, currently do not support other modifications of user information
+    public static void changePassword(User user, String newPW) throws SQLException, IOException{
+        String clause = "UPDATE users SET password = ? WHERE username = ?";
+        PreparedStatement query = db.prepareStatement(clause);
+        query.setString(1, new BASE64Encoder().encode(newPW.getBytes()));//String name
+        query.setString(2, user.getName());// encoded password
+        query.executeUpdate();
+    }
 
 
 

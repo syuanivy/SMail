@@ -60,7 +60,7 @@ public class EmailManager {
             if(account == null) return null;
             int[] builtIn = new int[4];
             String[] clauses = new String[5];
-            clauses[0] = "SELECT COUNT(*) FROM incoming WHERE label=0 AND recipient=?";
+            clauses[0] = "SELECT COUNT(*) FROM incoming WHERE recipient=?";
             clauses[1] = "SELECT COUNT(*) FROM outgoing WHERE label=1 AND sender=?";
             clauses[2] = "SELECT COUNT(*) FROM outgoing WHERE label=2 AND sender=?";
             clauses[3]  = "SELECT COUNT(*) FROM incoming WHERE label=4 AND recipient=?";
@@ -239,8 +239,6 @@ public class EmailManager {
             else return false;
         }
     }
-
-
 
     /*
     public static String Dateformat(String serverDate){

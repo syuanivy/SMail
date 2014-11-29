@@ -32,15 +32,30 @@ public class HomePage extends Page{
     @Override
     public ST body() {
         User user = (User) request.getSession().getAttribute("user");
-        Account account = (Account) request.getSession().getAttribute("account");
-        int label;
+        Account primary_account = (Account) request.getSession().getAttribute("account");
+        Account second_account = null;
+        if(request.getSession().getAttribute("second_account")!=null) second_account = (Account) request.getSession().getAttribute("second_account");
+        int chooseAccount = 1;
+        if(request.getSession().getAttribute("accountNum")!=null) chooseAccount = Integer.parseInt(request.getParameter("accountNum"));
+
+        int label=0;
         if(request.getParameter("folder")!=null) label = Integer.parseInt(request.getParameter("folder"));
-        else label=0;
+
+
         ST home = templates.getInstanceOf("home");
 
-        LeftSideBar leftSideBar = new LeftSideBar(account);
+        ST navbar = templates.getInstanceOf("home_navbar");
+
+        Account accountToShow;
+        if(chooseAccount != 1){
+            accountToShow = second_account;
+            request.getSession().setAttribute("accountToShow", second_account);
+        }
+        else accountToShow = primary_account;
+
+        LeftSideBar leftSideBar = new LeftSideBar(accountToShow);
         try {
-             leftSideBar = LeftSideBar.generateBar(account);
+             leftSideBar = LeftSideBar.generateBar(accountToShow);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -49,17 +64,21 @@ public class HomePage extends Page{
         ST table = templates.getInstanceOf("home_tabledisplay");
         ArrayList<Email> mails = new ArrayList<Email>();
         try{
-            mails = EmailManager.mailList(account,label);
+            mails = EmailManager.mailList(accountToShow,label);
         }catch(SQLException e){
             e.printStackTrace();
         }
 
-        if(user != null & account != null & leftSideBar != null){
+        if(user != null & accountToShow != null & leftSideBar != null){
             home.add("user", user.getName());
-            home.add("account", account.getEmailAddress());
-            center.add("account", account.getEmailAddress());
+            home.add("account", accountToShow.getEmailAddress());
+            navbar.add("user", user);
+            navbar.add("account", primary_account);
+            navbar.add("second_account", second_account);
+            center.add("account", accountToShow.getEmailAddress());
             table.add("maillist", mails);
             center.add("table", table);
+            home.add("navbar",navbar);
             home.add("leftbar", leftSideBar.leftbar);
             home.add("center",center);
             return home;

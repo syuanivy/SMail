@@ -12,15 +12,15 @@ import java.util.ArrayList;
  * Created by ivy on 11/4/14.
  */
 public class Account {
-    private String emailAddress;
-    private String smtpServer;
-    private int smtpPort;
-    private String popServer;
-    private int popPort;
-    private int SSL;//TODO: boolean, by checkbox
-    private String userName;
+    public String emailAddress;
+    public String smtpServer;
+    public int smtpPort;
+    public String popServer;
+    public int popPort;
+    public int SSL;//TODO: boolean, by checkbox
+    public String userName;
     private String password;
-    private String localUser;
+    public String localUser;
     public Folders folders = new Folders();
 
 

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class LoginProcessor extends PostProcessor {
 
@@ -34,13 +35,15 @@ public class LoginProcessor extends PostProcessor {
 
         boolean success = UserManager.isPWCorrect(password, checkuser.getPassword());
         if(success){
-            Account account = AccountManager.getUserAccount(username);
-            if(account==null){
+            ArrayList<Account> accounts = AccountManager.getUserAccount(username);
+            if(accounts.get(0)==null){
                 request.setAttribute("error", "No associated account, try again!");
                 response.sendRedirect("/");
             }else{
+                Account account = accounts.get(0);
                 request.getSession().setAttribute("user", checkuser);
                 request.getSession().setAttribute("account", account);
+                if(accounts.size()>1) request.getSession().setAttribute("second_account", accounts.get(1));
                 response.sendRedirect("/inbox");
             }
         }else{
