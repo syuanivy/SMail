@@ -38,5 +38,8 @@ home_display_reply(user, account, leftbar, display_reply) ::= <<
     $account:compose_window()$
 </div><!-- /.modal compose message -->
 
+<div class="modal fade" id="modalCreateFolder">
+    $account:newfolder_window()$
+</div><!-- /.modal Create Folder -->
 
 >>

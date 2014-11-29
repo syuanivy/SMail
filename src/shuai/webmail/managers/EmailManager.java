@@ -1,10 +1,12 @@
 package shuai.webmail.managers;
 
 
+import shuai.webmail.db_services.DBConnection;
 import shuai.webmail.entities.Account;
 import shuai.webmail.entities.Email;
 import shuai.webmail.entities.Incoming;
 import shuai.webmail.entities.Outgoing;
+import sun.misc.BASE64Encoder;
 
 import java.io.InputStream;
 import java.io.Reader;
@@ -26,6 +28,7 @@ import static shuai.webmail.db_services.DBConnection.*;
 public class EmailManager {
     //Count the number of mails in built in folders
     public static void countMails(Account account) throws SQLException {
+        if (account == null) return;
         Folders folderInfo = account.folders;
         int numFolders = folderInfo.size;
         int[] builtIn = countBuiltIn(account);
@@ -34,26 +37,27 @@ public class EmailManager {
         }
         //count user-defined folders
         if(numFolders>4){
-            for (MyFolder folder:folderInfo.myfolders.subList(4,numFolders-1)){
+            for (int i=4; i<folderInfo.myfolders.size(); i++){
+                int label = folderInfo.myfolders.get(i).label;
                 String[] clauses=new String[2];
                 clauses[0] = "SELECT COUNT(*) FROM incoming WHERE label=? AND recipient=?";
                 clauses[1] = "SELECT COUNT(*) FROM outgoing WHERE label=? AND sender=?";
                 int count=0;
                 for (String clause: clauses){
                     PreparedStatement query = db.prepareStatement(clause);
-                    query.setInt(1,folder.label);
+                    query.setInt(1,label);
                     query.setString(2,account.getEmailAddress());
                     ResultSet result = query.executeQuery();
                     if(result.next()) count += result.getInt(1);
                     result.close();
                 }
-                folder.setCount(count);
+                account.folders.myfolders.get(i).setCount(count);
             }
         }
     }
 
     public static int[] countBuiltIn(Account account) throws SQLException{
-
+            if(account == null) return null;
             int[] builtIn = new int[4];
             String[] clauses = new String[5];
             clauses[0] = "SELECT COUNT(*) FROM incoming WHERE label=0 AND recipient=?";
@@ -145,6 +149,7 @@ public class EmailManager {
 
 
     public static ArrayList<Email> mailList(Account account, int label) throws SQLException{
+        if(account==null) return null;
         ResultSet folderContent = getFolderContent(account, label);
         ArrayList<Email> mailList = new ArrayList<Email>();
         while (folderContent.next()){
@@ -165,6 +170,7 @@ public class EmailManager {
     }
 
     private static ResultSet getFolderContent(Account account, int label) throws SQLException {
+        if (account == null) return null;
         String clause = new String();
         if(label<=3){  //inbox/sender/draft/unread, from single email table: either incoming or outgoing
             switch (label) {
@@ -200,13 +206,15 @@ public class EmailManager {
         PreparedStatement query = db.prepareStatement(clause);
         query.setString(1, foldername);
         query.executeUpdate();
-        clause = "SELECT id FROM Label WHERE label=foldername";
+        clause = "SELECT id FROM Label WHERE label=?";
         query = db.prepareStatement(clause);
+        query.setString(1,foldername);
         ResultSet result =query.executeQuery();
         int newLabel = -1;
         if(result.next()) newLabel = result.getInt(1);
         return newLabel;
     }
+
 
     //move emails between folders
     public static void changeFolder(String id, int labelBefore, int labelAfter) throws SQLException{

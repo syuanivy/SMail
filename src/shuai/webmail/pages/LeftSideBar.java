@@ -37,14 +37,21 @@ public static LeftSideBar generateBar(Account account) throws SQLException{
     for (int i=0; i< 4; i++){
         builtin_counts[i] = account.folders.myfolders.get(i).count;
     }
-    ArrayList<MyFolder> userdefinedlist = new ArrayList<>();
-    if(myfolders.size()>4) userdefinedlist= (ArrayList<MyFolder>) myfolders.subList(4,myfolders.size()-1);
+
     leftSideBar.leftbar.add("account",account.getEmailAddress());
     leftSideBar.leftbar.add("count0", builtin_counts[0] );
     leftSideBar.leftbar.add("count1", builtin_counts[1] );
     leftSideBar.leftbar.add("count2", builtin_counts[2] );
     leftSideBar.leftbar.add("count3", builtin_counts[3] );
-    leftSideBar.leftbar.add("userdefinedlist", userdefinedlist );
+
+
+    if(myfolders.size()>4){
+        ArrayList<MyFolder> userdefinedlist = new ArrayList<MyFolder>();
+        for (int i=4 ; i<myfolders.size(); i++){
+          userdefinedlist.add(myfolders.get(i));
+        }
+        leftSideBar.leftbar.add("userdefinedlist", userdefinedlist );
+    }
     return leftSideBar;
 
 }

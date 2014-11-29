@@ -81,13 +81,16 @@ public class AccountManager {
 
             Folders folders = new Folders();
             if(labels.size()>4){
-                for(int label: labels.subList(4,labels.size()-1)){
+                for(int i=4; i<labels.size(); i++){
+                    int label = labels.get(i);
                     String foldername = findFolderName(label);
                     folders.myfolders.add(new MyFolder(label, foldername));
+                    folders.size +=1;
                 }
             }
-            EmailManager.countMails(account);
             account.setFolders(folders);
+            EmailManager.countMails(account);
+
             return account;
         }
         return null;
@@ -104,4 +107,17 @@ public class AccountManager {
             }
             return foldername;
         }
+    public static void updateFolders(Account account) throws SQLException{
+        int[] labels = account.getFolders();
+        String clause = "UPDATE accounts SET folders = ? WHERE email_address = ?";
+        PreparedStatement query = DBConnection.db.prepareStatement(clause);
+        StringBuffer folders = new StringBuffer();
+        for(int label : labels){
+            folders.append(label).append(",");
+        }
+        query.setString(1, folders.toString());
+        query.setString(2, account.getEmailAddress());
+        query.executeUpdate();
+
+    }
 }

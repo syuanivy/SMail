@@ -38,10 +38,9 @@ public class HomePage extends Page{
         else label=0;
         ST home = templates.getInstanceOf("home");
 
-        ST leftbar = new ST("");
+        LeftSideBar leftSideBar = new LeftSideBar(account);
         try {
-            LeftSideBar leftSideBar = LeftSideBar.generateBar(account);
-            leftbar = leftSideBar.leftbar;
+             leftSideBar = LeftSideBar.generateBar(account);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -55,13 +54,13 @@ public class HomePage extends Page{
             e.printStackTrace();
         }
 
-        if(user != null & account != null){
+        if(user != null & account != null & leftSideBar != null){
             home.add("user", user.getName());
             home.add("account", account.getEmailAddress());
             center.add("account", account.getEmailAddress());
             table.add("maillist", mails);
             center.add("table", table);
-            home.add("leftbar", leftbar);
+            home.add("leftbar", leftSideBar.leftbar);
             home.add("center",center);
             return home;
         }else{

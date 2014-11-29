@@ -40,11 +40,11 @@ page(title, body) ::= <<
                 \$("#panel-forward").hide();
               });
 
-              \$(function() {
-                \$(document).on("click",".clickableRow",function() {
-                   window.document.location = \$(this).attr("href");
-                  });
-              });
+            \$("#table_msg tbody td:not(:first-child)").click(function() {
+                  window.document.location = \$(this).parent().attr("href");
+             });
+            \$("#table_msg tbody tr[msg_label='0']").css({"font-weight":"bold"});
+
          });
        </script>
 

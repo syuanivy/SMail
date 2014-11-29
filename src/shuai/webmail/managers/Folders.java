@@ -10,10 +10,10 @@ public class Folders {
     public ArrayList<MyFolder> myfolders = new ArrayList<MyFolder>();
     public int size = 4;
     public Folders(){
-        this.myfolders.add(new MyFolder(0,"inbox"));// four built in folders
-        this.myfolders.add(new MyFolder(1,"sent"));
-        this.myfolders.add(new MyFolder(2,"draft"));
-        this.myfolders.add(new MyFolder(4,"trash"));
+        this.myfolders.add(new MyFolder(0,"Inbox"));// four built in folders
+        this.myfolders.add(new MyFolder(1,"Sent"));
+        this.myfolders.add(new MyFolder(2,"Draft"));
+        this.myfolders.add(new MyFolder(4,"Trash"));
     }
 
     public void newFolder(String foldername) throws SQLException {
