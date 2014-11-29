@@ -27,6 +27,9 @@ public class ChangeFolderProcessor extends PostProcessor {
     }
     @Override
     public void processPost() throws SQLException, IOException {
+        Account account;
+        if(request.getSession().getAttribute("accountToShow") != null) account = (Account) request.getSession().getAttribute("accountToShow");
+        else account = (Account) request.getSession().getAttribute("account");
         String id = request.getParameter("id");
         int labelBefore = Integer.parseInt(request.getParameter("labelBefore"));
         int labelAfter = Integer.parseInt(request.getParameter("labelAfter"));

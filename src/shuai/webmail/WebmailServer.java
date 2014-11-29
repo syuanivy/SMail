@@ -35,13 +35,13 @@ public class WebmailServer {
         mapping.put("/loginprocessor", LoginProcessor.class);
         mapping.put("/inbox", HomePage.class);
         mapping.put("/home", HomePage.class);
-        mapping.put("/compose", ComposePage.class);
         mapping.put("/composeprocessor", ComposeProcessor.class);
         mapping.put("/logout", LogoutPage.class);
         mapping.put("/home/fetch", FetchProcessor.class);
         mapping.put("/display", MessageDisplayPage.class);
         mapping.put("/save", SaveDraftProcessor.class);
         mapping.put("/home/addfolder", AddFolderProcessor.class);
+        mapping.put("/home/changefolder", ChangeFolderProcessor.class);
 
 
 

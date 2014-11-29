@@ -1,7 +1,8 @@
-home_searchrow(account) ::= <<
+home_searchrow(account,folders) ::= <<
 
 <div class="row">
-    <div class="col-xs-1">
+    <div class="col-xs-2">
+       <div class="btn-group">
           <!-- drowdown button -->
           <div class="btn-group">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -12,16 +13,25 @@ home_searchrow(account) ::= <<
                 <li><a href="#">None</a></li>
             </ul>
           </div>
+
+          <!-- drowdown button -->
+          <div class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                <span class="glyphicon glyphicon-folder-close"></span> <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="#"> Move to...</a</li>
+                $folders:dropdownlist()$
+
+            </ul>
+          </div>
+       </div>
     </div>
 
-    <div class="col-xs-3">
+    <div class="col-xs-2">
           <div class="btn-group" role="group" aria-label="...">
                 <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Trash">
                       <span class="glyphicon glyphicon-trash"></span>
-                </button>
-
-                <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Move to ...">
-                      <span class="glyphicon glyphicon-folder-close"></span>
                 </button>
 
                 <button type="button" class="btn btn-default"  data-placement="top" title="Create folder"  data-toggle="modal" data-target="#modalCreateFolder">

@@ -54,13 +54,16 @@ public class HomePage extends Page{
         else accountToShow = primary_account;
 
         LeftSideBar leftSideBar = new LeftSideBar(accountToShow);
+        SearchRow searchRow = new SearchRow(accountToShow);
         try {
              leftSideBar = LeftSideBar.generateBar(accountToShow);
+             searchRow = SearchRow.generateSearchRow(accountToShow);
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
         ST center = templates.getInstanceOf("home_center");
+
         ST table = templates.getInstanceOf("home_tabledisplay");
         ArrayList<Email> mails = new ArrayList<Email>();
         try{
@@ -76,6 +79,7 @@ public class HomePage extends Page{
             navbar.add("account", primary_account);
             navbar.add("second_account", second_account);
             center.add("account", accountToShow.getEmailAddress());
+            center.add("searchrow", searchRow.searchrow);
             table.add("maillist", mails);
             center.add("table", table);
             home.add("navbar",navbar);

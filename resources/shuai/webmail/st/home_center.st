@@ -1,7 +1,7 @@
-home_center(account,table) ::= <<
+home_center(account, searchrow, table) ::= <<
 
 <div class="col-xs-10">
-			$account:home_searchrow()$
+			$searchrow$
 
 			<br>
 
