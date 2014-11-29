@@ -42,13 +42,15 @@ home_searchrow(account,folders) ::= <<
     </div>
 
     <div class="col-xs-1">
+       <form method ="post" action ="/home/fetch">
           <button type="submit" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Refresh">
                 <span class="glyphicon glyphicon-refresh"></span>
           </button>
+       </form>
     </div>
 
     <div class="col-xs-6">
-          <form class="form-inline" role="form">
+          <form class="form-inline" method="post" action="/search" role="form">
                 <div class="form-group">
                       <label class="sr-only" for="search_input">Email address</label>
                       <input type="search" class="form-control" id="search_input" placeholder="Sender, Email, ...">

@@ -36,7 +36,7 @@ public class LoginProcessor extends PostProcessor {
         boolean success = UserManager.isPWCorrect(password, checkuser.getPassword());
         if(success){
             ArrayList<Account> accounts = AccountManager.getUserAccount(username);
-            if(accounts.get(0)==null){
+            if(accounts.size()==0){
                 request.setAttribute("error", "No associated account, try again!");
                 response.sendRedirect("/");
             }else{
