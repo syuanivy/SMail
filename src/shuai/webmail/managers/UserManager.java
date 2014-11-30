@@ -12,7 +12,7 @@ import java.sql.SQLException;
  */
 public class UserManager {
 
-    //attempt to find user information in db
+    //find user information in db
     public static ResultSet findUser(String name) throws SQLException {
         String clause = "SELECT * FROM users WHERE username= ?";
         PreparedStatement query = db.prepareStatement(clause);

@@ -42,7 +42,7 @@ public class WebmailServer {
         mapping.put("/save", SaveDraftProcessor.class);
         mapping.put("/home/addfolder", AddFolderProcessor.class);
         mapping.put("/home/changefolder", ChangeFolderProcessor.class);
-      //  mapping.put("/addaccount", AddAccountProcessor.class);
+        mapping.put("/addaccount", AddAccountProcessor.class);
         mapping.put("/changePW", ChangePWProcessor.class);
 
 

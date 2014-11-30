@@ -24,8 +24,8 @@ home_navbar(user,account,second_account) ::= <<
                          <span class="glyphicon glyphicon-user"></span> <span class="caret"></span>
                       </a>
                       <ul class="dropdown-menu" role="menu">
-                           <li><a href="/home" accountNum="1">$account.emailAddress$</a></li>
-                           <li><a href="/home" accountNum="2">$second_account.emailAddress$</a></li>
+                           <li><a href="/home?accountNum=1" accountNum="1" >$account.emailAddress$</a></li>
+                           <li><a href="/home?accountNum=2" accountNum="2">$second_account.emailAddress$</a></li>
                       </ul>
                 </li>
                 <li role="presentation" class="dropdown">

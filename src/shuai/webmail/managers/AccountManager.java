@@ -122,4 +122,13 @@ public class AccountManager {
         query.executeUpdate();
 
     }
+
+    //find account information in db
+    public static ResultSet findAccount(String email) throws SQLException {
+        String clause = "SELECT * FROM accounts WHERE email_address= ?";
+        PreparedStatement query = db.prepareStatement(clause);
+        query.setString(1, email);
+        ResultSet result = query.executeQuery();
+        return result;
+    }
 }

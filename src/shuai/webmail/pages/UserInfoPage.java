@@ -29,7 +29,9 @@ public class UserInfoPage extends Page {
     @Override
     public ST body() {
         User user = (User) request.getSession().getAttribute("user");
-        Account account = (Account) request.getSession().getAttribute("account");
+        Account account;
+        if(request.getSession().getAttribute("accountToshow")!=null) account = (Account) request.getSession().getAttribute("accountToshow");
+        else account = (Account) request.getSession().getAttribute("account");
         ST st = templates.getInstanceOf("userinfo");
         if(user != null){
             st.add("user", user);

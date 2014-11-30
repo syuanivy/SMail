@@ -3,6 +3,7 @@ package shuai.webmail.processors;
 import org.eclipse.jetty.server.Authentication;
 import shuai.webmail.entities.Account;
 import shuai.webmail.entities.User;
+import shuai.webmail.mail_services.POPService;
 import shuai.webmail.managers.AccountManager;
 import shuai.webmail.managers.UserManager;
 
@@ -33,6 +34,8 @@ public class LoginProcessor extends PostProcessor {
             return;
         }
 
+
+
         boolean success = UserManager.isPWCorrect(password, checkuser.getPassword());
         if(success){
             ArrayList<Account> accounts = AccountManager.getUserAccount(username);
@@ -44,7 +47,14 @@ public class LoginProcessor extends PostProcessor {
                 request.getSession().setAttribute("user", checkuser);
                 request.getSession().setAttribute("account", account);
                 if(accounts.size()>1) request.getSession().setAttribute("second_account", accounts.get(1));
-                response.sendRedirect("/inbox");
+
+                POPService request = new POPService(account);
+                try {
+                    request.retrieve();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                response.sendRedirect("/home");
             }
         }else{
             request.setAttribute("error", "Wrong password, try again!");
