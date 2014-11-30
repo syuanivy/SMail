@@ -26,7 +26,10 @@ public class AccountManager {
         newaccount.setSmtpPort(Integer.parseInt(fields[2]));
         newaccount.setPopServer(fields[3]);
         newaccount.setPopPort(Integer.parseInt(fields[4]));
-        newaccount.setEncryption(Integer.parseInt(fields[5]));
+        int ssl;
+        if(fields[5].equals("on")) ssl=1;
+        else ssl=0;
+        newaccount.setEncryption(ssl);
         newaccount.setUserName(fields[6]);
         newaccount.setPassword(new BASE64Encoder().encode(fields[7].getBytes()));
         newaccount.setLocalUser(fields[8]);
@@ -39,7 +42,7 @@ public class AccountManager {
         query.setString(3, fields[2]);
         query.setString(4, fields[3]);
         query.setString(5, fields[4]);
-        query.setString(6, fields[5]);
+        query.setInt(6, ssl);
         query.setString(7, fields[6]);
         query.setString(8, new BASE64Encoder().encode(fields[7].getBytes()));
         query.setString(9, fields[8]);

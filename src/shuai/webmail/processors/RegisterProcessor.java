@@ -29,7 +29,7 @@ public class RegisterProcessor extends PostProcessor{
         String[] userFields = {request.getParameter("username"),request.getParameter("password"),request.getParameter("retype")};
         String[] accountFields = {request.getParameter("email"),request.getParameter("smtp"),
                 request.getParameter("smtpPort"),request.getParameter("pop"),request.getParameter("popPort"),
-                request.getParameter("ssl"),request.getParameter("emailUsername"),request.getParameter("emailPassword"),
+                request.getParameter("ssl"),request.getParameter("emailUser"),request.getParameter("emailPassword"),
                 userFields[0]};
 
 
