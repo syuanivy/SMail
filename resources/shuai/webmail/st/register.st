@@ -1,7 +1,6 @@
 register() ::= <<
 <br>
 
-
 <div class="container">
   <div class="row">
       <div class="col-xs-2 col-xs-offset-5">
@@ -21,7 +20,7 @@ register() ::= <<
  <div class="row">
 
   <div class="col-xs-8 col-xs-offset-2">
-    <form method="post" action="registerprocessor">
+        <form method="post" action="/registerprocessor">
 
             <div class="row">
                   <div class="col-xs-6">
@@ -76,7 +75,7 @@ register() ::= <<
                   <div class="col-xs-6">
                     <div class="form-group">
                       <label for="inputSMTP">Username*</label>
-                      <input type="text" name="emailUser" class="form-control" id="inputSMTP" placeholder="smtp.xxx.com" required>
+                      <input type="text" name="emailUser" class="form-control" id="inputSMTP" placeholder="Username" required>
                     </div>
                   </div>
 
@@ -89,48 +88,48 @@ register() ::= <<
             </div>
 
 
-        <div class="row">
-                  <div class="col-xs-6">
+            <div class="row">
+                      <div class="col-xs-6">
+                            <div class="form-group">
+                              <label for="inputSMTP">SMTP*</label>
+                              <input type="text" name="smtp" class="form-control" id="inputSMTP" placeholder="smtp.xxx.com" required>
+                            </div>
+                      </div>
+
+                      <div class="col-xs-6">
                         <div class="form-group">
-                          <label for="inputSMTP">SMTP*</label>
-                          <input type="text" name="smtp" class="form-control" id="inputSMTP" placeholder="smtp.xxx.com" required>
+                          <label for="inputSMTPport">SMTP Port*</label>
+                          <input type="text" name="smtpPort" class="form-control" id="inputSMTPport" placeholder="25 or 465" required>
                         </div>
+                      </div>
+
+            </div>
+
+            <div class="row">
+                  <div class="col-xs-6">
+                    <div class="form-group">
+                      <label for="inputPOP">POP*</label>
+                      <input type="text" name="pop" class="form-control" id="inputPOP" placeholder="pop.xxx.com" required>
+                    </div>
                   </div>
 
                   <div class="col-xs-6">
                     <div class="form-group">
-                      <label for="inputSMTPport">SMTP Port*</label>
-                      <input type="text" name="smtpPort" class="form-control" id="inputSMTPport" placeholder="25" required>
+                      <label for="inputPOPport">POP Port* </label>
+                      <input type="text" name="popPort" class="form-control" id="inputPOPport" placeholder="110 or 995" required>
                     </div>
                   </div>
 
-        </div>
+            </div>
 
-        <div class="row">
-              <div class="col-xs-6">
-                <div class="form-group">
-                  <label for="inputPOP">POP*</label>
-                  <input type="text" name="pop" class="form-control" id="inputPOP" placeholder="pop.xxx.com" required>
-                </div>
+            <div class="row">
+              <div class="col-xs-12 text-center">
+                <button type="submit" class="btn btn-primary btn-lg">Register</button>
               </div>
-
-              <div class="col-xs-6">
-                <div class="form-group">
-                  <label for="inputPOPport">POP Port* </label>
-                  <input type="text" name="popPort" class="form-control" id="inputPOPport" placeholder="995" required>
-                </div>
-              </div>
-
-        </div>
-
-    <div class="row">
-      <div class="col-xs-12 text-center">
-        <button type="submit" class="btn btn-primary btn-lg">Register</button>
-      </div>
-    </div>
+            </div>
 
 
- </form>
+        </form>
 
   </div> <!-- col-->
 

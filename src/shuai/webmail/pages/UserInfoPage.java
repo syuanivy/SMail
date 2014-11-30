@@ -1,6 +1,7 @@
 package shuai.webmail.pages;
 
 import org.stringtemplate.v4.ST;
+import shuai.webmail.entities.Account;
 import shuai.webmail.entities.User;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,9 +29,11 @@ public class UserInfoPage extends Page {
     @Override
     public ST body() {
         User user = (User) request.getSession().getAttribute("user");
+        Account account = (Account) request.getSession().getAttribute("account");
         ST st = templates.getInstanceOf("userinfo");
         if(user != null){
-            st.add("user", user.getName());
+            st.add("user", user);
+            st.add("defaultAccount", account);
             return st;
         }else{
             return null;

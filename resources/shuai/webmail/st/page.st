@@ -57,6 +57,10 @@ page(title, body) ::= <<
                 \$("#remove-account").hide();
               });
 
+              if (\$("#sslCheckbox").attr("ssl") == 1){
+                \$("#sslCheckbox").prop('checked', true);}
+              else{
+                \$("#sslCheckbox").prop('checked', false);}
          });
        </script>
 

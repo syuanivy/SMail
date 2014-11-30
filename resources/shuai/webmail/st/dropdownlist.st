@@ -1,3 +1,7 @@
 dropdownlist(folder) ::= <<
-    <li><a href="/home/changefolder?labelAfter=$folder.label$" labelAfter="$folder.label$" >$folder.foldername$</a></li>
+    <li>
+        <form method=post action="/home/changefolder">
+            <button type="submit" class="btn btn-link" labelAfter="$folder.label$" >$folder.foldername$</button>
+        </form>
+    </li>
 >>
