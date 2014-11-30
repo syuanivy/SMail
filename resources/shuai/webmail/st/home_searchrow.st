@@ -29,10 +29,11 @@ home_searchrow(account,folders) ::= <<
     </div>
 
     <div class="col-xs-2">
-          <form id="form_trash" method="post" action="/home/changefolder">
-              <input type="hidden" name="selected_mails" value="0">
-              <input type="hidden" name="labelAfter" value="4">
+
               <div class="btn-group" role="group" aria-label="...">
+                <form class="form_move" method="post" action="/home/changefolder">
+                    <input type="hidden" name="selected_mails" value="0">
+                    <input type="hidden" name="labelAfter" value="4">
 
                     <button type="submit" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Trash">
                           <span class="glyphicon glyphicon-trash"></span>
@@ -43,8 +44,13 @@ home_searchrow(account,folders) ::= <<
                           <span class="glyphicon glyphicon-plus"></span>
                     </button>
 
+                    <button type="submit" formaction="/emptytrash" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Empty Trash">
+                          <span class="glyphicon glyphicon-fire"></span>
+                    </button>
+                </form>
+
               </div>
-          </form>
+
     </div>
 
     <div class="col-xs-1">
@@ -55,7 +61,7 @@ home_searchrow(account,folders) ::= <<
        </form>
     </div>
 
-    <div class="col-xs-6">
+    <div class="col-xs-5">
           <form class="form-inline" method="post" action="/search" role="form">
                 <div class="form-group">
                       <label class="sr-only" for="search_input">Email address</label>

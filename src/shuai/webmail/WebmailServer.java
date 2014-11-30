@@ -26,44 +26,48 @@ public class WebmailServer {
 
     public static Map<String,Class> mapping = new HashMap<String, Class>();
     static {
+        //Pages respond to doGET
         mapping.put("/", LoginPage.class);
         mapping.put("/login", LoginPage.class);
-        mapping.put("/registerprocessor", RegisterProcessor.class);
         mapping.put("/register", RegisterPage.class);
         mapping.put("/welcome", WelcomePage.class);
         mapping.put("/userinfo", UserInfoPage.class);
-        mapping.put("/loginprocessor", LoginProcessor.class);
         mapping.put("/inbox", HomePage.class);
         mapping.put("/home", HomePage.class);
-        mapping.put("/composeprocessor", ComposeProcessor.class);
         mapping.put("/logout", LogoutPage.class);
-        mapping.put("/home/fetch", FetchProcessor.class);
         mapping.put("/display", MessageDisplayPage.class);
+
+        //Processors respond to doPOST
+        mapping.put("/loginprocessor", LoginProcessor.class);
+        mapping.put("/registerprocessor", RegisterProcessor.class);
+        mapping.put("/addaccount", AddAccountProcessor.class);
+        mapping.put("/changePW", ChangePWProcessor.class);
+        mapping.put("/home/fetch", FetchProcessor.class);
+        mapping.put("/composeprocessor", ComposeProcessor.class);
         mapping.put("/save", SaveDraftProcessor.class);
         mapping.put("/home/addfolder", AddFolderProcessor.class);
         mapping.put("/home/changefolder", ChangeFolderProcessor.class);
-        mapping.put("/addaccount", AddAccountProcessor.class);
-        mapping.put("/changePW", ChangePWProcessor.class);
-
+        mapping.put("/emptytrash", EmptyTrashProcessor.class);
 
 
 
     }
 
     public static void main(String[] args) throws Exception {
-        //Make sure there are two program arguments set in Run-Edit Configuration:
-        //In this case are the paths of the static-pages and shuai.webmail.log folders
+        //Two program arguments:
+        //1.dir of the static-pages
+        //2.dir of log files
         if ( args.length<2 ) {
             System.err.println("java shuai.webmail.Server static-files-dir shuai.webmail.log-dir");
             System.exit(1);
         }
         String staticFilesDir = args[0];     // static-pages
-        String logDir = args[1];             //shuai.webmail.log
+        String logDir = args[1];             //log
+
+
         //set the context handler for the server, "/"
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.setContextPath("/");
-
-
 
 
         String jettyDistKeystore = "resources/shuai/webmail/static-pages/keystore";

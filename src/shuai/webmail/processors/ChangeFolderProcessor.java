@@ -28,13 +28,13 @@ public class ChangeFolderProcessor extends PostProcessor {
     }
     @Override
     public void processPost() throws SQLException, IOException {
-        Account account;
-        if(request.getSession().getAttribute("accountToShow") != null) account = (Account) request.getSession().getAttribute("accountToShow");
-        else account = (Account) request.getSession().getAttribute("account");
 
         String ids = request.getParameter("selected_mails");
         String[] id_array = ids.split(",");
-        if(id_array.length==0) response.sendRedirect("/home");
+        if(id_array[0].equals("")) {
+            response.sendRedirect("/home");
+            return;
+        }
         int labelAfter = Integer.parseInt(request.getParameter("labelAfter"));
         if(labelAfter==0) labelAfter=3;
         for (String id: id_array) {
