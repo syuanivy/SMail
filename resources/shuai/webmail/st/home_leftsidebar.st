@@ -18,7 +18,7 @@ home_leftsidebar(account, count0, count1,count2,count3, userdefinedlist) ::= <<
                 <a href="/home?folder=2" folder="2" class="list-group-item">
                 <span class="glyphicon glyphicon-pencil"></span> Draft <span class="badge">$count2$</span>
                 </a>
-                <a href="/home?folder=3" folder="3" class="list-group-item">
+                <a href="/home?folder=4" folder="4" class="list-group-item">
                 <span class="glyphicon glyphicon-trash"></span> Trash <span class="badge">$count3$</span>
                 </a>
 

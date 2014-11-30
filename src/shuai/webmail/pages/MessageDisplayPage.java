@@ -45,7 +45,7 @@ public class MessageDisplayPage extends Page {
         Email email = new Email();
         try{
             email = EmailManager.findEmail(emailID,Integer.parseInt(label));
-            if(email.label==0) EmailManager.changeFolder(email.id, email.label, 3);
+            if(email.label==0) EmailManager.changeFolder(email.id, 3);
         }catch(SQLException e){
             e.printStackTrace();
         }

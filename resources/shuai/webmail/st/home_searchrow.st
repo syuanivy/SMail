@@ -9,8 +9,8 @@ home_searchrow(account,folders) ::= <<
                 <span class="glyphicon glyphicon-list"></span> <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu">
-                <li><a href="#">All</a></li>
-                <li><a href="#">None</a></li>
+                <li><a id="select_all" href="#">All</a></li>
+                <li><a id="select_none" href="#">None</a></li>
             </ul>
           </div>
 
@@ -29,16 +29,22 @@ home_searchrow(account,folders) ::= <<
     </div>
 
     <div class="col-xs-2">
-          <div class="btn-group" role="group" aria-label="...">
-                <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Trash">
-                      <span class="glyphicon glyphicon-trash"></span>
-                </button>
+          <form id="form_trash" method="post" action="/home/changefolder">
+              <input type="hidden" name="selected_mails" value="0">
+              <input type="hidden" name="labelAfter" value="4">
+              <div class="btn-group" role="group" aria-label="...">
 
-                <button type="button" class="btn btn-default"  data-placement="top" title="Create folder"  data-toggle="modal" data-target="#modalCreateFolder">
-                      <span class="glyphicon glyphicon-plus"></span>
-                </button>
+                    <button type="submit" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Trash">
+                          <span class="glyphicon glyphicon-trash"></span>
+                    </button>
 
-          </div>
+
+                    <button type="button" class="btn btn-default"  data-placement="top" title="Create folder"  data-toggle="modal" data-target="#modalCreateFolder">
+                          <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+
+              </div>
+          </form>
     </div>
 
     <div class="col-xs-1">

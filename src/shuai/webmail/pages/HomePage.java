@@ -36,9 +36,9 @@ public class HomePage extends Page{
         Account second_account = null;
         if(request.getSession().getAttribute("second_account")!=null) second_account = (Account) request.getSession().getAttribute("second_account");
         int chooseAccount = 1;
-        System.out.println(request.getParameter("accountNum"));
+
         if(request.getParameter("accountNum")!=null) chooseAccount = Integer.parseInt(request.getParameter("accountNum"));
-        System.out.println(chooseAccount);
+
         int label=0;
         if(request.getParameter("folder")!=null) label = Integer.parseInt(request.getParameter("folder"));
 
@@ -54,7 +54,6 @@ public class HomePage extends Page{
         }
         else accountToShow = primary_account;
 
-        System.out.println(accountToShow.emailAddress);
         LeftSideBar leftSideBar = new LeftSideBar(accountToShow);
         SearchRow searchRow = new SearchRow(accountToShow);
         try {

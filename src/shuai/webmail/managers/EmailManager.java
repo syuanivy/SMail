@@ -60,7 +60,7 @@ public class EmailManager {
             if(account == null) return null;
             int[] builtIn = new int[4];
             String[] clauses = new String[5];
-            clauses[0] = "SELECT COUNT(*) FROM incoming WHERE recipient=?";
+            clauses[0] = "SELECT COUNT(*) FROM incoming WHERE (label=0 OR label=3) AND recipient=?";
             clauses[1] = "SELECT COUNT(*) FROM outgoing WHERE label=1 AND sender=?";
             clauses[2] = "SELECT COUNT(*) FROM outgoing WHERE label=2 AND sender=?";
             clauses[3]  = "SELECT COUNT(*) FROM incoming WHERE label=4 AND recipient=?";
@@ -172,16 +172,15 @@ public class EmailManager {
     private static ResultSet getFolderContent(Account account, int label) throws SQLException {
         if (account == null) return null;
         String clause = new String();
-        if(label<=3){  //inbox/sender/draft/unread, from single email table: either incoming or outgoing
+        if(label<3){  //inbox/sendt/draft, from single email table: either incoming or outgoing
             switch (label) {
                 case 0://inbox
-                    clause = "SELECT id, sender, recipient, subject, body, time,attached, label FROM incoming WHERE recipient = ? ORDER BY time DESC"; break;
+                    clause = "SELECT id, sender, recipient, subject, body, time,attached, label FROM incoming WHERE (label=0 OR label=3) AND recipient = ? ORDER BY time DESC"; break;
                 case 1://sent
                     clause = "SELECT id, sender, recipient, subject, body, time,attached, label FROM outgoing WHERE sender = ? AND label = 1 ORDER BY time DESC"; break;
                 case 2://draft
                     clause = "SELECT id, sender, recipient, subject, body, time,attached, label FROM outgoing WHERE sender = ? AND label = 2 ORDER BY time DESC"; break;
-                case 3://inbox read
-                    clause = "SELECT id, sender, recipient, subject, body, time,attached, label FROM incoming WHERE recipient = ? AND label = 3 ORDER BY time DESC"; break;
+
             }
             PreparedStatement query = db.prepareStatement(clause);
             query.setString(1, account.getEmailAddress());
@@ -217,8 +216,9 @@ public class EmailManager {
 
 
     //move emails between folders
-    public static void changeFolder(String id, int labelBefore, int labelAfter) throws SQLException{
+    public static void changeFolder(String id,  int labelAfter) throws SQLException{
         String clause= new String();
+        int labelBefore = findLabel(id);
         if(isIncoming(id, labelBefore)) clause = "UPDATE incoming SET label = ? WHERE id = ?";
         else clause = "UPDATE outgoing SET label = ? WHERE id = ?";
         PreparedStatement query = db.prepareStatement(clause);
@@ -232,14 +232,38 @@ public class EmailManager {
         if(label==0 || label==3) return true;//inbox or read
         if(label==1 || label==2) return false; // sent or draft
         else {//find by id
-            PreparedStatement query = db.prepareStatement("SELECT * FROM incoming WHERE id=?");
-            query.setString(1,id);
-            ResultSet result = query.executeQuery();
-            if(result.next()) return true;
+            ResultSet[] results = findMail(id);
+            ResultSet result_incoming = results[0];
+            ResultSet result_outgoing = results[1];
+            if(result_incoming.next()) return true;
             else return false;
         }
+
     }
 
+    public static int findLabel(String id) throws SQLException{
+        ResultSet[] results = findMail(id);
+        ResultSet result_incoming = results[0];
+        ResultSet result_outgoing = results[1];
+        if(result_incoming.next()) return result_incoming.getInt(1);
+        else return result_outgoing.getInt(1);
+    }
+
+    public static ResultSet[] findMail(String id) throws SQLException{
+        String clause_incoming = "SELECT label FROM incoming WHERE id=?";
+        String clause_outgoing = "SELECT label FROM outgoing WHERE id=?";
+        PreparedStatement query_incoming = db.prepareStatement(clause_incoming);
+        PreparedStatement query_outgoing = db.prepareStatement(clause_outgoing);
+        query_incoming.setString(1, id);
+        query_outgoing.setString(1, id);
+        ResultSet result_incoming = query_incoming.executeQuery();
+        ResultSet result_outgoing = query_outgoing.executeQuery();
+        ResultSet[] results = new ResultSet[2];
+        results[0] = result_incoming;
+        results[1] = result_outgoing;
+        return results;
+
+    }
     /*
     public static String Dateformat(String serverDate){
         String serverFormat;

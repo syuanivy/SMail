@@ -61,6 +61,35 @@ page(title, body) ::= <<
                 \$("#sslCheckbox").prop('checked', true);}
               else{
                 \$("#sslCheckbox").prop('checked', false);}
+
+
+
+              \$("#select_all").click(function() {
+                    \$('#table_msg :checkbox').prop('checked', true);
+                })
+
+              \$("#select_none").click(function() {
+                    \$('#table_msg :checkbox').prop('checked', false);
+                })
+
+              \$(".form_move").submit( function(e) {
+                    var ids = "";  // hidden value to submit
+                    \$('#table_msg input:checked').each(function() {
+                        ids += \$(this).parents("tr").attr("id") + ",";
+                    });
+                    var input = \$(this).find("input[name=selected_mails]");
+                    input.val( ids );   // set hidden value
+                    return true;        //still POST; if return false, skip POST.
+               })
+               \$("#form_trash").submit( function(e) {
+                   var ids = "";  // hidden value to submit
+                   \$('#table_msg input:checked').each(function() {
+                       ids += \$(this).parents("tr").attr("id") + ",";
+                   });
+                   var input = \$(this).find("input[name=selected_mails]");
+                   input.val( ids );   // set hidden value
+                   return true;        //still POST; if return false, skip POST.
+              })
          });
        </script>
 

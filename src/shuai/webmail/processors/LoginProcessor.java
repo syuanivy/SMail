@@ -48,12 +48,12 @@ public class LoginProcessor extends PostProcessor {
                 request.getSession().setAttribute("account", account);
                 if(accounts.size()>1) request.getSession().setAttribute("second_account", accounts.get(1));
 
-                POPService request = new POPService(account);
+                /*POPService request = new POPService(account);
                 try {
                     request.retrieve();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
-                }
+                }*/
                 response.sendRedirect("/home");
             }
         }else{
