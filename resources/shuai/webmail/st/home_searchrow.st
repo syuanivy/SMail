@@ -60,16 +60,16 @@ home_searchrow(account,folders) ::= <<
     </div>
 
     <div class="col-xs-5">
-          <form class="form-inline" method="post" action="/search" role="form">
+          <form class="form-inline" id="form_search">
                 <div class="form-group">
                       <label class="sr-only" for="search_input">Search Label</label>
-                      <input type="search" name="keyword" value="bug" class="form-control" id="search_input" placeholder="Sender, Subject, ...">
+                      <input type="search" name="keyword" class="form-control" id="search_input" placeholder="Sender, Subject, ...">
                 </div>
-                <button type="button" class="btn btn-primary" href="/home">
+                <button type="submit" class="btn btn-primary" >
                       <span class="glyphicon glyphicon-search"></span>
                 </button>
                 <div class="form-group">
-                      <select class="form-control" name="by" value="Message">
+                      <select class="form-control" name="by" >
                             <option>From</option>
                             <option>To</option>
                             <option>Subject</option>

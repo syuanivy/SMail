@@ -92,16 +92,16 @@ public class POPClient {
         verifyOK(msgLine);
 
         Incoming newMail = new Incoming();
-        StringBuffer content = new StringBuffer();
+        StringBuffer input = new StringBuffer();
         try {
             //obtain the whole message from the server including the end signal
             while (!(msgLine = in.readLine()).equalsIgnoreCase(".")) {
-                content.append(msgLine + "\n");
+                input.append(msgLine + "\n");
             }
-            content.append("." + "\n");
+           input.append("." + "\n");
 
             Session session = Session.getDefaultInstance(new Properties());
-            InputStream inputStream = new ByteArrayInputStream(content.toString().getBytes());
+            InputStream inputStream = new ByteArrayInputStream(input.toString().getBytes());
             MimeMessage message = new MimeMessage(session, inputStream);
             newMail.setID(UID);
             newMail.setTime(message.getSentDate().toString());
@@ -113,8 +113,9 @@ public class POPClient {
             newMail.setRecipient(recipientlist);
 
             String contentType = message.getContentType();
-            String body = getBodyAttachment(message, contentType)[0];
-            String attachment = getBodyAttachment(message, contentType)[1];
+            String[] content = getBodyAttachment(message, contentType);
+            String body = content [0];
+            String attachment = content[1];
 
             newMail.setBody(body);
             EmailManager.addIncoming(newMail);
@@ -133,18 +134,18 @@ public class POPClient {
         String attachment = "";
 
         if (contentType.contains("multipart")) {
-            // content may contain attachments
-            Multipart multiPart = (Multipart) message.getContent();
-            int numberOfParts = multiPart.getCount();
+            // Try to parse attachment
+            Multipart parts = (Multipart) message.getContent();
+            int numberOfParts = parts.getCount();
             for (int Count = 0; Count < numberOfParts; Count++) {
-                MimeBodyPart part = (MimeBodyPart) multiPart.getBodyPart(Count);
+                MimeBodyPart part = (MimeBodyPart) parts.getBodyPart(Count);
                 if (Part.ATTACHMENT.equalsIgnoreCase(part.getDisposition())) {
-                    // this part is attachment
+                    // attachment
                     String fileName = part.getFileName();
                     attachment += fileName + ", ";
                     part.saveFile("" + File.separator + fileName);
                 } else {
-                    // this part may be the message content
+                    // message
                     body = part.getContent().toString();
                 }
             }

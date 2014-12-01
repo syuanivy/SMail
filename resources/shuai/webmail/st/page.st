@@ -81,6 +81,12 @@ page(title, body) ::= <<
                     input.val( ids );   // set hidden value
                     return true;        //still POST; if return false, skip POST.
                })
+               \$("#form_search").submit( function(e) {
+                    var url = "/home?" + \$(this).serialize();
+                    alert(url)
+                    window.document.location = url;
+                    return false; //override
+                });
          });
        </script>
 
