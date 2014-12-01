@@ -110,7 +110,7 @@ public class HomePage extends Page{
             }
         }
 
-        home.add("user", user.getName());
+        home.add("user", user);
         home.add("account", accountToShow.getEmailAddress());
         navbar.add("user", user);
         navbar.add("account", primary_account);

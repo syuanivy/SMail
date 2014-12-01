@@ -38,6 +38,8 @@ public class MessageDisplayPage extends Page {
             }
         }
         User user = (User) request.getSession().getAttribute("user");
+        Account primary_account= (Account) request.getSession().getAttribute("primary_account");
+        Account second_account = (Account) request.getSession().getAttribute("second_account");
         Account account = (Account) request.getSession().getAttribute("accountToShow");
 
         String emailID = request.getParameter("id");
@@ -50,11 +52,12 @@ public class MessageDisplayPage extends Page {
             e.printStackTrace();
         }
         ST frame = templates.getInstanceOf("home_display_reply");
-
+        ST navbar = templates.getInstanceOf("home_navbar");
         ST leftbar = new ST("");
         try {
             LeftSideBar leftSideBar = LeftSideBar.generateBar(account);
             leftbar = leftSideBar.leftbar;
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -62,8 +65,12 @@ public class MessageDisplayPage extends Page {
         ST message = templates.getInstanceOf("display_reply");
 
         if(user != null & account != null){
-            frame.add("user", user.getName());
+            frame.add("user", user);
             frame.add("account", account.getEmailAddress());
+            navbar.add("user", user);
+            navbar.add("account", primary_account);
+            navbar.add("second_account", second_account);
+            frame.add("navbar",navbar);
             frame.add("leftbar",leftbar);
             message.add("email", email);
             message.add("account", account.getEmailAddress());

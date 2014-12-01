@@ -23,11 +23,18 @@ public class WelcomePage extends Page {
         User user = (User) request.getSession().getAttribute("user");
         ST st = templates.getInstanceOf("welcome");
         if(user != null){
-            st.add("name", user.getName());
+            st.add("name", user);
             return st;
         }else{
+            try{
+                response.sendRedirect("/");
+            }catch(IOException e){
+                e.printStackTrace();
+
+            }
             return null;
         }
+
     }
 
     @Override

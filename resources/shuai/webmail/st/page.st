@@ -69,7 +69,10 @@ page(title, body) ::= <<
               else{
                 \$("#sslCheckbox").prop('checked', false);}
 
-
+              if (\$("#sslCheckbox_second").attr("ssl") == 1){
+                \$("#sslCheckbox_second").prop('checked', true);}
+              else{
+                \$("#sslCheckbox_second").prop('checked', false);}
 
               \$("#select_all").click(function() {
                     \$('#table_msg :checkbox').prop('checked', true);

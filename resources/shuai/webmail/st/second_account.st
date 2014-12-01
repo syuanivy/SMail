@@ -21,7 +21,7 @@ second_account(secondAccount) ::= <<
                           <div class="col-xs-2">
                             <div class="form-group">
                               <label for="SMTPssl">SSL</label>
-                              <input type="checkbox" name="ssl" value="$secondAccount.SSL$" id="ssl">
+                              <input type="checkbox" class="form-control" id="sslCheckbox_second" ssl="$secondAccount.SSL$">
                             </div>
                           </div>
                   </div>
@@ -54,7 +54,7 @@ second_account(secondAccount) ::= <<
                         <div class="col-xs-6">
                           <div class="form-group">
                             <label for="inputSMTPport">SMTP Port*</label>
-                            <input type="text" name="smtpPort" value="$secondAccount.Port$" class="form-control" id="inputSMTPport" placeholder="25 or 465" required>
+                            <input type="text" name="smtpPort" value="$secondAccount.smtpPort$" class="form-control" id="inputSMTPport" placeholder="25 or 465" required>
                           </div>
                         </div>
 

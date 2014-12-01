@@ -1,4 +1,4 @@
-welcome(name) ::= <<
+welcome(user) ::= <<
 <br><br>
 
 <div class="container">
@@ -7,7 +7,7 @@ welcome(name) ::= <<
 		</div>
 		<div class="col-xs-4">
 			<div class="text-center">
-				<h1>Welcome, $name$! </h1>
+				<h1>Welcome, $user.name$! </h1>
 				<h1><small> SMail - A Webmail Service</small></h1>
 				<p><a href="#" class="thumbnail">
 					<img src="/files/images/logo.jpg" alt="125x125">
