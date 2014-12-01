@@ -90,7 +90,7 @@ page(title, body) ::= <<
                })
                \$("#form_search").submit( function(e) {
                     var url = "/home?" + \$(this).serialize();
-                    alert(url)
+
                     window.document.location = url;
                     return false; //override
                 });
@@ -99,9 +99,35 @@ page(title, body) ::= <<
                   var url = \$(this).attr("href");
                   var folder_id = getParameterByName('folder');
                   url += "&folder=" + folder_id;
-                  //alert( url );
                   window.document.location = url;
               })
+
+              \$("#table_msg tbody .td_time").each( function(i) {
+                  var len = 28;
+                  var text = \$(this).text();
+                  if (text.length > len)
+                  \$(this).text( text.substr(0, len-3) + "..." );
+              });
+
+              \$("#table_msg tbody .td_sender").each( function(i) {
+                  var len = 23;
+                  var text = \$(this).text();
+                  if (text.length > len)
+                  \$(this).text( text.substr(0, len-3) + "..." );
+              });
+
+              \$("#table_msg tbody .td_subject").each( function(i) {
+                  var len = 28;
+                  var text = \$(this).text();
+                  if (text.length > len)
+                  \$(this).text( text.substr(0, len-3) + "..." );
+              });
+              \$("#table_msg tbody .td_message").each( function(i) {
+                  var len = 96;
+                  var text = \$(this).text();
+                  if (text.length > len)
+                  \$(this).text( text.substr(0, len-6) + "......" );
+              });
 
          });
        </script>
