@@ -64,7 +64,6 @@ public class HomePage extends Page{
         String keyword = request.getParameter("keyword"); // null if unspecified
         String by = request.getParameter("by"); // null if unspecified
 
-
         //sort action
         String sortby = request.getParameter("sortby"); // null if unspecified
 

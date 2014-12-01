@@ -13,6 +13,13 @@ page(title, body) ::= <<
 
 
        <script>
+         function getParameterByName(name) {
+               name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+               var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                   results = regex.exec(location.search);
+               return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+         }
+
          \$(document).ready(function(){
              \$("#link-cc").click(function(){
               	\$("#formgroup-cc").toggle();
@@ -87,6 +94,15 @@ page(title, body) ::= <<
                     window.document.location = url;
                     return false; //override
                 });
+
+              \$("#ul_sortby > li > a").click( function(){
+                  var url = \$(this).attr("href");
+                  var folder_id = getParameterByName('folder');
+                  url += "&folder=" + folder_id;
+                  //alert( url );
+                  window.document.location = url;
+              })
+
          });
        </script>
 

@@ -85,10 +85,10 @@ home_searchrow(account,folders) ::= <<
           <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
             <span class="glyphicon glyphicon-sort"></span> <span class="caret"></span>
           </button>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="/home?sortby=time" sortby="time">Time </a></li>
-            <li><a href="/home?sortby=sender" sorby="sender">Sender </a></li>
-            <li><a href="/home?sortby=subject" sortby="subject">Subject </a></li>
+          <ul id="ul_sortby" class="dropdown-menu" role="menu">
+            <li><a href="/home?sortby=time" >Time </a></li>
+            <li><a href="/home?sortby=sender" >Sender </a></li>
+            <li><a href="/home?sortby=subject" >Subject </a></li>
           </ul>
         </div>
     </div>
