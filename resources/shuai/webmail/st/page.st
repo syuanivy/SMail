@@ -81,15 +81,6 @@ page(title, body) ::= <<
                     input.val( ids );   // set hidden value
                     return true;        //still POST; if return false, skip POST.
                })
-               \$("#form_trash").submit( function(e) {
-                   var ids = "";  // hidden value to submit
-                   \$('#table_msg input:checked').each(function() {
-                       ids += \$(this).parents("tr").attr("id") + ",";
-                   });
-                   var input = \$(this).find("input[name=selected_mails]");
-                   input.val( ids );   // set hidden value
-                   return true;        //still POST; if return false, skip POST.
-              })
          });
        </script>
 

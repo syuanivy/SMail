@@ -1,10 +1,5 @@
 package shuai.webmail.entities;
 
-import shuai.webmail.managers.EmailManager;
-import shuai.webmail.managers.Folders;
-import shuai.webmail.managers.MyFolder;
-
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 

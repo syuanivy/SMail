@@ -1,4 +1,4 @@
-package shuai.webmail.managers;
+package shuai.webmail.entities;
 
 /**
  * Created by ivy on 11/28/14.

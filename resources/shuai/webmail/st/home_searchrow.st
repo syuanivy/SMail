@@ -20,9 +20,7 @@ home_searchrow(account,folders) ::= <<
                 <span class="glyphicon glyphicon-folder-close"></span> <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu">
-                <li><a href="#"> Move to...</a</li>
                 $folders:dropdownlist()$
-
             </ul>
           </div>
        </div>
@@ -64,38 +62,37 @@ home_searchrow(account,folders) ::= <<
     <div class="col-xs-5">
           <form class="form-inline" method="post" action="/search" role="form">
                 <div class="form-group">
-                      <label class="sr-only" for="search_input">Email address</label>
-                      <input type="search" class="form-control" id="search_input" placeholder="Sender, Email, ...">
+                      <label class="sr-only" for="search_input">Search Label</label>
+                      <input type="search" name="keyword" value="bug" class="form-control" id="search_input" placeholder="Sender, Subject, ...">
                 </div>
-                <button type="submit" class="btn btn-primary">
+                <button type="button" class="btn btn-primary" href="/home">
                       <span class="glyphicon glyphicon-search"></span>
                 </button>
-                <div class="form-group" >
-                      <select class="form-control">
-                            <option>from </option>
-                            <option>to </option>
-                            <option>subject&nbsp; </option>
-                            <option>message&nbsp;</option>
+                <div class="form-group">
+                      <select class="form-control" name="by" value="Message">
+                            <option>From</option>
+                            <option>To</option>
+                            <option>Subject</option>
+                            <option>Message</option>
                       </select>
                 </div>
           </form>
     </div>
 
     <div class="col-xs-1 text-right" >
-          <!-- drowdown button -->
-          <div class="btn-group">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                <span class="glyphicon glyphicon-sort"></span> <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" role="menu">
-                <li><a href="#">Time </a></li>
-                <li><a href="#">Sender </a></li>
-            </ul>
-          </div>
+        <!-- drowdown button -->
+        <div class="btn-group">
+          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+            <span class="glyphicon glyphicon-sort"></span> <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="/home?sortby=time" sortby="time">Time </a></li>
+            <li><a href="/home?sortby=sender" sorby="sender">Sender </a></li>
+            <li><a href="/home?sortby=subject" sortby="subject">Subject </a></li>
+          </ul>
+        </div>
     </div>
 
-
 </div> <!-- div row-->
-
 
 >>

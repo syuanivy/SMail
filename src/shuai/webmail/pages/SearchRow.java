@@ -5,8 +5,7 @@ import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupDir;
 import shuai.webmail.WebmailServer;
 import shuai.webmail.entities.Account;
-import shuai.webmail.managers.EmailManager;
-import shuai.webmail.managers.MyFolder;
+import shuai.webmail.entities.MyFolder;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

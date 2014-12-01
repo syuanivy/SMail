@@ -1,4 +1,6 @@
-package shuai.webmail.managers;
+package shuai.webmail.entities;
+
+import shuai.webmail.managers.EmailManager;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

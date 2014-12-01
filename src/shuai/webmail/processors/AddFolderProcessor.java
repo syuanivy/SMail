@@ -1,13 +1,7 @@
 package shuai.webmail.processors;
 
 import shuai.webmail.entities.Account;
-import shuai.webmail.entities.Outgoing;
-import shuai.webmail.entities.User;
-import shuai.webmail.mail_services.SMTPService;
 import shuai.webmail.managers.AccountManager;
-import shuai.webmail.managers.EmailManager;
-import shuai.webmail.managers.MyFolder;
-import shuai.webmail.managers.UserManager;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

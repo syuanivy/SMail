@@ -1,24 +1,10 @@
 package shuai.webmail.managers;
 
 
-import shuai.webmail.db_services.DBConnection;
-import shuai.webmail.entities.Account;
-import shuai.webmail.entities.Email;
-import shuai.webmail.entities.Incoming;
-import shuai.webmail.entities.Outgoing;
-import sun.misc.BASE64Encoder;
+import shuai.webmail.entities.*;
 
-import java.io.InputStream;
-import java.io.Reader;
-import java.math.BigDecimal;
-import java.net.URL;
 import java.sql.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.LinkedList;
 
 import static shuai.webmail.db_services.DBConnection.*;
 
@@ -57,7 +43,6 @@ public class EmailManager {
     }
 
     public static int[] countBuiltIn(Account account) throws SQLException{
-            if(account == null) return null;
             int[] builtIn = new int[4];
             String[] clauses = new String[5];
             clauses[0] = "SELECT COUNT(*) FROM incoming WHERE (label=0 OR label=3) AND recipient=?";
@@ -147,26 +132,55 @@ public class EmailManager {
         }
     }
 
-
+    //A list of mails with a specific label
     public static ArrayList<Email> mailList(Account account, int label) throws SQLException{
-        if(account==null) return null;
         ResultSet folderContent = getFolderContent(account, label);
-        ArrayList<Email> mailList = new ArrayList<Email>();
-        while (folderContent.next()){
-            Email mail = new Email();
-            mail.setID(folderContent.getString(1));
-            mail.setSender(folderContent.getString(2));
-            mail.setRecipient(folderContent.getString(3));
-            mail.setSubject(folderContent.getString(4));
-            mail.setBody(folderContent.getString(5));
-            mail.setTime(folderContent.getString(6));
-            mail.setAttachment(folderContent.getInt(7));
-            mail.setLabel(folderContent.getInt(8));
-            mailList.add(mail);
-        }
-        folderContent.close();
+        ArrayList<Email> mailList = constructEmailFromResultSet(folderContent);
         return mailList;
 
+    }
+
+    //A list of mails from search keywords and search by field name
+    public static ArrayList<Email> mailList(Account account, String keyword, String by) throws SQLException{
+        ResultSet searchResults = searchEmailTables(account, keyword, by);
+        ArrayList<Email> emailList = constructEmailFromResultSet(searchResults);
+        return emailList;
+    }
+
+    //A list of mails from sort in a specific folder
+    public static ArrayList<Email> mailList(Account account, int label, String sortby) throws SQLException{
+        ResultSet searchResults = getFolderContent(account, label, sortby);
+        ArrayList<Email> emailList = constructEmailFromResultSet(searchResults);
+        return emailList;
+    }
+
+    private static ResultSet searchEmailTables(Account account, String keyword, String by ) throws SQLException{
+        String clause = new String();
+
+        switch (by) {
+            case "From":// in incoming
+                clause = "SELECT id, sender, recipient, subject, body, time,attached, label FROM incoming WHERE recipient = ? AND sender LIKE ? ORDER BY time DESC"; break;
+            case "To"://in outgoing
+                clause = "SELECT id, sender, recipient, subject, body, time,attached, label FROM outgoing WHERE sender = ? AND recipient LIKE ? ORDER BY time DESC"; break;
+            case "Subject"://in both
+                clause = "SELECT id, sender, recipient, subject, body, time,attached, label FROM outgoing WHERE sender = ? AND subject LIKE ? " +
+                        "UNION SELECT id, sender, recipient, subject, body, time, attached, label FROM incoming WHERE recipient = ? AND subject LIKE ? ORDER BY time DESC"; break;
+            case "Message"://in both
+                clause = "SELECT id, sender, recipient, subject, body, time,attached, label FROM outgoing WHERE sender = ? AND body LIKE ? " +
+                        "UNION SELECT id, sender, recipient, subject, body, time, attached, label FROM incoming WHERE recipient = ? AND body LIKE ? ORDER BY time DESC"; break;
+        }
+        PreparedStatement query = db.prepareStatement(clause);
+        if(by.equals("From") || by.equals("To")){
+            query.setString(1, account.getEmailAddress());
+            query.setString(2,"%"+keyword+"%");
+        }else{
+            query.setString(1, account.getEmailAddress());
+            query.setString(2,"%"+keyword+"%");
+            query.setString(3, account.getEmailAddress());
+            query.setString(4,"%"+keyword+"%");
+        }
+        ResultSet results= query.executeQuery();
+        return results;
     }
 
     private static ResultSet getFolderContent(Account account, int label) throws SQLException {
@@ -197,6 +211,57 @@ public class EmailManager {
             ResultSet folderContent= query.executeQuery();
             return folderContent;
         }
+    }
+
+    private static ResultSet getFolderContent(Account account, int label, String sortby) throws SQLException {
+        String order = "time";
+        if( sortby != null & !sortby.equals("")) order = sortby;
+        String clause = new String();
+        if(label<3){  //inbox/sendt/draft, from single email table: either incoming or outgoing
+            switch (label) {
+                case 0://inbox
+                    clause = "SELECT id, sender, recipient, subject, body, time,attached, label FROM incoming WHERE (label=0 OR label=3) AND recipient = ? ORDER BY ? DESC"; break;
+                case 1://sent
+                    clause = "SELECT id, sender, recipient, subject, body, time,attached, label FROM outgoing WHERE sender = ? AND label = 1 ORDER BY ? DESC"; break;
+                case 2://draft
+                    clause = "SELECT id, sender, recipient, subject, body, time,attached, label FROM outgoing WHERE sender = ? AND label = 2 ORDER BY ? DESC"; break;
+
+            }
+            PreparedStatement query = db.prepareStatement(clause);
+            query.setString(1, account.getEmailAddress());
+            query.setString(2, sortby);
+            ResultSet folderContent= query.executeQuery();
+            return folderContent;
+        }else{//trash or user-defined can be from both incoming and outgoing
+            clause= "SELECT id, sender, recipient, subject, body, time, attached, label FROM outgoing WHERE sender = ? AND label=? ORDER BY ? DESC" +
+                    "UNION SELECT id, sender, recipient, subject, body, time, attached, label FROM incoming WHERE recipient = ? AND label=? ORDER BY ? DESC";
+            PreparedStatement query = db.prepareStatement(clause);
+            query.setString(1, account.getEmailAddress());
+            query.setInt(2,label);
+            query.setString(3, account.getEmailAddress());
+            query.setInt(4,label);
+            query.setString(5,sortby);
+            ResultSet folderContent= query.executeQuery();
+            return folderContent;
+        }
+    }
+
+    private static ArrayList<Email> constructEmailFromResultSet(ResultSet results)throws SQLException{
+        ArrayList<Email> mailList = new ArrayList<Email>();
+        while (results.next()){
+            Email mail = new Email();
+            mail.setID(results.getString(1));
+            mail.setSender(results.getString(2));
+            mail.setRecipient(results.getString(3));
+            mail.setSubject(results.getString(4));
+            mail.setBody(results.getString(5));
+            mail.setTime(results.getString(6));
+            mail.setAttachment(results.getInt(7));
+            mail.setLabel(results.getInt(8));
+            mailList.add(mail);
+        }
+        results.close();
+        return mailList;
     }
 
     //add user-defined folder
@@ -234,7 +299,6 @@ public class EmailManager {
         else {//find by id
             ResultSet[] results = findMail(id);
             ResultSet result_incoming = results[0];
-            ResultSet result_outgoing = results[1];
             if(result_incoming.next()) return true;
             else return false;
         }

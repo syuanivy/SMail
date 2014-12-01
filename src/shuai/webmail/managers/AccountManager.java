@@ -2,6 +2,8 @@ package shuai.webmail.managers;
 
 import shuai.webmail.db_services.DBConnection;
 import shuai.webmail.entities.Account;
+import shuai.webmail.entities.Folders;
+import shuai.webmail.entities.MyFolder;
 import sun.misc.BASE64Encoder;
 
 import java.sql.PreparedStatement;
