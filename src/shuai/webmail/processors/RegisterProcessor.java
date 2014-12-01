@@ -25,7 +25,8 @@ public class RegisterProcessor extends PostProcessor{
 
     @Override
     public void processPost() throws SQLException, IOException {
-        //All fields are required, which is enforced by the UI.
+        //All fields are required, enforced by the UI.
+        //Users have to specify the SMTP server they send mails from.
         String[] userFields = {request.getParameter("username"),request.getParameter("password"),request.getParameter("retype")};
         String[] accountFields = {request.getParameter("email"),request.getParameter("smtp"),
                 request.getParameter("smtpPort"),request.getParameter("pop"),request.getParameter("popPort"),
@@ -33,18 +34,16 @@ public class RegisterProcessor extends PostProcessor{
                 userFields[0]};
 
 
-        //TODO: AJAX client side: check existing user and password1 == password2;
+        //Check if username exists and if password and retype matches
         User checkuser = UserManager.checkUserInfo(userFields[0]);
         Boolean exist = (checkuser != null);
         Boolean match = userFields[1].equals(userFields[2]);
-
-        //TODO: AJAX client side: check all fields are filled;
 
         if (!exist & match) {
             User newuser = UserManager.addUser(userFields);
             Account newaccount = AccountManager.addAccount(accountFields);
             request.getSession().setAttribute("user", newuser);
-            request.getSession().setAttribute("account", newaccount);
+            request.getSession().setAttribute("primary_account", newaccount);
             response.sendRedirect("/welcome");
         } else{
             if(exist) request.setAttribute("error", "User existing, please choose another username!");

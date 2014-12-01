@@ -27,26 +27,31 @@ public class LoginProcessor extends PostProcessor {
     public void processPost() throws SQLException, IOException{
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        User checkuser = UserManager.checkUserInfo(username);
 
+        //Check if already registered
+        User checkuser = UserManager.checkUserInfo(username);
         if(checkuser == null){
             response.sendRedirect("/"); //TODO: AJAX
             return;
         }
 
-
-
+        //Check if password is correct
         boolean success = UserManager.isPWCorrect(password, checkuser.getPassword());
         if(success){
+            //Get all email accounts associated with the user
             ArrayList<Account> accounts = AccountManager.getUserAccount(username);
+            //If the user has an email account
             if(accounts.size()==0){
                 request.setAttribute("error", "No associated account, try again!");
                 response.sendRedirect("/");
             }else{
-                Account account = accounts.get(0);
                 request.getSession().setAttribute("user", checkuser);
-                request.getSession().setAttribute("account", account);
+                request.getSession().setAttribute("primary_account", accounts.get(0));
+                //if user has more than one account
                 if(accounts.size()>1) request.getSession().setAttribute("second_account", accounts.get(1));
+                //default account
+                request.getSession().setAttribute("accountToShow", accounts.get(0));
+
 
                 /*POPService request = new POPService(account);
                 try {

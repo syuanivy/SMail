@@ -20,10 +20,12 @@ public class ChangeFolderProcessor extends PostProcessor {
     }
     @Override
     public void verify() throws IOException {
-        Account account = (Account) request.getSession().getAttribute("account");
-        if(account == null){
-            response.sendRedirect("/login");
-            return;
+        if(request.getSession().getAttribute("user")==null || request.getSession().getAttribute("accountToShow")==null){
+            try{
+                response.sendRedirect("/");
+            }catch(IOException e){
+                e.printStackTrace();
+            }
         }
     }
     @Override

@@ -1,4 +1,4 @@
-userinfo(user, defaultAccount) ::= <<
+userinfo(user, defaultAccount, secondAccount) ::= <<
 <br>
 
 <div class="container">
@@ -138,7 +138,7 @@ userinfo(user, defaultAccount) ::= <<
 
 
 
-        $user:second_account()$
+        $secondAccount:second_account()$
 
 
         <div class="row">

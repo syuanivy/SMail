@@ -16,30 +16,27 @@ public class UserInfoPage extends Page {
         super(request, response);
     }
 
-    public void verify() {
-        if(request.getSession().getAttribute("user")==null){
+    public void verify() {}
+
+    @Override
+    public ST body() {
+        if(request.getSession().getAttribute("accountToShow" )== null) {
             try{
                 response.sendRedirect("/");
+                return null;
             }catch(IOException e){
                 e.printStackTrace();
             }
         }
-    }
-
-    @Override
-    public ST body() {
         User user = (User) request.getSession().getAttribute("user");
-        Account account;
-        if(request.getSession().getAttribute("accountToshow")!=null) account = (Account) request.getSession().getAttribute("accountToshow");
-        else account = (Account) request.getSession().getAttribute("account");
+        Account primary_account = (Account) request.getSession().getAttribute("primary_account");
+        Account second_account = (Account) request.getSession().getAttribute("second_account");
         ST st = templates.getInstanceOf("userinfo");
-        if(user != null){
-            st.add("user", user);
-            st.add("defaultAccount", account);
-            return st;
-        }else{
-            return null;
-        }
+        st.add("user", user);
+        st.add("defaultAccount", primary_account);
+        st.add("secondAccount", second_account);
+        return st;
+
     }
 
     @Override

@@ -21,24 +21,26 @@ public class ComposeProcessor extends PostProcessor {
     }
     @Override
     public void verify() throws IOException {
-        Account account = (Account) request.getSession().getAttribute("account");
-        if(account == null){
-            response.sendRedirect("/login");
-            return;
+        if(request.getSession().getAttribute("user")==null || request.getSession().getAttribute("accountToShow")==null){
+            try{
+                response.sendRedirect("/");
+            }catch(IOException e){
+                e.printStackTrace();
+            }
         }
     }
     @Override
     public void processPost() throws SQLException, IOException{
-       Account account = (Account) request.getSession().getAttribute("account");
-       if(account == null){
+       Account accountToShow = (Account) request.getSession().getAttribute("accountToShow");
+       if(accountToShow == null){
            response.sendRedirect("/login");
            return;
        }
 
-       String[] outgoingFields = {account.getEmailAddress(),request.getParameter("recipient"),
+       String[] outgoingFields = {accountToShow.getEmailAddress(),request.getParameter("recipient"),
                 request.getParameter("subject"),request.getParameter("body")};
         Outgoing email = new Outgoing(outgoingFields[0], outgoingFields[1],outgoingFields[2],outgoingFields[3]);
-        SMTPService request = new SMTPService(email, account);
+        SMTPService request = new SMTPService(email, accountToShow);
         try {
             request.send();
         } catch (InterruptedException e) {

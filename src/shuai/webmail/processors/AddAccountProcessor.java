@@ -22,17 +22,12 @@ public class AddAccountProcessor extends PostProcessor{
     }
     @Override
     public void verify() throws IOException {
-        Account account = (Account) request.getSession().getAttribute("account");
-        if(account == null){
-            response.sendRedirect("/login");
-            return;
-        }
     }
     @Override
     public void processPost() throws SQLException, IOException{
         User user = (User) request.getSession().getAttribute("user");
-        Account account = (Account) request.getSession().getAttribute("account");
-        if(account == null){
+        Account accountToShow = (Account) request.getSession().getAttribute("accountToShow");
+        if(accountToShow == null){
             response.sendRedirect("/login");
             return;
         }

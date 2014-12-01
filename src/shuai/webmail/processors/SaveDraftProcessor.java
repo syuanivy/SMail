@@ -20,21 +20,19 @@ public class SaveDraftProcessor extends PostProcessor {
     }
     @Override
     public void verify() throws IOException {
-        Account account = (Account) request.getSession().getAttribute("account");
-        if(account == null){
-            response.sendRedirect("/login");
-            return;
+        if(request.getSession().getAttribute("user")==null || request.getSession().getAttribute("accountToShow")==null){
+            try{
+                response.sendRedirect("/");
+            }catch(IOException e){
+                e.printStackTrace();
+            }
         }
     }
     @Override
     public void processPost() throws SQLException, IOException {
-        Account account = (Account) request.getSession().getAttribute("account");
-        if(account == null){
-            response.sendRedirect("/login");
-            return;
-        }
+        Account accountToShow = (Account) request.getSession().getAttribute("accountToShow");
 
-        String[] outgoingFields = {account.getEmailAddress(),request.getParameter("recipient"),
+        String[] outgoingFields = {accountToShow.getEmailAddress(),request.getParameter("recipient"),
                 request.getParameter("subject"),request.getParameter("body")};
         Outgoing email = new Outgoing(outgoingFields[0], outgoingFields[1],outgoingFields[2],outgoingFields[3]);
         email.setLabel(2);

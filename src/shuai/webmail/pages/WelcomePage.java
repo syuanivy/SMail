@@ -16,13 +16,6 @@ public class WelcomePage extends Page {
     }
 
     public void verify() {
-        if(request.getSession().getAttribute("user")==null){
-            try{
-                response.sendRedirect("/");
-            }catch(IOException e){
-                e.printStackTrace();
-            }
-        }
     }
 
     @Override

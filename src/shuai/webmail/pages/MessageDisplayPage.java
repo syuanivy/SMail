@@ -25,21 +25,21 @@ public class MessageDisplayPage extends Page {
 
 
     public void verify() {
-        if(request.getSession().getAttribute("user")==null || request.getSession().getAttribute("account")==null){
-            try{
-                response.sendRedirect("/");
-            }catch(IOException e){
-                e.printStackTrace();
-            }
-        }
     }
 
     @Override
     public ST body() {
+        if(request.getSession().getAttribute("accountToShow" )== null) {
+            try{
+                response.sendRedirect("/");
+                return null;
+            }catch(IOException e){
+                e.printStackTrace();
+            }
+        }
         User user = (User) request.getSession().getAttribute("user");
-        Account account;
-        if(request.getSession().getAttribute("accountToShow") != null) account = (Account) request.getSession().getAttribute("accountToShow");
-        else account = (Account) request.getSession().getAttribute("account");
+        Account account = (Account) request.getSession().getAttribute("accountToShow");
+
         String emailID = request.getParameter("id");
         String label = request.getParameter("label");
         Email email = new Email();

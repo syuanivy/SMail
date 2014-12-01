@@ -20,40 +20,40 @@ public class HomePage extends Page{
     }
 
     public void verify() {
-        if(request.getSession().getAttribute("user")==null || request.getSession().getAttribute("account")==null){
-            try{
-                response.sendRedirect("/");
-            }catch(IOException e){
-                e.printStackTrace();
-            }
-        }
     }
 
     @Override
     public ST body() {
-        //get user and accounts information from session
-        User user = (User) request.getSession().getAttribute("user");
-        Account primary_account = (Account) request.getSession().getAttribute("account");
-        Account second_account = null;
-        if(request.getSession().getAttribute("second_account")!=null) second_account = (Account) request.getSession().getAttribute("second_account");
 
-        //account selection
-        int chooseAccount = 1;
-        if(request.getParameter("accountNum")!=null) chooseAccount = Integer.parseInt(request.getParameter("accountNum"));
-        Account accountToShow;
-        if(chooseAccount != 1){
-            accountToShow = second_account;
-            request.getSession().setAttribute("accountToShow", second_account);
-        }
-        else accountToShow = primary_account;
-        if(accountToShow == null){
+        if(request.getSession().getAttribute("accountToShow" )== null) {
             try{
                 response.sendRedirect("/");
+                return null;
             }catch(IOException e){
                 e.printStackTrace();
-            }finally{
-                return null;
             }
+        }
+        //get user and accounts information from session
+        User user = (User) request.getSession().getAttribute("user");
+        Account primary_account= (Account) request.getSession().getAttribute("primary_account");
+        Account second_account = (Account) request.getSession().getAttribute("second_account");
+        Account accountToShow = (Account) request.getSession().getAttribute("accountToShow");
+
+        if(request.getParameter("accountNum")!=null){
+            //account selection from UI, selecting primary account
+            int chooseAccount = Integer.parseInt(request.getParameter("accountNum"));
+
+            if(chooseAccount==1){
+                accountToShow = primary_account;
+                request.getSession().setAttribute("accountToShow", accountToShow);
+            }
+
+            if(chooseAccount == 2){
+                accountToShow = second_account;
+                request.getSession().setAttribute("accountToShow", accountToShow);
+            }
+
+
         }
 
         //folder selection
@@ -61,11 +61,11 @@ public class HomePage extends Page{
         if(request.getParameter("folder")!=null) label = Integer.parseInt(request.getParameter("folder"));
 
         //search action
-        String keyword = request.getParameter("keyword"); // null if unspecified
-        String by = request.getParameter("by"); // null if unspecified
+        String keyword = request.getParameter("keyword");
+        String by = request.getParameter("by");
 
         //sort action
-        String sortby = request.getParameter("sortby"); // null if unspecified
+        String sortby = request.getParameter("sortby");
 
 
         //Construct String Templates;

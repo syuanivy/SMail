@@ -23,18 +23,19 @@ public class EmptyTrashProcessor extends PostProcessor{
         }
         @Override
         public void verify() throws IOException {
-            Account account = (Account) request.getSession().getAttribute("account");
-            if(account == null){
-                response.sendRedirect("/login");
-                return;
+            if(request.getSession().getAttribute("user")==null || request.getSession().getAttribute("accountToShow")==null){
+                try{
+                    response.sendRedirect("/");
+                }catch(IOException e){
+                    e.printStackTrace();
+                }
             }
         }
         @Override
         public void processPost() throws SQLException, IOException {
-            Account account;
-            if(request.getSession().getAttribute("accountToShow") != null) account = (Account) request.getSession().getAttribute("accountToShow");
-            else account = (Account) request.getSession().getAttribute("account");
-            ArrayList<Email> mails_in_trash = EmailManager.mailList(account,4);
+            Account accountToShow = (Account) request.getSession().getAttribute("accountToShow");
+
+            ArrayList<Email> mails_in_trash = EmailManager.mailList(accountToShow,4);
             for(Email trash_mail : mails_in_trash){
                 EmailManager.changeFolder(trash_mail.id, 5);
             }
