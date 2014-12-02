@@ -1,0 +1,36 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="syuanivy-webmail:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/syuanivy_webmail_jar</output-path>
+    <root id="archive" name="syuanivy-webmail.jar">
+      <element id="module-output" name="syuanivy-webmail" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../libraries/ST-4.0.8.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../libraries/javamail-1.4.7/mail.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../libraries/jetty-distribution-9.2.3.v20140905/lib/servlet-api-3.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../libraries/jetty-distribution-9.2.3.v20140905/lib/jetty-schemas-3.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../libraries/jetty-distribution-9.2.3.v20140905/lib/jetty-io-9.2.3.v20140905.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../libraries/jetty-distribution-9.2.3.v20140905/lib/jetty-jmx-9.2.3.v20140905.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../libraries/jetty-distribution-9.2.3.v20140905/lib/jetty-xml-9.2.3.v20140905.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../libraries/jetty-distribution-9.2.3.v20140905/lib/jetty-http-9.2.3.v20140905.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../libraries/jetty-distribution-9.2.3.v20140905/lib/jetty-jaas-9.2.3.v20140905.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../libraries/jetty-distribution-9.2.3.v20140905/lib/jetty-jndi-9.2.3.v20140905.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../libraries/jetty-distribution-9.2.3.v20140905/lib/jetty-plus-9.2.3.v20140905.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../libraries/jetty-distribution-9.2.3.v20140905/lib/jetty-util-9.2.3.v20140905.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../libraries/jetty-distribution-9.2.3.v20140905/lib/jetty-jaspi-9.2.3.v20140905.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../libraries/jetty-distribution-9.2.3.v20140905/lib/jetty-proxy-9.2.3.v20140905.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../libraries/jetty-distribution-9.2.3.v20140905/lib/jetty-client-9.2.3.v20140905.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../libraries/jetty-distribution-9.2.3.v20140905/lib/jetty-deploy-9.2.3.v20140905.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../libraries/jetty-distribution-9.2.3.v20140905/lib/jetty-server-9.2.3.v20140905.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../libraries/jetty-distribution-9.2.3.v20140905/lib/jetty-webapp-9.2.3.v20140905.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../libraries/jetty-distribution-9.2.3.v20140905/lib/jetty-rewrite-9.2.3.v20140905.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../libraries/jetty-distribution-9.2.3.v20140905/lib/jetty-servlet-9.2.3.v20140905.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../libraries/jetty-distribution-9.2.3.v20140905/lib/jetty-security-9.2.3.v20140905.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../libraries/jetty-distribution-9.2.3.v20140905/lib/jetty-servlets-9.2.3.v20140905.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../libraries/jetty-distribution-9.2.3.v20140905/lib/jetty-quickstart-9.2.3.v20140905.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../libraries/jetty-distribution-9.2.3.v20140905/lib/jetty-alpn-client-9.2.3.v20140905.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../libraries/jetty-distribution-9.2.3.v20140905/lib/jetty-alpn-server-9.2.3.v20140905.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../libraries/jetty-distribution-9.2.3.v20140905/lib/jetty-annotations-9.2.3.v20140905.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../libraries/jetty-distribution-9.2.3.v20140905/lib/jetty-continuation-9.2.3.v20140905.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../libraries/sqlite-jdbc-3.8.7.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

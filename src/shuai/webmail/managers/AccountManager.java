@@ -29,8 +29,8 @@ public class AccountManager {
         newaccount.setPopServer(fields[3]);
         newaccount.setPopPort(Integer.parseInt(fields[4]));
         int ssl;
-        if(fields[5].equals("on")) ssl=1;
-        else ssl=0;
+        if(!fields[5].equals("on")) ssl=0;
+        else ssl=1;
         newaccount.setEncryption(ssl);
         newaccount.setUserName(fields[6]);
         newaccount.setPassword(new BASE64Encoder().encode(fields[7].getBytes()));

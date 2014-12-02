@@ -101,7 +101,7 @@ page(title, body) ::= <<
 
               \$("#ul_sortby > li > a").click( function(){
                   var url = \$(this).attr("href");
-                  var folder_id = getParameterByName('folder');
+                  var folder_id = getParameterByName("folder");
                   url += "&folder=" + folder_id;
                   window.document.location = url;
               })

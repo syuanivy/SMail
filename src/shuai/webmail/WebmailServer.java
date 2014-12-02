@@ -58,12 +58,13 @@ public class WebmailServer {
         //Two program arguments:
         //1.dir of the static-pages
         //2.dir of log files
-        if ( args.length<2 ) {
-            System.err.println("java shuai.webmail.Server static-files-dir shuai.webmail.log-dir");
-            System.exit(1);
-        }
-        String staticFilesDir = args[0];     // static-pages
-        String logDir = args[1];             //log
+//        if ( args.length<2 ) {
+//            System.err.println("java shuai.webmail.Server static-files-dir shuai.webmail.log-dir");
+//            System.exit(1);
+//        }
+
+        String staticFilesDir = "resources/shuai/webmail/static-pages";     // static-pages
+        String logDir = "log/Shuai/webmail";             //log
 
 
         //set the context handler for the server, "/"

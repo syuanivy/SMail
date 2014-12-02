@@ -23,7 +23,7 @@ public class WelcomePage extends Page {
         User user = (User) request.getSession().getAttribute("user");
         ST st = templates.getInstanceOf("welcome");
         if(user != null){
-            st.add("name", user);
+            st.add("user", user);
             return st;
         }else{
             try{

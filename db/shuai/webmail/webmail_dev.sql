@@ -220,7 +220,7 @@ INSERT INTO "users" VALUES(21,'zaozao','zaozao');
 INSERT INTO "users" VALUES(22,'niurou','bml1cm91');
 INSERT INTO "users" VALUES(23,'ivy','aXZ5');
 INSERT INTO "users" VALUES(24,'wangwangwang','d2FuZ3dhbmd3YW5n');
-CREATE TABLE accounts(email_address TEXT PRIMARY KEY,smtp TEXT NOT NULL, smtp_port INTEGER NOT NULL, pop TEXT NOT NULL, pop_port INTEGER NOT NULL, ssl INTEGER DEFAULT 1, username TEXT NOT NULL, password TEXT NOT NULL, my_user TEXT NOT NULL, FOREIGN KEY (my_user) REFERENCES users(username));
+CREATE TABLE accounts(email_address TEXT NOT NULL,smtp TEXT NOT NULL, smtp_port INTEGER NOT NULL, pop TEXT NOT NULL, pop_port INTEGER NOT NULL, ssl INTEGER DEFAULT 1, username TEXT NOT NULL, password TEXT NOT NULL, my_user TEXT NOT NULL, FOREIGN KEY (my_user) REFERENCES users(username));
 INSERT INTO "accounts" VALUES('yuanshuaikey@163.com','smtp.163.com',465,'pop.163.com',995,1,'yuanshuaikey','624426ivy','shuai');
 INSERT INTO "accounts" VALUES('mengmeng@gmail.com','smtp.gmail.com',465,'pop.gmail.com',995,1,'mengmeng','123','mengmeng');
 INSERT INTO "accounts" VALUES('doudou@sina.com','smtp.sina.com',25,'pop.sina.com',110,0,'doudou','doudou','doudou');
