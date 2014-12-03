@@ -119,7 +119,7 @@ page(title, body) ::= <<
               });
 
               \$("#table_msg tbody .td_sender").each( function(i) {
-                  var len = 23;
+                  var len = 28;
                   var text = \$(this).text();
                   if (text.length > len)
                   \$(this).text( text.substr(0, len-3) + "..." );

@@ -6,8 +6,8 @@ display_reply(email, account) ::= <<
 
 		<div class="col-xs-8">
 		    <h4>$email.subject$</h4>
-			<h4><small> From: Shuai Yuan </small><small> &lt;$email.sender$&gt;</small></h4>
-			<h4> <small> To: Snail User </small> <small> &lt;$email.recipient$&gt;</small></h4>
+			<h4><small> From: </small><small> $email.sender$</small></h4>
+			<h4> <small> To: </small> <small> $email.recipient$</small></h4>
 			<h4><small>Date: $email.time$ </small></h4>
 
 	        <div class="form-group">
@@ -37,8 +37,6 @@ display_reply(email, account) ::= <<
 							<div class="col-xs-8">
 								<select class="form-control">
 									<option>$account$</option>
-									<option>syuan@nyu.edu</option>
-									<option>ivyandscorpio@hotmail.com</option>
 								</select>
 							</div>
 						</div>

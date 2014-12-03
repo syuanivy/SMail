@@ -8,14 +8,14 @@ home_tabledisplay(maillist) ::= <<
 				-->
 
 				<div class="panel-body">
-					<table id="table_msg" class="table table-hover" style="cursor: pointer;">
+					<table id="table_msg" class="table table-hover" style="cursor: pointer;word-break: break-all;">
 						<thead>
 							<tr>
-							    <th></th>
-								<th>Sender</th>
-								<th>Subject</th>
-								<th>Message</th>
-								<th>Datetime</th>
+							    <th width=4%></th>
+								<th width=23%>Sender</th>
+								<th width=20%>Subject</th>
+								<th width=33>Message</th>
+								<th width=20%>Datetime</th>
 							</tr>
 						</thead>
 

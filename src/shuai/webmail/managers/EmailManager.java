@@ -4,6 +4,7 @@ package shuai.webmail.managers;
 import shuai.webmail.entities.*;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import static shuai.webmail.db_services.DBConnection.*;
@@ -159,24 +160,24 @@ public class EmailManager {
 
         switch (by) {
             case "From":// in incoming
-                clause = "SELECT id, sender, recipient, subject, body, time,attached, label FROM incoming WHERE recipient = ? AND sender LIKE ? ORDER BY time DESC"; break;
+                clause = "SELECT id, sender, recipient, subject, body, time,attached, label FROM incoming WHERE recipient LIKE ? AND sender LIKE ? ORDER BY time DESC"; break;
             case "To"://in outgoing
                 clause = "SELECT id, sender, recipient, subject, body, time,attached, label FROM outgoing WHERE sender = ? AND recipient LIKE ? ORDER BY time DESC"; break;
             case "Subject"://in both
                 clause = "SELECT id, sender, recipient, subject, body, time,attached, label FROM outgoing WHERE sender = ? AND subject LIKE ? " +
-                        "UNION SELECT id, sender, recipient, subject, body, time, attached, label FROM incoming WHERE recipient = ? AND subject LIKE ? ORDER BY time DESC"; break;
+                        "UNION SELECT id, sender, recipient, subject, body, time, attached, label FROM incoming WHERE recipient LIKE ? AND subject LIKE ? ORDER BY time DESC"; break;
             case "Message"://in both
                 clause = "SELECT id, sender, recipient, subject, body, time,attached, label FROM outgoing WHERE sender = ? AND body LIKE ? " +
-                        "UNION SELECT id, sender, recipient, subject, body, time, attached, label FROM incoming WHERE recipient = ? AND body LIKE ? ORDER BY time DESC"; break;
+                        "UNION SELECT id, sender, recipient, subject, body, time, attached, label FROM incoming WHERE recipient LIKE ? AND body LIKE ? ORDER BY time DESC"; break;
         }
         PreparedStatement query = db.prepareStatement(clause);
         if(by.equals("From") || by.equals("To")){
-            query.setString(1, account.getEmailAddress());
+            query.setString(1, "%"+account.getEmailAddress()+"%");
             query.setString(2,"%"+keyword+"%");
         }else{
             query.setString(1, account.getEmailAddress());
             query.setString(2,"%"+keyword+"%");
-            query.setString(3, account.getEmailAddress());
+            query.setString(3, "%"+account.getEmailAddress()+"%");
             query.setString(4,"%"+keyword+"%");
         }
         ResultSet results= query.executeQuery();
@@ -189,7 +190,7 @@ public class EmailManager {
         if(label<3){  //inbox/sendt/draft, from single email table: either incoming or outgoing
             switch (label) {
                 case 0://inbox
-                    clause = "SELECT id, sender, recipient, subject, body, time,attached, label FROM incoming WHERE (label=0 OR label=3) AND recipient = ? ORDER BY time DESC"; break;
+                    clause = "SELECT id, sender, recipient, subject, body, time,attached, label FROM incoming WHERE (label=0 OR label=3) AND recipient LIKE ? ORDER BY time DESC"; break;
                 case 1://sent
                     clause = "SELECT id, sender, recipient, subject, body, time,attached, label FROM outgoing WHERE sender = ? AND label = 1 ORDER BY time DESC"; break;
                 case 2://draft
@@ -197,16 +198,16 @@ public class EmailManager {
 
             }
             PreparedStatement query = db.prepareStatement(clause);
-            query.setString(1, account.getEmailAddress());
+            query.setString(1, "%"+account.getEmailAddress()+"%");
             ResultSet folderContent= query.executeQuery();
             return folderContent;
         }else{//trash or user-defined can be from both incoming and outgoing
             clause= "SELECT id, sender, recipient, subject, body, time, attached, label FROM outgoing WHERE sender = ? AND label=? " +
-                    "UNION SELECT id, sender, recipient, subject, body, time, attached, label FROM incoming WHERE recipient = ? AND label=? ORDER BY time DESC";
+                    "UNION SELECT id, sender, recipient, subject, body, time, attached, label FROM incoming WHERE recipient LIKE ? AND label=? ORDER BY time DESC";
             PreparedStatement query = db.prepareStatement(clause);
             query.setString(1, account.getEmailAddress());
             query.setInt(2,label);
-            query.setString(3, account.getEmailAddress());
+            query.setString(3, "%"+account.getEmailAddress()+"%");
             query.setInt(4,label);
             ResultSet folderContent= query.executeQuery();
             return folderContent;
@@ -222,7 +223,7 @@ public class EmailManager {
         if(label<3){  //inbox/sendt/draft, from single email table: either incoming or outgoing
             switch (label) {
                 case 0://inbox
-                    select = "SELECT id, sender, recipient, subject, body, time, attached, label FROM incoming WHERE recipient = ? AND (label=0 OR label=3) "; break;
+                    select = "SELECT id, sender, recipient, subject, body, time, attached, label FROM incoming WHERE recipient LIKE ? AND (label=0 OR label=3) "; break;
                 case 1://sent
                     select = "SELECT id, sender, recipient, subject, body, time,attached, label FROM outgoing WHERE sender = ? AND label = 1 "; break;
                 case 2://draft
@@ -231,18 +232,17 @@ public class EmailManager {
             }
             clause = select+orderby;
             PreparedStatement query = db.prepareStatement(clause);
-            System.out.println(query);
-            query.setString(1, account.getEmailAddress());
+            query.setString(1, "%"+account.getEmailAddress()+"%");
             ResultSet folderContent= query.executeQuery();
             return folderContent;
         }else{//trash or user-defined can be from both incoming and outgoing
             select= "SELECT * FROM (SELECT id, sender, recipient, subject, body, time, attached, label FROM outgoing WHERE sender = ? AND label = ?  " +
-                    "UNION SELECT id, sender, recipient, subject, body, time, attached, label FROM incoming WHERE recipient = ? AND label = ?) ";
+                    "UNION SELECT id, sender, recipient, subject, body, time, attached, label FROM incoming WHERE recipient LIKE ? AND label = ?) ";
             clause = select+orderby;
             PreparedStatement query = db.prepareStatement(clause);
             query.setString(1, account.getEmailAddress());
             query.setInt(2,label);
-            query.setString(3, account.getEmailAddress());
+            query.setString(3, "%" + account.getEmailAddress() + "%");
             query.setInt(4,label);
             ResultSet folderContent= query.executeQuery();
             return folderContent;
@@ -331,17 +331,5 @@ public class EmailManager {
         return results;
 
     }
-    /*
-    public static String Dateformat(String serverDate){
-        String serverFormat;
-        String covertedFormat;
-        if(serverDate.startsWith("Date:")){
-            serverFormat = serverDate.substring(serverDate.indexOf(":")+1);
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-            covertedFormat = dateFormat.format(serverFormat);
-            return covertedFormat;
-        }
-        return null;
-    }
-*/
+
 }

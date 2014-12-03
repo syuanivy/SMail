@@ -10,6 +10,7 @@ import sun.misc.BASE64Decoder;
 import javax.mail.*;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimePart;
 import javax.net.ssl.SSLSocketFactory;
 
@@ -110,15 +111,8 @@ public class POPClient {
             setSubject(newMail, message);
             setSender(newMail, message);
             setRecipient(newMail, message);
+            setBody(newMail, message);
 
-
-
-            String contentType = message.getContentType();
-            String[] content = getBodyAttachment(message, contentType);
-            String body = content [0];
-            String attachment = content[1];
-
-            newMail.setBody(body);
             EmailManager.addIncoming(newMail);
             return newMail;
         } catch (IOException e) {
@@ -148,14 +142,18 @@ public class POPClient {
         newMail.setTime(date.toString());
     }
 
-    private String[] getBodyAttachment(MimeMessage message, String contentType) throws IOException, MessagingException {
+    private void setBody(Incoming email, MimeMessage message) throws IOException, MessagingException {
+        String contentType = message.getContentType();
         String body = "";
-        String attachment = "";
+        if(contentType.contains("multipart")){
+            Multipart parts = (Multipart) message.getContent();
+            int numberOfParts = parts.getCount();
+            for (int Count = 0; Count < numberOfParts; Count++) {
+                MimeBodyPart part = (MimeBodyPart) parts.getBodyPart(Count);
+                if (!Part.ATTACHMENT.equalsIgnoreCase(part.getDisposition())) {
+                    body = part.getContent().toString();
+                }
 
-        if(contentType.contains("text/plain")) {
-            Object Body = message.getContent();
-            if (Body != null) {
-                body = Body.toString();
             }
         }else if ( contentType.contains("text/html")) {
             Object Body = message.getContent();
@@ -165,46 +163,14 @@ public class POPClient {
                 html.select("body").tagName("div");
                 body = html.html();
             }
-        }else{
-          //  Multipart parts = (Multipart) message.getContent();
-
-
-
+        }else if(contentType.contains("text/plain")) {
+            Object Body = message.getContent();
+            if (Body != null) {
+                body = Body.toString();
+            }
         }
-        /*if (contentType.contains("multipart")) {
 
-            int numberOfParts = parts.getCount();
-            for (int i = 0; i < numberOfParts; i++) {
-                MimeBodyPart part = (MimeBodyPart) parts.getBodyPart(i);
-                if(part.isMimeType("multipart*//*")){
-                    Multipart multipart = (Multipart) part.getContent();
-                }
-
-
-
-
-
-
-
-                if (Part.ATTACHMENT.equalsIgnoreCase(part.getDisposition())) {
-                    // attachment
-                   *//* String fileName = part.getFileName();
-                    attachment += fileName + ", ";
-                    part.saveFile("" + File.separator + fileName);*//*
-                } else {
-                    // message
-                    body = part.getContent().toString();
-                }
-            }
-
-            if (attachment.length() > 1) {
-                attachment = attachment.substring(0, attachment.length() - 2);
-            }
-        }*/
-        String[] bodyAttachement = new String[2];
-        bodyAttachement[0]=body;
-        bodyAttachement[1]=attachment;
-        return bodyAttachement;
+        email.setBody(body);
     }
 
 
@@ -214,7 +180,16 @@ public class POPClient {
         if (recipients != null){
             StringBuffer recipientString = new StringBuffer();
             for (Address recipient : recipients) {
-                recipientString.append("," + recipient.toString());
+                if(recipient.toString().contains("@")){
+                    String name_address = recipient.toString();
+                    if(name_address.contains("<")){
+                        String[] array1 = name_address.split("<");
+                        String[] array2 = array1[1].split(">");
+                        recipientString.append("," + array2[0].trim());
+                    }else{
+                        recipientString.append("," + recipient.toString());
+                    }
+                }
             }
             recipientlist =  recipientString.toString().substring(1);
         }
@@ -227,14 +202,21 @@ public class POPClient {
         if(senders != null){
             StringBuffer senderString = new StringBuffer();
             for (Address sender : senders) {
-                senderString.append("," + sender.toString());
-
+                if(sender.toString().contains("@")){
+                    String name_address = sender.toString();
+                    if(name_address.contains("<")){
+                        String[] array1 = name_address.split("<");
+                        String[] array2 = array1[1].split(">");
+                        senderString.append("," + array2[0].trim());
+                    }else{
+                        senderString.append("," + sender.toString());
+                    }
+                }
             }
             senderlist =  senderString.toString().substring(1);
-
         }
+
         newMail.setSender(senderlist);
     }
-
 
 }
