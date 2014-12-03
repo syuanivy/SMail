@@ -39,7 +39,7 @@ public class RegisterProcessor extends PostProcessor{
         Boolean exist = (checkuser != null);
         Boolean match = userFields[1].equals(userFields[2]);
 
-        if (!exist & match) {
+        if (!exist && match) {
             User newuser = UserManager.addUser(userFields);
             Account newaccount = AccountManager.addAccount(accountFields);
             request.getSession().setAttribute("user", newuser);

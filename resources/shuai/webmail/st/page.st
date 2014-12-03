@@ -99,11 +99,16 @@ page(title, body) ::= <<
                     return false; //override
                 });
 
-              \$("#ul_sortby > li > a").click( function(){
+              \$("#ul_sortby  li  a").click( function(){
                   var url = \$(this).attr("href");
+                  //alert( url );
                   var folder_id = getParameterByName("folder");
-                  url += "&folder=" + folder_id;
-                  window.document.location = url;
+                  //alert( folder_id );
+                  if(folder_id != "")
+                    url += "&folder=" + folder_id;
+                  //alert( url );
+                  //window.document.location = url;
+                  \$(location).attr('href', url);
               })
 
               \$("#table_msg tbody .td_time").each( function(i) {

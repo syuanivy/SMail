@@ -64,7 +64,7 @@ public class MessageDisplayPage extends Page {
 
         ST message = templates.getInstanceOf("display_reply");
 
-        if(user != null & account != null){
+        if(user != null && account != null){
             frame.add("user", user);
             frame.add("account", account.getEmailAddress());
             navbar.add("user", user);

@@ -67,6 +67,7 @@ public class HomePage extends Page{
 
         //sort action
         String sortby = request.getParameter("sortby");
+        if(sortby !=null && !sortby.equals("time") && !sortby.equals("sender") && !sortby.equals("subject")) sortby = null;
 
 
         //Construct String Templates;

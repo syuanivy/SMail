@@ -215,32 +215,35 @@ public class EmailManager {
 
     private static ResultSet getFolderContent(Account account, int label, String sortby) throws SQLException {
         String order = "time";
-        if( sortby != null & !sortby.equals("")) order = sortby;
+        if( sortby != null && !sortby.equals("")) order = sortby;
         String clause = new String();
+        String select = new String();
+        String orderby = "ORDER BY " + sortby + " DESC";
         if(label<3){  //inbox/sendt/draft, from single email table: either incoming or outgoing
             switch (label) {
                 case 0://inbox
-                    clause = "SELECT id, sender, recipient, subject, body, time,attached, label FROM incoming WHERE (label=0 OR label=3) AND recipient = ? ORDER BY ? DESC"; break;
+                    select = "SELECT id, sender, recipient, subject, body, time, attached, label FROM incoming WHERE recipient = ? AND (label=0 OR label=3) "; break;
                 case 1://sent
-                    clause = "SELECT id, sender, recipient, subject, body, time,attached, label FROM outgoing WHERE sender = ? AND label = 1 ORDER BY ? DESC"; break;
+                    select = "SELECT id, sender, recipient, subject, body, time,attached, label FROM outgoing WHERE sender = ? AND label = 1 "; break;
                 case 2://draft
-                    clause = "SELECT id, sender, recipient, subject, body, time,attached, label FROM outgoing WHERE sender = ? AND label = 2 ORDER BY ? DESC"; break;
+                    select = "SELECT id, sender, recipient, subject, body, time,attached, label FROM outgoing WHERE sender = ? AND label = 2 "; break;
 
             }
+            clause = select+orderby;
             PreparedStatement query = db.prepareStatement(clause);
+            System.out.println(query);
             query.setString(1, account.getEmailAddress());
-            query.setString(2, sortby);
             ResultSet folderContent= query.executeQuery();
             return folderContent;
         }else{//trash or user-defined can be from both incoming and outgoing
-            clause= "SELECT * FROM (SELECT id, sender, recipient, subject, body, time, attached, label FROM outgoing WHERE sender = ? AND label = ?  " +
-                    "UNION SELECT id, sender, recipient, subject, body, time, attached, label FROM incoming WHERE recipient = ? AND label = ?) ORDER BY ? DESC";
+            select= "SELECT * FROM (SELECT id, sender, recipient, subject, body, time, attached, label FROM outgoing WHERE sender = ? AND label = ?  " +
+                    "UNION SELECT id, sender, recipient, subject, body, time, attached, label FROM incoming WHERE recipient = ? AND label = ?) ";
+            clause = select+orderby;
             PreparedStatement query = db.prepareStatement(clause);
             query.setString(1, account.getEmailAddress());
             query.setInt(2,label);
             query.setString(3, account.getEmailAddress());
             query.setInt(4,label);
-            query.setString(5,sortby);
             ResultSet folderContent= query.executeQuery();
             return folderContent;
         }

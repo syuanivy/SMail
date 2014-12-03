@@ -10,6 +10,7 @@ import sun.misc.BASE64Decoder;
 import javax.mail.*;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimePart;
 import javax.net.ssl.SSLSocketFactory;
 
 import java.io.*;
@@ -98,25 +99,19 @@ public class POPClient {
             while (!(msgLine = in.readLine()).equalsIgnoreCase(".")) {
                 input.append(msgLine + "\n");
             }
-           input.append("." + "\n");
+            input.append("." + "\n");
 
             Session session = Session.getDefaultInstance(new Properties());
             InputStream inputStream = new ByteArrayInputStream(input.toString().getBytes());
             MimeMessage message = new MimeMessage(session, inputStream);
-            newMail.setID(UID);
-            Date date = message.getSentDate();
-            if(date == null){
-                date = message.getReceivedDate();
-            }else if(date == null){
-                date = new Date();
-            }
-            newMail.setTime(date.toString());
-            newMail.setSubject(message.getSubject());
 
-            String senderlist = getSenderList(message);
-            String recipientlist = getRecipientList(message);
-            newMail.setSender(senderlist);
-            newMail.setRecipient(recipientlist);
+            setID(newMail,UID);
+            setDate(newMail, message);
+            setSubject(newMail, message);
+            setSender(newMail, message);
+            setRecipient(newMail, message);
+
+
 
             String contentType = message.getContentType();
             String[] content = getBodyAttachment(message, contentType);
@@ -135,23 +130,67 @@ public class POPClient {
 
     }
 
+    private void setSubject(Incoming newMail, MimeMessage message) throws MessagingException {
+        newMail.setSubject(message.getSubject());
+    }
+
+    private void setID(Incoming newMail, String UID) {
+        newMail.setID(UID);
+    }
+
+    private void setDate(Incoming newMail, MimeMessage message) throws MessagingException {
+        Date date = message.getSentDate();
+        if(date == null){
+            date = message.getReceivedDate();
+        }else if(date == null){
+            date = new Date();
+        }
+        newMail.setTime(date.toString());
+    }
+
     private String[] getBodyAttachment(MimeMessage message, String contentType) throws IOException, MessagingException {
         String body = "";
         String attachment = "";
-        String actualImage="";
-        String cid="";
 
-        if (contentType.contains("multipart")) {
-           // Try to parse attachment
-            Multipart parts = (Multipart) message.getContent();
+        if(contentType.contains("text/plain")) {
+            Object Body = message.getContent();
+            if (Body != null) {
+                body = Body.toString();
+            }
+        }else if ( contentType.contains("text/html")) {
+            Object Body = message.getContent();
+            if (Body != null) {
+                body = Body.toString();
+                Document html = Jsoup.parse(body);
+                html.select("body").tagName("div");
+                body = html.html();
+            }
+        }else{
+          //  Multipart parts = (Multipart) message.getContent();
+
+
+
+        }
+        /*if (contentType.contains("multipart")) {
+
             int numberOfParts = parts.getCount();
-            for (int Count = 0; Count < numberOfParts; Count++) {
-                MimeBodyPart part = (MimeBodyPart) parts.getBodyPart(Count);
+            for (int i = 0; i < numberOfParts; i++) {
+                MimeBodyPart part = (MimeBodyPart) parts.getBodyPart(i);
+                if(part.isMimeType("multipart*//*")){
+                    Multipart multipart = (Multipart) part.getContent();
+                }
+
+
+
+
+
+
+
                 if (Part.ATTACHMENT.equalsIgnoreCase(part.getDisposition())) {
                     // attachment
-                   /* String fileName = part.getFileName();
+                   *//* String fileName = part.getFileName();
                     attachment += fileName + ", ";
-                    part.saveFile("" + File.separator + fileName);*/
+                    part.saveFile("" + File.separator + fileName);*//*
                 } else {
                     // message
                     body = part.getContent().toString();
@@ -161,48 +200,40 @@ public class POPClient {
             if (attachment.length() > 1) {
                 attachment = attachment.substring(0, attachment.length() - 2);
             }
-        } else if ( contentType.contains("text/html")) {
-
-            Object Body = message.getContent();
-            if (Body != null) {
-                body = Body.toString();
-                Document html = Jsoup.parse(body);
-                html.select("body").tagName("div");
-                body = html.html();
-            }
-        }
-        else if(contentType.contains("text/plain")) {
-            Object Body = message.getContent();
-            if (Body != null) {
-                body = Body.toString();
-            }
-        }
-
+        }*/
         String[] bodyAttachement = new String[2];
         bodyAttachement[0]=body;
         bodyAttachement[1]=attachment;
         return bodyAttachement;
     }
 
-    private String getRecipientList(MimeMessage message) throws MessagingException {
+
+    private void setRecipient(Incoming newMail, MimeMessage message) throws MessagingException {
         Address[] recipients = message.getRecipients(Message.RecipientType.TO);
-        if (recipients==null) return "";
-        StringBuffer recipientString = new StringBuffer();
-        for (Address recipient : recipients) {
-            recipientString.append("," + recipient.toString());
+        String recipientlist = "";
+        if (recipients != null){
+            StringBuffer recipientString = new StringBuffer();
+            for (Address recipient : recipients) {
+                recipientString.append("," + recipient.toString());
+            }
+            recipientlist =  recipientString.toString().substring(1);
         }
-        return recipientString.toString().substring(1);
+        newMail.setRecipient(recipientlist);
     }
 
-    private String getSenderList(MimeMessage message) throws MessagingException {
+    private void setSender(Incoming newMail, MimeMessage message) throws MessagingException {
         Address[] senders = message.getFrom();
-        if (senders==null) return "";
-        StringBuffer senderString = new StringBuffer();
-        for (Address sender : senders) {
-            senderString.append("," + sender.toString());
+        String senderlist= "";
+        if(senders != null){
+            StringBuffer senderString = new StringBuffer();
+            for (Address sender : senders) {
+                senderString.append("," + sender.toString());
+
+            }
+            senderlist =  senderString.toString().substring(1);
 
         }
-        return senderString.toString().substring(1);
+        newMail.setSender(senderlist);
     }
 
 
