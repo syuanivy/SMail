@@ -233,8 +233,8 @@ public class EmailManager {
             ResultSet folderContent= query.executeQuery();
             return folderContent;
         }else{//trash or user-defined can be from both incoming and outgoing
-            clause= "SELECT id, sender, recipient, subject, body, time, attached, label FROM outgoing WHERE sender = ? AND label=? ORDER BY ? DESC " +
-                    "UNION SELECT id, sender, recipient, subject, body, time, attached, label FROM incoming WHERE recipient = ? AND label=? ORDER BY ? DESC";
+            clause= "SELECT * FROM (SELECT id, sender, recipient, subject, body, time, attached, label FROM outgoing WHERE sender = ? AND label = ?  " +
+                    "UNION SELECT id, sender, recipient, subject, body, time, attached, label FROM incoming WHERE recipient = ? AND label = ?) ORDER BY ? DESC";
             PreparedStatement query = db.prepareStatement(clause);
             query.setString(1, account.getEmailAddress());
             query.setInt(2,label);

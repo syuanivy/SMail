@@ -107,7 +107,7 @@ page(title, body) ::= <<
               })
 
               \$("#table_msg tbody .td_time").each( function(i) {
-                  var len = 28;
+                  var len = 23;
                   var text = \$(this).text();
                   if (text.length > len)
                   \$(this).text( text.substr(0, len-3) + "..." );
@@ -121,13 +121,13 @@ page(title, body) ::= <<
               });
 
               \$("#table_msg tbody .td_subject").each( function(i) {
-                  var len = 28;
+                  var len = 53;
                   var text = \$(this).text();
                   if (text.length > len)
                   \$(this).text( text.substr(0, len-3) + "..." );
               });
               \$("#table_msg tbody .td_message").each( function(i) {
-                  var len = 96;
+                  var len = 86;
                   var text = \$(this).text();
                   if (text.length > len)
                   \$(this).text( text.substr(0, len-6) + "......" );

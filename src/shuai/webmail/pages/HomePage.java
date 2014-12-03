@@ -57,8 +57,9 @@ public class HomePage extends Page{
         }
 
         //folder selection
-        int label=0; //inbox by default
-        if(request.getParameter("folder")!=null) label = Integer.parseInt(request.getParameter("folder"));
+        int label; //label of folder to display
+        if(request.getParameter("folder")==null || request.getParameter("folder").equals("")) label=0; //inbox by default
+        else label = Integer.parseInt(request.getParameter("folder"));
 
         //search action
         String keyword = request.getParameter("keyword");
@@ -88,7 +89,7 @@ public class HomePage extends Page{
         //generate the mail lists to display in the main table, according to the account, as well as search/sort action if there is any
         ArrayList<Email> mails = new ArrayList<Email>();
         if(keyword == null || keyword.equals("")){ //not a search result
-            if(sortby == null || sortby.equals("time")){ //not a sort result or sort by default(Date)
+            if(sortby == null || sortby.equals("")){ //not a sort result or sort by default(Date)
                 try{
                     mails = EmailManager.mailList(accountToShow,label); // show all mails in the folder
                 }catch(SQLException e){
